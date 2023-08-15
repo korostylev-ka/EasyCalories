@@ -72,10 +72,13 @@ class HomeFragment : Fragment() {
         val homeFragmentBinding = FragmentHomeBinding.inflate(layoutInflater)
 
         val data = viewModel.data
-
-        homeFragmentBinding.totalDiagram.data = data
-        homeFragmentBinding.date.text = getStringDate()
-
+        with(homeFragmentBinding) {
+            proteinValue.text = viewModel.limitsOfNutrients[0].toString()
+            fatValue.text = viewModel.limitsOfNutrients[1].toString()
+            carbValue.text = viewModel.limitsOfNutrients[2].toString()
+            totalDiagram.data = data
+            date.text = getStringDate()
+        }
 
         homeFragmentBinding.backButton.setOnClickListener {
 

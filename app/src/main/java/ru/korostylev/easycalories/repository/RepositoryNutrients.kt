@@ -6,9 +6,9 @@ class RepositoryNutrients {
     set(value) {
         field = value
     }
-    var limitsOfNutrients: List<Float> = listOf(100F, 100F, 100F)
-    var actualEatenNutrients: MutableList<Float> = listOf(0F, 0F, 0F).toMutableList()
-    var thatDayData: Map<Int, Pair<List<Float>, List<Float>>> = emptyMap()
+    var limitsOfNutrients: List<Float> = listOf(100F, 100F, 100F, 200F)
+    var actualEatenNutrients: MutableList<Float> = listOf(0F, 0F, 0F, 0F).toMutableList()
+    var thatDayData: Map<Int, List<Float>> = emptyMap()
 
     fun addLimits(protein: Float, fat: Float, carbs: Float) {
         limitsOfNutrients = listOf(protein, fat, carbs)
