@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Легкие Калории</string>
+    <string name="proteins">Белки</string>
+    <string name="fats">Жиры</string>
+    <string name="carbohydrates">Углеводы</string>
+    <string name="calories">Калории</string>
+    <string name="mon">ПН</string>
+    <string name="tue">ВТ</string>
+    <string name="wed">СР</string>
+    <string name="thu">ЧТ</string>
+    <string name="fri">ПТ</string>
+    <string name="sat">СБ</string>
+    <string name="sun">ВС</string>
+    <string name="jan">ЯНВ</string>
+    <string name="feb">ФЕВ</string>
+    <string name="mar">МАР</string>
+    <string name="apr">АПР</string>
+    <string name="may">MAY</string>
+    <string name="jun">ИЮН</string>
+    <string name="jul">ИЮЛ</string>
+    <string name="aug">АВГ</string>
+    <string name="sep">СЕН</string>
+    <string name="oct">ОКТ</string>
+    <string name="nov">НОЯ</string>
+    <string name="dec">ДЕК</string>
+</resources>
