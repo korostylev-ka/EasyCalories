@@ -5,9 +5,4 @@
     <stroke android:width="3dp"
         android:color="@color/fat_fill"/>
     <corners android:radius="5dp" />
-    <gradient
-        android:startColor="#C8C8C8"
-        android:endColor="#FFFFFF"
-        android:type="linear"
-        android:angle="270"/>
 </shape>

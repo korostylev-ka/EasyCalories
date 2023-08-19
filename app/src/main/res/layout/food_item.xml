@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/foodItem"
+    android:layout_marginBottom="@dimen/common"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/foodName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Название"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+    </TextView>
+
+    <TextView
+        android:id="@+id/foodProteinsTitle"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        android:text="Белки"
+        app:layout_constraintTop_toBottomOf="@id/foodName"
+        app:layout_constraintStart_toStartOf="parent">
+    </TextView>
+
+    <TextView
+        android:id="@+id/foodProteinsValue"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/foodName"
+        app:layout_constraintStart_toEndOf="@id/foodProteinsTitle">
+    </TextView>
+
+    <TextView
+        android:id="@+id/foodFatsTitle"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        android:text="Жиры"
+        app:layout_constraintTop_toBottomOf="@id/foodProteinsTitle"
+        app:layout_constraintStart_toStartOf="parent">
+    </TextView>
+
+    <TextView
+        android:id="@+id/foodFatsValue"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/foodProteinsValue"
+        app:layout_constraintStart_toEndOf="@id/foodFatsTitle">
+    </TextView>
+
+    <TextView
+        android:id="@+id/foodCarbsTitle"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        android:text="Углеводы"
+        app:layout_constraintTop_toBottomOf="@id/foodFatsTitle"
+        app:layout_constraintStart_toStartOf="parent">
+    </TextView>
+
+    <TextView
+        android:id="@+id/foodCarbsValue"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/foodFatsValue"
+        app:layout_constraintStart_toEndOf="@id/foodCarbsTitle">
+    </TextView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

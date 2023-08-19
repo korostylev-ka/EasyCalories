@@ -73,9 +73,9 @@ class HomeFragment : Fragment() {
 
         val data = viewModel.data
         with(homeFragmentBinding) {
-            proteinValue.text = viewModel.limitsOfNutrients[0].toString()
-            fatValue.text = viewModel.limitsOfNutrients[1].toString()
-            carbValue.text = viewModel.limitsOfNutrients[2].toString()
+            proteinValue.text = viewModel.liveDataLimits.value!!.proteins.toString()
+            fatValue.text = viewModel.liveDataLimits.value!!.fats.toString()
+            carbValue.text = viewModel.liveDataLimits.value!!.carbs.toString()
             totalDiagram.data = data
             date.text = getStringDate()
         }
@@ -112,6 +112,14 @@ class HomeFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
 
+        }
+
+        homeFragmentBinding.addFood.setOnClickListener {
+            val fragment = FoodListFragment.newInstance()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit()
         }
 
 

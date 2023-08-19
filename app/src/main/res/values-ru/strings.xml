@@ -2,8 +2,11 @@
 <resources>
     <string name="app_name">Легкие Калории</string>
     <string name="proteins">Белки</string>
+    <string name="P">Б</string>
     <string name="fats">Жиры</string>
+    <string name="F">Ж</string>
     <string name="carbohydrates">Углеводы</string>
+    <string name="C">У</string>
     <string name="calories">Калории</string>
     <string name="mon">ПН</string>
     <string name="tue">ВТ</string>
@@ -24,4 +27,10 @@
     <string name="oct">ОКТ</string>
     <string name="nov">НОЯ</string>
     <string name="dec">ДЕК</string>
+    <string name="editProfile">Редактировать профиль</string>
+    <string name="editLimits">Редактировать лимиты калорий</string>
+    <string name="enterProteinsPercent">Укажите % белков</string>
+    <string name="enterFatsPercent">Укажите % жиров</string>
+    <string name="enterCarbsPercent">Укажите % углеводов</string>
+    <string name="enterCaloriesLimit">Укажите лимит калорий</string>
 </resources>

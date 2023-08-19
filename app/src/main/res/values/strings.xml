@@ -2,8 +2,11 @@
     <string name="app_name">EasyCalories</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="proteins">Proteins</string>
+    <string name="P">P</string>
     <string name="fats">Fats</string>
+    <string name="F">F</string>
     <string name="carbohydrates">Carbohydrates</string>
+    <string name="C">C</string>
     <string name="calories">Сalories</string>
     <string name="mon">MON</string>
     <string name="tue">TUE</string>
@@ -24,6 +27,12 @@
     <string name="oct">OCT</string>
     <string name="nov">NOV</string>
     <string name="dec">DEC</string>
+    <string name="editProfile">Edit profile</string>
+    <string name="editLimits">Edit calories limit</string>
+    <string name="enterProteinsPercent">Enter % of proteins</string>
+    <string name="enterFatsPercent">Enter % of fats</string>
+    <string name="enterCarbsPercent">Enter % of carbohydrates</string>
+    <string name="enterCaloriesLimit">Enter limit of calories</string>
 
 
 </resources>

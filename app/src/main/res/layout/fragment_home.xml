@@ -51,7 +51,7 @@
 
         <TextView
             android:id="@+id/proteinValue"
-            android:layout_width="@dimen/nutrient_value_weight"
+            android:layout_width="@dimen/nutrient_value_weight_small"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common"
             android:text="@string/proteins"
@@ -75,7 +75,7 @@
 
         <TextView
             android:id="@+id/fatValue"
-            android:layout_width="@dimen/nutrient_value_weight"
+            android:layout_width="@dimen/nutrient_value_weight_small"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common"
             android:text="@string/fats"
@@ -98,7 +98,7 @@
 
         <TextView
             android:id="@+id/carbValue"
-            android:layout_width="@dimen/nutrient_value_weight"
+            android:layout_width="@dimen/nutrient_value_weight_small"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common"
             android:text="@string/carbohydrates"
@@ -121,7 +121,7 @@
 
         <TextView
             android:id="@+id/caloryValue"
-            android:layout_width="@dimen/nutrient_value_weight"
+            android:layout_width="@dimen/nutrient_value_weight_small"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common"
             android:text="@string/calories"
@@ -176,5 +176,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addFood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="@dimen/common"
+        android:src="@drawable/add_icon_24">
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
