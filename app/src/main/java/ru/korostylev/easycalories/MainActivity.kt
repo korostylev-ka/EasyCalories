@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.editLimits -> {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, EditLimitsFragment())
+                    .replace(R.id.fragmentContainer, EditLimitsFragment.newInstance())
                     .addToBackStack(null)
                     .commit()
                 return true

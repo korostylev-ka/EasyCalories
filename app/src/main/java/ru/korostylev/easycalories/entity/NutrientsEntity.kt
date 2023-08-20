@@ -9,5 +9,6 @@ data class NutrientsEntity(
     val id: Int,
     val proteins: Float,
     val fats: Float,
-    val carbs: Float
+    val carbs: Float,
+    val calories: Float
 )

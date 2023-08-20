@@ -4,34 +4,35 @@ import ru.korostylev.easycalories.dao.NutrientsDao
 import ru.korostylev.easycalories.entity.NutrientsEntity
 
 
-class RepositoryNutrients(val nutrientsDao: NutrientsDao) {
+class NutrientsRepositoryImpl(val nutrientsDao: NutrientsDao): NutrientsRepository {
     //var data: List<Pair<Float, Float>> =  emptyList()
-    var dayId: Int = 1
+    override var dayId: Int = 1
     set(value) {
         field = value
     }
     //заглушка с нулевыми нутриентами
-    val emptyNutrients = NutrientsEntity(0, 0F, 0F, 0F)
+    override val emptyNutrients = NutrientsEntity(0, 0F, 0F, 0F, 0F)
     //установленные лимиты нутриентов
-    var limitsOfNutrients: NutrientsEntity = getTheLimit() ?: emptyNutrients
+    override var limitsOfNutrients: NutrientsEntity = getLimits() ?: emptyNutrients
     //текущее потребление нутрентов
-    var actualEatenNutrients: NutrientsEntity = getTheNutrients(dayId) ?: emptyNutrients
+    override var actualEatenNutrients: NutrientsEntity = getTheNutrients(dayId) ?: emptyNutrients
     //связь лимита и текущего значения для графика
-    var data: MutableList<Pair<Float, Float>> = mutableListOf(Pair(limitsOfNutrients.proteins, actualEatenNutrients.proteins), Pair(limitsOfNutrients.fats, actualEatenNutrients.fats), Pair(limitsOfNutrients.carbs, actualEatenNutrients.carbs))
+    override var data: List<Pair<Float, Float>> = listOf(Pair(limitsOfNutrients.proteins, actualEatenNutrients.proteins), Pair(limitsOfNutrients.fats, actualEatenNutrients.fats), Pair(limitsOfNutrients.carbs, actualEatenNutrients.carbs))
+
     var thatDayData: Map<Int, List<Float>> = emptyMap()
 
-    fun addLimits(limit: NutrientsEntity) {
+    override fun setLimits(limit: NutrientsEntity) {
         nutrientsDao.insert(limit)
         limitsOfNutrients = limit
         println("В репозитории ${limitsOfNutrients}")
     }
 
-    fun getTheLimit(): NutrientsEntity? {
+    override fun getLimits(): NutrientsEntity? {
         return nutrientsDao.getTheNutrients(0)
     }
 
-    fun getTheNutrients(id: Int): NutrientsEntity? {
-        return nutrientsDao.getTheNutrients(id)
+    override fun getTheNutrients(dayId: Int): NutrientsEntity? {
+        return nutrientsDao.getTheNutrients(dayId)
     }
 
     fun addProtein(protein: Float) {

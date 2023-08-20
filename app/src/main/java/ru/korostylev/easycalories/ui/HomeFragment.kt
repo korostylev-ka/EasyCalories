@@ -71,12 +71,21 @@ class HomeFragment : Fragment() {
     ): View? {
         val homeFragmentBinding = FragmentHomeBinding.inflate(layoutInflater)
 
-        val data = viewModel.data
+        val data = viewModel.liveDataDiagram
+
+        viewModel.liveDataLimits.observe(viewLifecycleOwner) {
+            with(homeFragmentBinding) {
+                proteinValue.text = viewModel.limitsOfNutrients.proteins.toString()
+                fatValue.text = viewModel.limitsOfNutrients.fats.toString()
+                carbValue.text = viewModel.limitsOfNutrients.carbs.toString()
+            }
+        }
+
         with(homeFragmentBinding) {
-            proteinValue.text = viewModel.liveDataLimits.value!!.proteins.toString()
-            fatValue.text = viewModel.liveDataLimits.value!!.fats.toString()
-            carbValue.text = viewModel.liveDataLimits.value!!.carbs.toString()
-            totalDiagram.data = data
+            //proteinValue.text = viewModel.liveDataLimits.value!!.proteins.toString()
+            //fatValue.text = viewModel.liveDataLimits.value!!.fats.toString()
+            //carbValue.text = viewModel.liveDataLimits.value!!.carbs.toString()
+            totalDiagram.data = viewModel.liveDataDiagram.value!!
             date.text = getStringDate()
         }
 

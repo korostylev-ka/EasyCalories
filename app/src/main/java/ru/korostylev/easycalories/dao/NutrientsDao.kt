@@ -3,6 +3,7 @@ package ru.korostylev.easycalories.dao
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 import ru.korostylev.easycalories.entity.NutrientsEntity
@@ -12,9 +13,9 @@ interface NutrientsDao {
     @Query("SELECT * FROM NutrientsEntity")
     fun getLimits(): LiveData<NutrientsEntity>
 
-    @Query("SELECT * FROM NutrientsEntity WHERE id = (:id)")
-    fun getTheNutrients(id: Int): NutrientsEntity
+    @Query("SELECT * FROM NutrientsEntity WHERE id = (:dayId)")
+    fun getTheNutrients(dayId: Int): NutrientsEntity
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(nutrients: NutrientsEntity)
 }

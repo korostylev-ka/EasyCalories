@@ -6,21 +6,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.EditLimitsFragment">
 
-    <TextView
-        android:id="@+id/caloriesAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/common"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="" />
+
+
     <EditText
         android:id="@+id/caloriesValueAdd"
-        android:layout_width="@dimen/nutrient_value_weight_small"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@id/caloriesAdd"
-        app:layout_constraintTop_toTopOf="@id/caloriesAdd"
-        app:layout_constraintBottom_toBottomOf="@id/caloriesAdd">
+        android:textAlignment="center"
+        android:background="@drawable/calories_value_view"
+        android:layout_marginTop="@dimen/common"
+        android:hint="@string/enterCaloriesLimit"
+        app:layout_constraintStart_toStartOf="@id/carbsValueAddPercent"
+        app:layout_constraintEnd_toEndOf="@id/carbsValueAddGramm"
+        app:layout_constraintTop_toBottomOf="@id/carbsValueAddPercent">
+
     </EditText>
 
     <TextView
@@ -29,13 +28,15 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/common"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/caloriesAdd"
+        app:layout_constraintTop_toTopOf="parent"
         android:text="@string/P" />
 
     <EditText
         android:id="@+id/proteinsValueAddPercent"
         android:layout_width="@dimen/nutrient_value_weight_small"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginStart="@dimen/common"
         android:background="@drawable/proteins_value_view"
         app:layout_constraintStart_toEndOf="@id/proteinsAdd"
         app:layout_constraintBottom_toBottomOf="@id/proteinsAdd"
@@ -45,6 +46,8 @@
         android:id="@+id/proteinsValueAddGramm"
         android:layout_width="@dimen/nutrient_value_weight_small"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:textAlignment="center"
         android:background="@drawable/proteins_value_view"
         app:layout_constraintStart_toEndOf="@id/proteinsValueAddPercent"
         app:layout_constraintBottom_toBottomOf="@id/proteinsAdd"
@@ -64,6 +67,8 @@
         android:id="@+id/fatsValueAddPercent"
         android:layout_width="@dimen/nutrient_value_weight_small"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginStart="@dimen/common"
         android:background="@drawable/fats_value_view"
         app:layout_constraintStart_toEndOf="@id/fatsAdd"
         app:layout_constraintBottom_toBottomOf="@id/fatsAdd"
@@ -73,6 +78,8 @@
         android:id="@+id/fatsValueAddGramm"
         android:layout_width="@dimen/nutrient_value_weight_small"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:textAlignment="center"
         android:background="@drawable/fats_value_view"
         app:layout_constraintStart_toEndOf="@id/fatsValueAddPercent"
         app:layout_constraintBottom_toBottomOf="@id/fatsAdd"
@@ -92,6 +99,8 @@
         android:id="@+id/carbsValueAddPercent"
         android:layout_width="@dimen/nutrient_value_weight_small"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginStart="@dimen/common"
         android:background="@drawable/carbs_value_view"
         app:layout_constraintStart_toEndOf="@id/carbsAdd"
         app:layout_constraintBottom_toBottomOf="@id/carbsAdd"
@@ -101,6 +110,8 @@
         android:id="@+id/carbsValueAddGramm"
         android:layout_width="@dimen/nutrient_value_weight_small"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:textAlignment="center"
         android:background="@drawable/carbs_value_view"
         app:layout_constraintStart_toEndOf="@id/carbsValueAddPercent"
         app:layout_constraintBottom_toBottomOf="@id/carbsAdd"
@@ -113,7 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/common"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/carbsAdd"
+        app:layout_constraintTop_toBottomOf="@id/caloriesValueAdd"
         android:text="SAVE">
     </Button>
 </androidx.constraintlayout.widget.ConstraintLayout>

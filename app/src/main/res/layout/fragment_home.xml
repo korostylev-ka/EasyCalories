@@ -55,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common"
             android:text="@string/proteins"
+            android:textAlignment="center"
             android:background="@drawable/proteins_value_view"
             app:layout_constraintEnd_toStartOf="@id/verticalDivider"
 
@@ -79,6 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common"
             android:text="@string/fats"
+            android:textAlignment="center"
             android:background="@drawable/fats_value_view"
             app:layout_constraintStart_toStartOf="@id/verticalDivider"
             app:layout_constraintTop_toTopOf="parent">
@@ -102,6 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common"
             android:text="@string/carbohydrates"
+            android:textAlignment="center"
             android:background="@drawable/carbs_value_view"
             app:layout_constraintEnd_toStartOf="@id/verticalDivider"
             app:layout_constraintTop_toBottomOf="@id/proteinLabel">

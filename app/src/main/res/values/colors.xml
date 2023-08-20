@@ -13,6 +13,7 @@
     <color name="fat_fill">#D10606</color>
     <color name="carbs">#D6D6A2</color>
     <color name="carbs_fill">#CDCC5C</color>
+    <color name="calories_fill">#193EC8</color>
 
 
     <array name="colors">
