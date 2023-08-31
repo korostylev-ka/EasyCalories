@@ -3,6 +3,7 @@ package ru.korostylev.easycalories.ui
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +35,8 @@ class EditLimitsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        with(viewModel.limitsOfNutrients) {
+        Log.d("EditLimits", "onCreate")
+        with(viewModel.liveDataLimits.value) {
             proteinsLimit = this?.proteins ?: 0F
             fatsLimit = this?.fats ?: 0F
             carbsLimit = this?.carbs ?: 0F
@@ -47,6 +49,8 @@ class EditLimitsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val editLimitsBinding = FragmentEditLimitsBinding.inflate(layoutInflater)
+
+        Log.d("EditLimits", "onCreateView")
         val nutrientsValueWatcher = object : TextWatcher {
             override fun beforeTextChanged(
                 sequence: CharSequence?,

@@ -11,7 +11,7 @@ import ru.korostylev.easycalories.entity.NutrientsEntity
 @Dao
 interface NutrientsDao {
     @Query("SELECT * FROM NutrientsEntity")
-    fun getLimits(): LiveData<NutrientsEntity>
+    fun getLimits(): NutrientsEntity
 
     @Query("SELECT * FROM NutrientsEntity WHERE id = (:dayId)")
     fun getTheNutrients(dayId: Int): NutrientsEntity

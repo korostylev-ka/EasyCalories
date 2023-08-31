@@ -8,7 +8,7 @@ import ru.korostylev.easycalories.entity.FoodItem
 
 class FoodListAdapter(val foodList: List<FoodItem>): RecyclerView.Adapter<FoodListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodListViewHolder {
-        return FoodListViewHolder(FoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return FoodListViewHolder(FoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false), parent.context)
     }
 
     override fun getItemCount(): Int {
