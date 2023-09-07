@@ -33,6 +33,9 @@
     <string name="enterFatsPercent">Enter % of fats</string>
     <string name="enterCarbsPercent">Enter % of carbohydrates</string>
     <string name="enterCaloriesLimit">Enter limit of calories</string>
+    <string name="enterNutrientsFor100Gr">Enter nutrients in 100 gr.</string>
+    <string name="foodName">Food name</string>
+    <string name="portionWeight">Weight of the portion</string>
 
 
 </resources>

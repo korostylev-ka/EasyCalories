@@ -65,9 +65,23 @@ class HomeFragment : Fragment() {
         month = arguments!!.getInt(MONTH_ID)
         year = arguments!!.getInt(YEAR_ID)
         dayId = getCurrentDay()
-        viewModel.setId(dayId)
+        //viewModel.setId(dayId)
 
 
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.liveDataLimits.observe(viewLifecycleOwner, Observer {
+            val homeFragmentBinding = FragmentHomeBinding.inflate(layoutInflater)
+            with(homeFragmentBinding) {
+                proteinValue.text = it.proteins.toString()
+                fatValue.text = it.fats.toString()
+                carbValue.text = it.carbs.toString()
+                totalDiagram.data = viewModel.liveDataDiagram.value!!
+                date.text = getStringDate()
+            }
+        })
     }
 
     override fun onCreateView(
@@ -77,13 +91,13 @@ class HomeFragment : Fragment() {
         val homeFragmentBinding = FragmentHomeBinding.inflate(layoutInflater)
         Log.d(HOME_FRAGMENT_TAG, "onCreateView")
 
-        with(homeFragmentBinding) {
-            proteinValue.text = viewModel.liveDataLimits.value!!.proteins.toString()
-            fatValue.text = viewModel.liveDataLimits.value!!.fats.toString()
-            carbValue.text = viewModel.liveDataLimits.value!!.carbs.toString()
+        /*with(homeFragmentBinding) {
+            proteinValue.text = viewModel.liveDataLimits.value?.proteins.toString()
+            fatValue.text = viewModel.liveDataLimits.value?.fats.toString()
+            carbValue.text = viewModel.liveDataLimits.value?.carbs.toString()
             totalDiagram.data = viewModel.liveDataDiagram.value!!
             date.text = getStringDate()
-        }
+        }*/
 
         //кнопка назад на один день
         homeFragmentBinding.backButton.setOnClickListener {

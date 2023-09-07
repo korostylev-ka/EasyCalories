@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.korostylev.easycalories.FoodListRecyclerView.FoodListAdapter
@@ -34,13 +35,31 @@ class FoodListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentFoodListBinding.inflate(layoutInflater)
-
         recyclerView = binding.foodListRecyclerView
         recyclerView!!.layoutManager = LinearLayoutManager(context)
-        adapter = FoodListAdapter(viewModel.foodList)
         recyclerView!!.adapter = adapter
-        // Inflate the layout for this fragment
+
+        binding.addFoodItem.setOnClickListener {
+            val fragment = NewFoodItemFragment.newInstance()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        /*viewModel.foodListLiveData.observe(
+            viewLifecycleOwner,
+            Observer {foods->
+                foods.let {
+                    adapter = FoodListAdapter(foods)
+                    recyclerView!!.adapter = adapter
+                }
+
+            }
+        )*/
     }
 
     companion object {

@@ -24,9 +24,9 @@ class SelectedFoodItemFragment : Fragment() {
         arguments?.let {
             foodName = it.getString(FOOD_NAME) ?: ""
         }
-        foodItem = foodViewModel.foodList.filter {
+        foodItem = foodViewModel.foodListLiveData.value?.filter {
             it.name == foodName
-        }.get(0)
+        }?.get(0)
     }
 
     override fun onCreateView(

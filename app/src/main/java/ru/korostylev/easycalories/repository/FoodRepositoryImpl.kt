@@ -1,19 +1,25 @@
 package ru.korostylev.easycalories.repository
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import ru.korostylev.easycalories.dao.FoodDao
+import ru.korostylev.easycalories.db.FoodDB
 import ru.korostylev.easycalories.entity.FoodItem
 
-class FoodRepositoryImpl: FoodRepository {
-    private val foodList = mutableListOf(FoodItem("Овсянка", 30F, 20F, 100F), FoodItem("Шоколад", 40F, 80F, 120F))
-    override fun getFoodList(): List<FoodItem> {
-        return foodList
+class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
+    private val emptyList = emptyList<FoodItem>()
+    override fun getFoodList(): LiveData<List<FoodItem>> {
+        return foodDao.getAll()
+
+        //println("В репозитории ${getFoodList().value?.size} элементов")
     }
 
     override fun getFoodItem(id: Long): FoodItem {
         TODO("Not yet implemented")
     }
 
-    override fun addItem() {
-        TODO("Not yet implemented")
+    override fun addItem(foodItem: FoodItem) {
+        foodDao.insert(foodItem)
     }
 
     override fun deleteItem(id: Long) {

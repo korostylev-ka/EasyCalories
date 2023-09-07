@@ -5,17 +5,17 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-
+import ru.korostylev.easycalories.entity.FoodItem
 import ru.korostylev.easycalories.entity.NutrientsEntity
 
 @Dao
-interface NutrientsDao {
-    @Query("SELECT * FROM NutrientsEntity")
-    fun getLimits(): LiveData<NutrientsEntity>
+interface FoodDao {
+    @Query("SELECT * FROM FoodItem")
+    fun getAll(): LiveData<List<FoodItem>>
 
-    @Query("SELECT * FROM NutrientsEntity WHERE id = (:dayId)")
-    fun getTheNutrients(dayId: Int): NutrientsEntity
+    @Query("SELECT * FROM FoodItem WHERE id = (:foodId)")
+    fun getFoodItem(foodId: Int): FoodItem
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(nutrients: NutrientsEntity)
+    fun insert(foodItem: FoodItem)
 }
