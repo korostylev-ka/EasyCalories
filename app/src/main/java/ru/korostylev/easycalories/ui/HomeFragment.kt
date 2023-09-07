@@ -72,7 +72,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.liveDataLimits.observe(viewLifecycleOwner, Observer {
+        /*viewModel.liveDataLimits.observe(viewLifecycleOwner, Observer {
             val homeFragmentBinding = FragmentHomeBinding.inflate(layoutInflater)
             with(homeFragmentBinding) {
                 proteinValue.text = it.proteins.toString()
@@ -81,7 +81,7 @@ class HomeFragment : Fragment() {
                 totalDiagram.data = viewModel.liveDataDiagram.value!!
                 date.text = getStringDate()
             }
-        })
+        })*/
     }
 
     override fun onCreateView(
@@ -91,13 +91,23 @@ class HomeFragment : Fragment() {
         val homeFragmentBinding = FragmentHomeBinding.inflate(layoutInflater)
         Log.d(HOME_FRAGMENT_TAG, "onCreateView")
 
-        /*with(homeFragmentBinding) {
-            proteinValue.text = viewModel.liveDataLimits.value?.proteins.toString()
-            fatValue.text = viewModel.liveDataLimits.value?.fats.toString()
-            carbValue.text = viewModel.liveDataLimits.value?.carbs.toString()
-            totalDiagram.data = viewModel.liveDataDiagram.value!!
+        viewModel.liveDataLimits.observe(viewLifecycleOwner, Observer {
+            with(homeFragmentBinding) {
+                proteinValue.text = it.proteins.toString()
+                fatValue.text = it.fats.toString()
+                carbValue.text = it.carbs.toString()
+                totalDiagram.data = Pair(it, it)
+                date.text = getStringDate()
+            }
+        })
+
+        with(homeFragmentBinding) {
+            proteinValue.text = viewModel.limitsOfNutrients.proteins.toString()
+            fatValue.text = viewModel.limitsOfNutrients.fats.toString()
+            carbValue.text = viewModel.limitsOfNutrients.carbs.toString()
+            //totalDiagram.data = viewModel.data
             date.text = getStringDate()
-        }*/
+        }
 
         //кнопка назад на один день
         homeFragmentBinding.backButton.setOnClickListener {

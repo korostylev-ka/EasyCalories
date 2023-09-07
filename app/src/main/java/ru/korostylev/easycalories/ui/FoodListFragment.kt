@@ -39,6 +39,17 @@ class FoodListFragment : Fragment() {
         recyclerView!!.layoutManager = LinearLayoutManager(context)
         recyclerView!!.adapter = adapter
 
+        viewModel.foodListLiveData.observe(
+            viewLifecycleOwner,
+            Observer {foods->
+                foods.let {
+                    adapter = FoodListAdapter(foods)
+                    recyclerView!!.adapter = adapter
+                }
+
+            }
+        )
+
         binding.addFoodItem.setOnClickListener {
             val fragment = NewFoodItemFragment.newInstance()
             parentFragmentManager.beginTransaction()

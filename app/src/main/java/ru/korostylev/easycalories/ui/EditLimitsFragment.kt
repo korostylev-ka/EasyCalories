@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentEditLimitsBinding
@@ -30,9 +33,6 @@ class EditLimitsFragment : Fragment() {
         return (proteins.toFloat() * 4 + fats.toFloat() * 9 + carbs.toFloat() * 4)
     }
 
-
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("EditLimits", "onCreate")
@@ -51,6 +51,7 @@ class EditLimitsFragment : Fragment() {
         val editLimitsBinding = FragmentEditLimitsBinding.inflate(layoutInflater)
 
         Log.d("EditLimits", "onCreateView")
+        requireActivity().setTitle(R.string.editCaloriesLimitFragment)
         val nutrientsValueWatcher = object : TextWatcher {
             override fun beforeTextChanged(
                 sequence: CharSequence?,
@@ -73,7 +74,13 @@ class EditLimitsFragment : Fragment() {
 
             override fun afterTextChanged(sequence: Editable?) {
                 with (editLimitsBinding) {
-                    editLimitsBinding.caloriesValueAdd.setText(calculateCalories(proteinsValueAddGramm.text.toString(), fatsValueAddGramm.text.toString(), carbsValueAddGramm.text.toString()).toString())
+                    try {
+                        editLimitsBinding.caloriesValueAdd.setText(calculateCalories(proteinsValueAddGramm.text.toString(), fatsValueAddGramm.text.toString(), carbsValueAddGramm.text.toString()).toString())
+                    } catch (e: java.lang.NumberFormatException) {
+                        Toast.makeText(context, R.string.numberFormatException, Toast.LENGTH_LONG)
+                            .show()
+                    }
+
                 }
 
             }

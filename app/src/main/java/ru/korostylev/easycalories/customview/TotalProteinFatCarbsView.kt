@@ -14,6 +14,7 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.content.withStyledAttributes
 import ru.korostylev.easycalories.R
+import ru.korostylev.easycalories.entity.NutrientsEntity
 import ru.korostylev.easycalories.utils.AndroidUtils
 import kotlin.math.PI
 import kotlin.math.cos
@@ -75,26 +76,26 @@ class TotalProteinFatCarbsView @JvmOverloads constructor(
         textAlign = Paint.Align.CENTER
         textSize = fontSize
     }
-    //создаем данные в формате списка пар: потребленные нутриенты - изначально рассчитанные
-    var data: List<Pair<Float, Float>> = listOf(Pair(150F, 100F), Pair(150F, 100F), Pair(200F, 100F))
+    //Пара лимит-факт
+    var data: Pair<NutrientsEntity, NutrientsEntity> = Pair(NutrientsEntity(0, 200F, 50F, 100F, 0F), NutrientsEntity(0, 0F, 0F, 0F, 0F))
         set(value) {
             field = value
             //custom view перерисуется при условии видимости
             invalidate()
         }
 
-    //функция для получения данных для 100% загрузки из 1-х элементов Pair
-    fun getSummNutrients(data: List<Pair<Float, Float>>): Float {
-        var total = 0f
-        data.map {
-            total += it.first
+    //функция для получения данных для 100%
+    fun getSummNutrients(): Float {
+        var total = 0F
+        with(data.first) {
+            total = proteins + fats + carbs
         }
         return total
     }
-    fun getSummNutrientsFact(data: List<Pair<Float, Float>>): Float {
-        var total = 0f
-        data.map {
-            total += it.second
+    fun getSummNutrientsFact(): Float {
+        var total = 0F
+        with(data.second) {
+            total = proteins + fats + carbs
         }
         return total
     }
@@ -124,49 +125,50 @@ class TotalProteinFatCarbsView @JvmOverloads constructor(
 
     @SuppressLint("ResourceAsColor")
     override fun onDraw(canvas: Canvas) {
-
-        /*if (data.isEmpty()) {
-            return
-        }*/
         //чтобы начинать отрисовку окружности сверху
         var startFrom = -90F
+        var angle = 0F
+        var angleFact = 0F
         //выясним суммарное значение элементов, для вычисления доли каждого
-        val total = getSummNutrients(data)
-        val totalFact = getSummNutrientsFact(data)
+        val total = getSummNutrients()
+        val totalFact = getSummNutrientsFact()
         //переменная для вывода текста процентов
         var textPercent = 0f
         //переменная для цвета точки
         //var dotColor: Int = 0
+        angle = 360F * (data.first.proteins/total)
+        angleFact = angle * data.second.proteins/data.first.proteins
+        //добавляем к переменной процент от сектора
+        textPercent += data.first.proteins / total
+        paint.style = Paint.Style.FILL
+        paintFact.style = Paint.Style.FILL
+        paint.color = ContextCompat.getColor(context, R.color.protein)
+        paintFact.color = ContextCompat.getColor(context, R.color.protein_fill)
+        canvas.drawArc(oval, startFrom,angle, true, paint)
+        canvas.drawArc(oval, startFrom,angleFact, true, paintFact)
+        startFrom += angle
 
-        for ((index, value) in data.withIndex()) {
-            val angle = 360F * (value.first/total)
-            val angleFact = angle * value.second/value.first
-            //добавляем к переменной процент от сектора
-            textPercent += value.first / total
-            paint.style = Paint.Style.FILL
-            paintFact.style = Paint.Style.FILL
-            //paint.color = ContextCompat.getColor(context, R.color.protein)
+        angle = 360F * (data.first.fats/total)
+        angleFact = angle * data.second.fats/data.first.fats
+        textPercent += data.first.fats / total
+        paint.style = Paint.Style.FILL
+        paintFact.style = Paint.Style.FILL
+        paint.color = ContextCompat.getColor(context, R.color.fat)
+        paintFact.color = ContextCompat.getColor(context, R.color.fat_fill)
+        canvas.drawArc(oval, startFrom,angle, true, paint)
+        canvas.drawArc(oval, startFrom,angleFact, true, paintFact)
+        startFrom += angle
 
-            //установка цвета сектора в зависимости от нутриента(теория)
-            paint.color = when (index) {
-                0 -> ContextCompat.getColor(context, R.color.protein)
-                1 -> ContextCompat.getColor(context, R.color.fat)
-                else -> ContextCompat.getColor(context, R.color.carbs)
-            }
-            //установка цвета сектора в зависимости от нутриента(фактические данные)
-            paintFact.color = when (index) {
-                0 -> ContextCompat.getColor(context, R.color.protein_fill)
-                1 -> ContextCompat.getColor(context, R.color.fat_fill)
-                else -> ContextCompat.getColor(context, R.color.carbs_fill)
-            }
-            canvas.drawArc(oval, startFrom,angle, true, paint)
-            canvas.drawArc(oval, startFrom,angleFact, true, paintFact)
-            startFrom += angle
-            //dotColor = colors.get(0)
-
-        }
-
-
+        angle = 360F * (data.first.carbs/total)
+        angleFact = angle * data.second.carbs/data.first.carbs
+        textPercent += data.first.carbs / total
+        paint.style = Paint.Style.FILL
+        paintFact.style = Paint.Style.FILL
+        paint.color = ContextCompat.getColor(context, R.color.carbs)
+        paintFact.color = ContextCompat.getColor(context, R.color.carbs_fill)
+        canvas.drawArc(oval, startFrom,angle, true, paint)
+        canvas.drawArc(oval, startFrom,angleFact, true, paintFact)
+        startFrom += angle
 
         //paint.color = randomColor()
         //paint.style = Paint.Style.FILL
@@ -191,6 +193,8 @@ class TotalProteinFatCarbsView @JvmOverloads constructor(
         //рисуем точку для корректировки верхней точки окружности
         //canvas.drawPoint(center.x,center.y - radius,paint)
 
+
     }
     private fun randomColor() = Random.nextInt(0xFF000000.toInt(), 0xFFFFFFFF.toInt())
+
 }

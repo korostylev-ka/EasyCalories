@@ -19,6 +19,8 @@
         android:id="@+id/foodNameTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:layout_marginTop="@dimen/common"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/foodName" />
@@ -27,6 +29,8 @@
         android:id="@+id/foodNameValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="@dimen/padding_edit_text"
+        android:background="@drawable/edit_text_value"
         android:hint="Enter"
         app:layout_constraintStart_toEndOf="@id/divider"
         app:layout_constraintTop_toTopOf="@id/foodNameTitle"
@@ -38,6 +42,8 @@
         android:id="@+id/portionWeightTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:layout_marginTop="@dimen/common"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/foodNameTitle"
         android:text="@string/portionWeight" />
@@ -66,6 +72,8 @@
         android:id="@+id/proteinsTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:layout_marginTop="@dimen/common"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/forHundredGrTitle"
         android:text="@string/proteins" />
@@ -84,6 +92,8 @@
         android:id="@+id/fatsTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:layout_marginTop="@dimen/common"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/proteinsTitle"
         android:text="@string/fats" />
@@ -102,6 +112,8 @@
         android:id="@+id/carbsTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:layout_marginTop="@dimen/common"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/fatsTitle"
         android:text="@string/carbohydrates" />
@@ -120,6 +132,8 @@
         android:id="@+id/caloriesTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:layout_marginTop="@dimen/common"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/carbsTitle"
         android:text="@string/calories" />

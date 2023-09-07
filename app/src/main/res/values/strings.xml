@@ -36,6 +36,8 @@
     <string name="enterNutrientsFor100Gr">Enter nutrients in 100 gr.</string>
     <string name="foodName">Food name</string>
     <string name="portionWeight">Weight of the portion</string>
+    <string name="numberFormatException">Wrong type of value!</string>
+    <string name="editCaloriesLimitFragment">Edit calories limit</string>
 
 
 </resources>

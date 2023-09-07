@@ -5,4 +5,6 @@
     <stroke android:width="3dp"
         android:color="@color/protein_fill"/>
     <corners android:radius="5dp" />
+    <gradient android:startColor="@color/protein_fill"
+        android:endColor="@color/white"/>
 </shape>
