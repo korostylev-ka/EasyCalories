@@ -77,7 +77,7 @@ class TotalProteinFatCarbsView @JvmOverloads constructor(
         textSize = fontSize
     }
     //Пара лимит-факт
-    var data: Pair<NutrientsEntity, NutrientsEntity> = Pair(NutrientsEntity(0, 200F, 50F, 100F, 0F), NutrientsEntity(0, 0F, 0F, 0F, 0F))
+    var data: Pair<NutrientsEntity, NutrientsEntity> = Pair(NutrientsEntity(0, 100F, 100F, 100F, 0F), NutrientsEntity(0, 0F, 0F, 0F, 0F))
         set(value) {
             field = value
             //custom view перерисуется при условии видимости
@@ -137,7 +137,10 @@ class TotalProteinFatCarbsView @JvmOverloads constructor(
         //переменная для цвета точки
         //var dotColor: Int = 0
         angle = 360F * (data.first.proteins/total)
-        angleFact = angle * data.second.proteins/data.first.proteins
+        if (data.first.proteins == 0F) {
+            angleFact = angle * data.second.proteins
+        } else angleFact = angle * data.second.proteins/data.first.proteins
+
         //добавляем к переменной процент от сектора
         textPercent += data.first.proteins / total
         paint.style = Paint.Style.FILL
@@ -149,7 +152,10 @@ class TotalProteinFatCarbsView @JvmOverloads constructor(
         startFrom += angle
 
         angle = 360F * (data.first.fats/total)
-        angleFact = angle * data.second.fats/data.first.fats
+        if (data.first.fats == 0F) {
+            angleFact = angle * data.second.fats
+        } else angleFact = angle * data.second.fats/data.first.fats
+        println("angle $angleFact")
         textPercent += data.first.fats / total
         paint.style = Paint.Style.FILL
         paintFact.style = Paint.Style.FILL
@@ -160,7 +166,9 @@ class TotalProteinFatCarbsView @JvmOverloads constructor(
         startFrom += angle
 
         angle = 360F * (data.first.carbs/total)
-        angleFact = angle * data.second.carbs/data.first.carbs
+        if (data.first.carbs == 0F) {
+            angleFact = angle * data.second.carbs
+        } else angleFact = angle * data.second.carbs/data.first.carbs
         textPercent += data.first.carbs / total
         paint.style = Paint.Style.FILL
         paintFact.style = Paint.Style.FILL

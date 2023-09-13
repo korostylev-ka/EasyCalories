@@ -33,7 +33,7 @@ class NutrientsRepositoryImpl(val nutrientsDao: NutrientsDao): NutrientsReposito
 
     }
 
-    override fun getLimits(): NutrientsEntity {
+    override fun getLimits(): NutrientsEntity? {
         return nutrientsDao.getTheNutrients(0)
     }
 
@@ -52,6 +52,7 @@ class NutrientsRepositoryImpl(val nutrientsDao: NutrientsDao): NutrientsReposito
     }
 
     init{
+        if (getLimits() == null) nutrientsDao.insert(emptyNutrients)
 
     }
 }

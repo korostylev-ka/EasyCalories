@@ -20,7 +20,7 @@ interface NutrientsDao {
     fun getTheNutrientsLiveData(dayId: Int): LiveData<NutrientsEntity>
 
     @Query("SELECT * FROM NutrientsEntity WHERE id = (:dayId)")
-    fun getTheNutrients(dayId: Int): NutrientsEntity
+    fun getTheNutrients(dayId: Int): NutrientsEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(nutrients: NutrientsEntity)

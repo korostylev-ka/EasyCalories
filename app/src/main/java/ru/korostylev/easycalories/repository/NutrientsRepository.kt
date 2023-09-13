@@ -9,6 +9,6 @@ interface NutrientsRepository {
     var actualEatenNutrients: LiveData<NutrientsEntity>
 
     fun setLimits(limits: NutrientsEntity)
-    fun getLimits(): NutrientsEntity
+    fun getLimits(): NutrientsEntity?
     fun getTheNutrients(dayId: Int): NutrientsEntity?
 }

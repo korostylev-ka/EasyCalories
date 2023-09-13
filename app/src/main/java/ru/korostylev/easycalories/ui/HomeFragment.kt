@@ -70,20 +70,6 @@ class HomeFragment : Fragment() {
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        /*viewModel.liveDataLimits.observe(viewLifecycleOwner, Observer {
-            val homeFragmentBinding = FragmentHomeBinding.inflate(layoutInflater)
-            with(homeFragmentBinding) {
-                proteinValue.text = it.proteins.toString()
-                fatValue.text = it.fats.toString()
-                carbValue.text = it.carbs.toString()
-                totalDiagram.data = viewModel.liveDataDiagram.value!!
-                date.text = getStringDate()
-            }
-        })*/
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -91,23 +77,18 @@ class HomeFragment : Fragment() {
         val homeFragmentBinding = FragmentHomeBinding.inflate(layoutInflater)
         Log.d(HOME_FRAGMENT_TAG, "onCreateView")
 
-        viewModel.liveDataLimits.observe(viewLifecycleOwner, Observer {
-            with(homeFragmentBinding) {
-                proteinValue.text = it.proteins.toString()
-                fatValue.text = it.fats.toString()
-                carbValue.text = it.carbs.toString()
-                totalDiagram.data = Pair(it, it)
-                date.text = getStringDate()
+        viewModel.liveDataLimits.observe(viewLifecycleOwner, Observer {nutrients->
+            nutrients.let {
+                with(homeFragmentBinding) {
+                    proteinValue.text = it.proteins.toString()
+                    fatValue.text = it.fats.toString()
+                    carbValue.text = it.carbs.toString()
+                    if (it != viewModel.emptyNutrients) totalDiagram.data = Pair(it, viewModel.emptyNutrients)
+                    date.text = getStringDate()
+                }
             }
-        })
 
-        with(homeFragmentBinding) {
-            proteinValue.text = viewModel.limitsOfNutrients.proteins.toString()
-            fatValue.text = viewModel.limitsOfNutrients.fats.toString()
-            carbValue.text = viewModel.limitsOfNutrients.carbs.toString()
-            //totalDiagram.data = viewModel.data
-            date.text = getStringDate()
-        }
+        })
 
         //кнопка назад на один день
         homeFragmentBinding.backButton.setOnClickListener {

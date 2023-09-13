@@ -12,7 +12,7 @@ class NutrientsViewModel(application: Application): AndroidViewModel(application
     private val repository: NutrientsRepository = NutrientsRepositoryImpl(NutrientsDB.getInstance(application).nutrientsDao)
     val emptyNutrients = NutrientsEntity(0, 0F, 0F, 0F, 0F)
     val liveDataLimits = repository.limitsOfNutrientsLiveData
-    var limitsOfNutrients = liveDataLimits.value ?: emptyNutrients
+    var limitsOfNutrients = repository.getLimits() ?: emptyNutrients
     var actualEatenNutrients = repository.actualEatenNutrients
 
     fun setId(id: Int) {
