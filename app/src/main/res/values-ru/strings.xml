@@ -33,9 +33,12 @@
     <string name="enterFatsPercent">Укажите % жиров</string>
     <string name="enterCarbsPercent">Укажите % углеводов</string>
     <string name="enterCaloriesLimit">Укажите лимит калорий</string>
+    <string name="enterValue">Введите значение</string>
     <string name="enterNutrientsFor100Gr">Введите количество нутриентов в 100 гр.</string>
     <string name="foodName">Название блюда</string>
     <string name="portionWeight">Вес порции</string>
     <string name="numberFormatException">Неверное значение!</string>
+    <string name="tooShort">Длина должна быть минимум 1 символ!</string>
     <string name="editCaloriesLimitFragment">Редактирование лимита калорий</string>
+    <string name="checkTheFieldsAreCorrect">Проверьте правильность заполнения полей</string>
 </resources>

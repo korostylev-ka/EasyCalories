@@ -22,6 +22,18 @@ class NutrientsViewModel(application: Application): AndroidViewModel(application
     fun setLimit(limit: NutrientsEntity) {
         repository.setLimits(limit)
     }
+
+    fun addNutrients(id: Int, nutrients: NutrientsEntity) {
+        try {
+            val currentNutrients = repository.getTheNutrients(id)
+            val changedNutrients = NutrientsEntity(id, currentNutrients!!.proteins + nutrients.proteins, currentNutrients!!.fats + nutrients.fats, currentNutrients!!.carbs + nutrients.carbs, currentNutrients!!.calories + nutrients.calories )
+            repository.addNutrients(changedNutrients)
+        } catch (e: Exception) {
+            repository.addNutrients(nutrients)
+
+        }
+
+    }
     fun printId() {
     }
 

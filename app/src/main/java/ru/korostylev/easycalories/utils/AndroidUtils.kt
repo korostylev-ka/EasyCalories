@@ -33,4 +33,8 @@ object AndroidUtils {
         }
         return monthName ?: throw Exception("Month no found")
     }
+
+    fun calculateCalories(proteins: Float, fats: Float, carbs: Float): Float {
+        return (proteins * 4 + fats * 9 + carbs * 4)
+    }
 }

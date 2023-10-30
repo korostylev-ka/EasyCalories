@@ -14,16 +14,16 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
         //println("В репозитории ${getFoodList().value?.size} элементов")
     }
 
-    override fun getFoodItem(id: Long): FoodItem {
-        TODO("Not yet implemented")
+    override fun getFoodItem(name: String): FoodItem {
+        return foodDao.getFoodItem(name)
     }
 
     override fun addItem(foodItem: FoodItem) {
         foodDao.insert(foodItem)
     }
 
-    override fun deleteItem(id: Long) {
-        TODO("Not yet implemented")
+    override fun deleteItem(name: String) {
+        foodDao.delete(name)
     }
 
     override fun changeItem(id: Long) {

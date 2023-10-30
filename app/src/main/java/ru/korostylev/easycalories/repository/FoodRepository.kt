@@ -5,8 +5,8 @@ import ru.korostylev.easycalories.entity.FoodItem
 
 interface FoodRepository {
     fun getFoodList(): LiveData<List<FoodItem>>
-    fun getFoodItem(id: Long): FoodItem
+    fun getFoodItem(name: String): FoodItem
     fun addItem(foodItem: FoodItem)
-    fun deleteItem(id: Long)
+    fun deleteItem(name: String)
     fun changeItem(id: Long)
 }

@@ -13,9 +13,12 @@ interface FoodDao {
     @Query("SELECT * FROM FoodItem")
     fun getAll(): LiveData<List<FoodItem>>
 
-    @Query("SELECT * FROM FoodItem WHERE id = (:foodId)")
-    fun getFoodItem(foodId: Int): FoodItem
+    @Query("SELECT * FROM FoodItem WHERE name = (:foodName)")
+    fun getFoodItem(foodName: String): FoodItem
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(foodItem: FoodItem)
+
+    @Query("DELETE FROM FoodItem WHERE name = :name")
+    fun delete(name: String)
 }

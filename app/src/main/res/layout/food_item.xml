@@ -9,7 +9,7 @@
         android:id="@+id/foodName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Название"
+        style="@style/recyclerTextTitle"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -19,7 +19,8 @@
         android:id="@+id/foodProteinsTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
-        android:text="Белки"
+        android:text="@string/proteins"
+        style="@style/recyclerTextRegular"
         app:layout_constraintTop_toBottomOf="@id/foodName"
         app:layout_constraintStart_toStartOf="parent">
     </TextView>
@@ -28,6 +29,7 @@
         android:id="@+id/foodProteinsValue"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
+        style="@style/recyclerProteinsTextTitle"
         app:layout_constraintTop_toBottomOf="@id/foodName"
         app:layout_constraintStart_toEndOf="@id/foodProteinsTitle">
     </TextView>
@@ -36,7 +38,8 @@
         android:id="@+id/foodFatsTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
-        android:text="Жиры"
+        android:text="@string/fats"
+        style="@style/recyclerTextRegular"
         app:layout_constraintTop_toBottomOf="@id/foodProteinsTitle"
         app:layout_constraintStart_toStartOf="parent">
     </TextView>
@@ -45,6 +48,7 @@
         android:id="@+id/foodFatsValue"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
+        style="@style/recyclerFatsTextTitle"
         app:layout_constraintTop_toBottomOf="@id/foodProteinsValue"
         app:layout_constraintStart_toEndOf="@id/foodFatsTitle">
     </TextView>
@@ -53,7 +57,8 @@
         android:id="@+id/foodCarbsTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
-        android:text="Углеводы"
+        android:text="@string/carbohydrates"
+        style="@style/recyclerTextRegular"
         app:layout_constraintTop_toBottomOf="@id/foodFatsTitle"
         app:layout_constraintStart_toStartOf="parent">
     </TextView>
@@ -62,6 +67,7 @@
         android:id="@+id/foodCarbsValue"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
+        style="@style/recyclerCarbsTextTitle"
         app:layout_constraintTop_toBottomOf="@id/foodFatsValue"
         app:layout_constraintStart_toEndOf="@id/foodCarbsTitle">
     </TextView>

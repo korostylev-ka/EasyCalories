@@ -11,4 +11,5 @@ interface NutrientsRepository {
     fun setLimits(limits: NutrientsEntity)
     fun getLimits(): NutrientsEntity?
     fun getTheNutrients(dayId: Int): NutrientsEntity?
+    fun addNutrients(nutrients: NutrientsEntity)
 }

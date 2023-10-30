@@ -41,6 +41,10 @@ class NutrientsRepositoryImpl(val nutrientsDao: NutrientsDao): NutrientsReposito
         return nutrientsDao.getTheNutrients(dayId)
     }
 
+    override fun addNutrients(nutrients: NutrientsEntity) {
+        nutrientsDao.insert(nutrients)
+    }
+
     fun addProtein(protein: Float) {
         //actualEatenNutrients = actualEatenNutrients.copy(proteins = protein)
     }

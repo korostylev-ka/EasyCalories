@@ -12,11 +12,17 @@ class FoodViewModel(application: Application): AndroidViewModel(application) {
     val repository: FoodRepository = FoodRepositoryImpl(FoodDB.getInstance(application).foodDao)
     var foodListLiveData = repository.getFoodList()
 
-
+    fun getFoodItem(name: String): FoodItem {
+        return repository.getFoodItem(name)
+    }
 
 
     fun addItem(foodItem: FoodItem) {
         repository.addItem(foodItem)
+    }
+
+    fun deleteItem(name: String) {
+        repository.deleteItem(name)
     }
 
     init {
