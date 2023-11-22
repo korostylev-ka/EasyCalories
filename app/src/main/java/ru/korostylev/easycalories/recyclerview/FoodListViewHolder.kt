@@ -1,11 +1,8 @@
-package ru.korostylev.easycalories.FoodListRecyclerView
+package ru.korostylev.easycalories.recyclerview
 
-import android.app.Activity
 import android.content.Context
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FoodItemBinding
@@ -38,6 +35,7 @@ class FoodListViewHolder(
         val fragment = SelectedFoodItemFragment.newInstance(binding.foodName.text.toString())
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
+            .addToBackStack(null)
             .commit()
     }
 

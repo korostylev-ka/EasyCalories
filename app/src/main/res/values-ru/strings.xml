@@ -8,6 +8,7 @@
     <string name="carbohydrates">Углеводы</string>
     <string name="C">У</string>
     <string name="calories">Калории</string>
+    <string name="kcal">кКал</string>
     <string name="mon">ПН</string>
     <string name="tue">ВТ</string>
     <string name="wed">СР</string>

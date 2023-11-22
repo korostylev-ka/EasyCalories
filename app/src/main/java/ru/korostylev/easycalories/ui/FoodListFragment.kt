@@ -9,7 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.korostylev.easycalories.FoodListRecyclerView.FoodListAdapter
+import ru.korostylev.easycalories.recyclerview.FoodListAdapter
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentFoodListBinding
 import ru.korostylev.easycalories.viewmodel.FoodViewModel

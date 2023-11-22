@@ -1,4 +1,4 @@
-package ru.korostylev.easycalories.FoodListRecyclerView
+package ru.korostylev.easycalories.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

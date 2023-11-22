@@ -189,6 +189,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/eatenFoods"
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/totalDiagram"
+        app:layout_constraintStart_toStartOf="@id/totalDiagram"
+        app:layout_constraintEnd_toEndOf="@id/totalDiagram">
+
+        <TextView
+            android:id="@+id/eatenFoodsTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TOTAL">
+        </TextView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/eatenFoodsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addFood"
         android:layout_width="wrap_content"
