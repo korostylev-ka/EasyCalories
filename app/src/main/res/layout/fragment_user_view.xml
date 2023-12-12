@@ -6,15 +6,5 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.UserViewFragment">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="@dimen/common"
-        android:src="@drawable/person_logo_32dp">
-
-    </ImageView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

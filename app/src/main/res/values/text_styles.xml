@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="textTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/main_color_blue</item>
         <item name="android:textStyle">bold</item>
+    </style>
+    <style name="dateText" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/main_color_blue</item>
+    </style>
+    <style name="textRegular" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black</item>
     </style>
     <style name="recyclerTextTitle" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">18sp</item>
@@ -11,47 +19,44 @@
         <item name="android:textStyle">bold</item>
     </style>
     <style name="recyclerTextRegular" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
     <style name="proteinsTextTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/protein_fill</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="recyclerProteinsTextTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">12sp</item>
+    <style name="proteinsTextRegular" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/protein_fill</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="fatsTextTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/fat_fill</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="recyclerFatsTextTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">12sp</item>
+    <style name="fatsTextRegular" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/fat_fill</item>
-        <item name="android:textStyle">bold</item>
     </style>
     <style name="carbsTextTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/carbs_fill</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="recyclerCarbsTextTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">12sp</item>
+    <style name="carbsTextRegular" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/carbs_fill</item>
-        <item name="android:textStyle">bold</item>
     </style>
     <style name="caloriesTextTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/calories_fill</item>
         <item name="android:textStyle">bold</item>
     </style>
-    <style name="recyclerCaloriesTextTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">12sp</item>
+    <style name="caloriesTextRegular" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/calories_fill</item>
-        <item name="android:textStyle">bold</item>
     </style>
 </resources>

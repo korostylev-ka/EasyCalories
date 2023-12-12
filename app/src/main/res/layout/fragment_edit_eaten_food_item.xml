@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".ui.NewFoodItemFragment">
+
+
+    <View
+        android:id="@+id/divider"
+        android:visibility="invisible"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toEndOf="@id/carbsTitle"
+        android:background="?android:attr/listDivider" />
+
+    <TextView
+        android:id="@+id/foodNameTitle"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:layout_marginTop="@dimen/common"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/time"
+        style="@style/textTitle"
+        android:text="@string/foodName" />
+    <ImageView
+        android:id="@+id/calendarIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/calendar_48dp"
+        app:layout_constraintEnd_toStartOf="@id/divider"
+        app:layout_constraintTop_toTopOf="@id/date"
+        app:layout_constraintBottom_toBottomOf="@id/date">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="@dimen/nutrient_value_weight_small"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common"
+        android:text="123"
+        android:padding="@dimen/padding_edit_text"
+        android:background="@drawable/edit_text_value"
+        app:layout_constraintStart_toStartOf="@id/foodNameValue"
+        app:layout_constraintTop_toTopOf="parent">
+    </TextView>
+
+    <ImageView
+        android:id="@+id/clockIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@drawable/clock_icon48dp"
+        app:layout_constraintEnd_toStartOf="@id/divider"
+        app:layout_constraintTop_toTopOf="@id/time"
+        app:layout_constraintBottom_toBottomOf="@id/time">
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="@dimen/nutrient_value_weight_small"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common"
+        android:padding="@dimen/padding_edit_text"
+        android:text="123"
+        android:background="@drawable/edit_text_value"
+        app:layout_constraintStart_toStartOf="@id/foodNameValue"
+        app:layout_constraintTop_toBottomOf="@id/date">
+    </TextView>
+
+    <TextView
+        android:id="@+id/foodNameValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_edit_text"
+        android:background="@drawable/edit_text_value"
+        android:hint="@string/enterValue"
+        app:layout_constraintStart_toEndOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/common"
+        app:layout_constraintTop_toTopOf="@id/foodNameTitle"
+        app:layout_constraintBottom_toBottomOf="@id/foodNameTitle">
+    </TextView>
+
+
+    <TextView
+        android:id="@+id/portionWeightTitle"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:layout_marginTop="@dimen/common"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/foodNameTitle"
+        style="@style/textTitle"
+        android:text="@string/portionWeight" />
+
+    <EditText
+        android:id="@+id/portionWeightValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_edit_text"
+        android:hint="@string/enterValue"
+        android:inputType="number"
+        android:background="@drawable/edit_text_value"
+        app:layout_constraintStart_toEndOf="@id/divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/common"
+        app:layout_constraintTop_toTopOf="@id/portionWeightTitle"
+        app:layout_constraintBottom_toBottomOf="@id/portionWeightTitle">
+    </EditText>
+
+    <TextView
+        android:id="@+id/forHundredGrTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_marginTop="@dimen/common"
+        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/portionWeightTitle"
+        android:text="@string/enterNutrientsFor100Gr" />
+
+    <TextView
+        android:id="@+id/proteinsTitle"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:layout_marginTop="@dimen/common"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/forHundredGrTitle"
+        style="@style/proteinsTextTitle"
+        android:text="@string/proteins" />
+
+    <TextView
+        android:id="@+id/proteinsValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_edit_text"
+        android:hint="@string/enterValue"
+        android:background="@drawable/edit_text_value"
+        app:layout_constraintStart_toEndOf="@id/divider"
+        app:layout_constraintTop_toTopOf="@id/proteinsTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/common"
+        app:layout_constraintBottom_toBottomOf="@id/proteinsTitle">
+    </TextView>
+
+    <TextView
+        android:id="@+id/fatsTitle"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:layout_marginTop="@dimen/common"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/proteinsTitle"
+        style="@style/fatsTextTitle"
+        android:text="@string/fats" />
+
+    <TextView
+        android:id="@+id/fatsValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_edit_text"
+        android:hint="@string/enterValue"
+        android:background="@drawable/edit_text_value"
+        app:layout_constraintStart_toEndOf="@id/divider"
+        app:layout_constraintTop_toTopOf="@id/fatsTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/common"
+        app:layout_constraintBottom_toBottomOf="@id/fatsTitle">
+    </TextView>
+
+    <TextView
+        android:id="@+id/carbsTitle"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:layout_marginTop="@dimen/common"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fatsTitle"
+        style="@style/carbsTextTitle"
+        android:text="@string/carbohydrates" />
+
+    <TextView
+        android:id="@+id/carbsValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_edit_text"
+        android:hint="@string/enterValue"
+        android:background="@drawable/edit_text_value"
+        app:layout_constraintStart_toEndOf="@id/divider"
+        app:layout_constraintTop_toTopOf="@id/carbsTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/common"
+        app:layout_constraintBottom_toBottomOf="@id/carbsTitle">
+    </TextView>
+
+    <TextView
+        android:id="@+id/caloriesTitle"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
+        android:layout_marginTop="@dimen/common"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/carbsTitle"
+        style="@style/caloriesTextTitle"
+        android:text="@string/calories" />
+
+    <TextView
+        android:id="@+id/caloriesValue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_edit_text"
+        android:hint="@string/enterValue"
+        android:background="@drawable/edit_text_value"
+        app:layout_constraintStart_toEndOf="@id/divider"
+        app:layout_constraintTop_toTopOf="@id/caloriesTitle"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/common"
+        app:layout_constraintBottom_toBottomOf="@id/caloriesTitle">
+    </TextView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonSave"
+        android:text="save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/caloriesValue"
+        app:layout_constraintStart_toStartOf="parent">
+    </com.google.android.material.button.MaterialButton>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonDelete"
+        android:text="delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/caloriesValue"
+        app:layout_constraintStart_toEndOf="@id/buttonSave"
+        android:layout_marginStart="@dimen/common"
+        app:layout_constraintTop_toTopOf="@id/buttonSave"
+        app:layout_constraintBottom_toBottomOf="@id/buttonSave">
+    </com.google.android.material.button.MaterialButton>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

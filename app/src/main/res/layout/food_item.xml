@@ -7,12 +7,12 @@
     android:layout_height="wrap_content">
     <TextView
         android:id="@+id/foodName"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/recyclerTextTitle"
+        style="@style/textTitle"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
+
     </TextView>
 
     <TextView
@@ -29,7 +29,7 @@
         android:id="@+id/foodProteinsValue"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
-        style="@style/recyclerProteinsTextTitle"
+        style="@style/proteinsTextRegular"
         app:layout_constraintTop_toBottomOf="@id/foodName"
         app:layout_constraintStart_toEndOf="@id/foodProteinsTitle">
     </TextView>
@@ -48,7 +48,7 @@
         android:id="@+id/foodFatsValue"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
-        style="@style/recyclerFatsTextTitle"
+        style="@style/fatsTextRegular"
         app:layout_constraintTop_toBottomOf="@id/foodProteinsValue"
         app:layout_constraintStart_toEndOf="@id/foodFatsTitle">
     </TextView>
@@ -67,8 +67,27 @@
         android:id="@+id/foodCarbsValue"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
-        style="@style/recyclerCarbsTextTitle"
+        style="@style/carbsTextRegular"
         app:layout_constraintTop_toBottomOf="@id/foodFatsValue"
+        app:layout_constraintStart_toEndOf="@id/foodCarbsTitle">
+    </TextView>
+
+    <TextView
+        android:id="@+id/foodCaloriesTitle"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        android:text="@string/calories"
+        style="@style/recyclerTextRegular"
+        app:layout_constraintTop_toBottomOf="@id/foodCarbsTitle"
+        app:layout_constraintStart_toStartOf="parent">
+    </TextView>
+
+    <TextView
+        android:id="@+id/foodCaloriessValue"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        style="@style/caloriesTextRegular"
+        app:layout_constraintTop_toBottomOf="@id/foodCarbsValue"
         app:layout_constraintStart_toEndOf="@id/foodCarbsTitle">
     </TextView>
 

@@ -7,6 +7,4 @@
     android:id="@+id/fragmentContainer"
     tools:context=".MainActivity">
 
-
-
 </FrameLayout>

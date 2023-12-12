@@ -5,10 +5,12 @@
     <string name="P">P</string>
     <string name="fats">Fats</string>
     <string name="F">F</string>
-    <string name="carbohydrates">Carbohydrates</string>
+    <string name="carbohydrates">Carb-s</string>
     <string name="C">C</string>
     <string name="calories">Сalories</string>
+    <string name="calories_title">calories:</string>
     <string name="kcal">kcal</string>
+    <string name="weight_g">weight(g):</string>
     <string name="mon">MON</string>
     <string name="tue">TUE</string>
     <string name="wed">WED</string>
@@ -42,7 +44,19 @@
     <string name="tooShort">The length must be at least 1 character!</string>
     <string name="editCaloriesLimitFragment">Edit calories limit</string>
     <string name="checkTheFieldsAreCorrect">Check that the fields are filled in correctly</string>
-
+    <string name="percent">percent(%)</string>
+    <string name="gramm">gramm(g)</string>
+    <string name="search">Search</string>
+    <string name="meals">MEALS:</string>
+    <string name="profile">Profile</string>
+    <string name="name">Name</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="anthropometricData">Anthropometric data</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
 
 
 </resources>

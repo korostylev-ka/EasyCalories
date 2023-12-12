@@ -116,7 +116,7 @@ class NewFoodItemFragment : Fragment() {
                     val fatsFloat = fats.toFloat()
                     val carbsFloat = carbs.toFloat()
                     if (proteinsFloat >= 0F && fatsFloat >=0F && carbsFloat >= 0F ) {
-                        val newFood = FoodItem(0, name, proteins.toFloat(), fats.toFloat(), carbs.toFloat(), calories.toFloat())
+                        val newFood = FoodItem(0, name, portionWeight.toFloat(), proteins.toFloat(), fats.toFloat(), carbs.toFloat(), calories.toFloat())
                         foodViewModel.addItem(newFood)
                         parentFragmentManager.popBackStack()
                     } else {

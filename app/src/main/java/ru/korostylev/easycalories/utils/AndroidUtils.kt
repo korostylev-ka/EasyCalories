@@ -5,6 +5,10 @@ import androidx.annotation.StringRes
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.dto.DayOfWeek
 import ru.korostylev.easycalories.dto.Month
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.util.Calendar
 import kotlin.math.ceil
 
 object AndroidUtils {
@@ -37,4 +41,15 @@ object AndroidUtils {
     fun calculateCalories(proteins: Float, fats: Float, carbs: Float): Float {
         return (proteins * 4 + fats * 9 + carbs * 4)
     }
+
+    fun formatFloatValuesToOneSign(value: Float): Float {
+        var bd: BigDecimal = BigDecimal(value.toDouble())
+        bd = bd.setScale(1, RoundingMode.CEILING)
+        return bd.toFloat()
+    }
+
+//    fun dayIdToCalendar(date: String): Calendar {
+//
+//
+//    }
 }

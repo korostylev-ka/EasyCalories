@@ -8,7 +8,9 @@
     <string name="carbohydrates">Углеводы</string>
     <string name="C">У</string>
     <string name="calories">Калории</string>
+    <string name="calories_title">калории:</string>
     <string name="kcal">кКал</string>
+    <string name="weight_g">вес(г):</string>
     <string name="mon">ПН</string>
     <string name="tue">ВТ</string>
     <string name="wed">СР</string>
@@ -42,4 +44,17 @@
     <string name="tooShort">Длина должна быть минимум 1 символ!</string>
     <string name="editCaloriesLimitFragment">Редактирование лимита калорий</string>
     <string name="checkTheFieldsAreCorrect">Проверьте правильность заполнения полей</string>
+    <string name="percent">процент(%)</string>
+    <string name="gramm">грамм(г)</string>
+    <string name="search">Поиск</string>
+    <string name="meals">ПРИЁМЫ ПИЩИ:</string>
+    <string name="profile">Профиль</string>
+    <string name="name">Имя</string>
+    <string name="age">Возраст</string>
+    <string name="gender">Пол</string>
+    <string name="male">Мужчина</string>
+    <string name="female">Женщина</string>
+    <string name="anthropometricData">Антропометрические данные</string>
+    <string name="weight">Вес</string>
+    <string name="height">Рост</string>
 </resources>

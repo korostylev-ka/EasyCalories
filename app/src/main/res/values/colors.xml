@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="main_color_blue">#031D44</color>
     <color name="wrong">#E81708</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
@@ -11,12 +12,20 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="protein">#99E4A0</color>
-    <color name="protein_fill">#039511</color>
+    <!--color name="protein_fill">#039511</color-->
+    <!--color name="protein_fill">#B2D9BC</color-->
+    <color name="protein_fill">#70A288</color>
     <color name="fat">#E6BEBE</color>
-    <color name="fat_fill">#D10606</color>
+    <!--color name="fat_fill">#D10606</color-->
+<!--    <color name="fat_fill">#E99499</color>-->
+    <color name="fat_fill">#D5896F</color>
     <color name="carbs">#D6D6A2</color>
-    <color name="carbs_fill">#CDCC5C</color>
-    <color name="calories_fill">#193EC8</color>
+    <!--color name="carbs_fill">#CDCC5C</color-->
+<!--    <color name="carbs_fill">#FFEFB1</color>-->
+    <color name="carbs_fill">#DAB785</color>
+    <!--color name="calories_fill">#193EC8</color-->
+<!--    <color name="calories_fill">#BA7FAD</color>-->
+    <color name="calories_fill">#04395E</color>
 
 
     <array name="colors">

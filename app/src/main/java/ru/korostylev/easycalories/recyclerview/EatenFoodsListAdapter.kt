@@ -8,9 +8,9 @@ import ru.korostylev.easycalories.databinding.FoodItemBinding
 import ru.korostylev.easycalories.entity.EatenFoods
 import ru.korostylev.easycalories.entity.FoodItem
 
-class EatenFoodsListAdapter(val foodList: List<EatenFoods>): RecyclerView.Adapter<EatenFoodsListViewHolder>() {
+class EatenFoodsListAdapter(val foodList: List<EatenFoods>, val listener: OnInteractionListener): RecyclerView.Adapter<EatenFoodsListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EatenFoodsListViewHolder {
-        return EatenFoodsListViewHolder(EatenFoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false), parent.context)
+        return EatenFoodsListViewHolder(EatenFoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false), parent.context, listener)
     }
 
     override fun getItemCount(): Int {

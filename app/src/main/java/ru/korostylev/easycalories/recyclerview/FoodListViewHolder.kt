@@ -19,6 +19,7 @@ class FoodListViewHolder(
             foodProteinsValue.text = foodItem.proteins.toString()
             foodFatsValue.text = foodItem.fats.toString()
             foodCarbsValue.text = foodItem.carbs.toString()
+            foodCaloriessValue.text = foodItem.calories.toString()
         }
     }
 

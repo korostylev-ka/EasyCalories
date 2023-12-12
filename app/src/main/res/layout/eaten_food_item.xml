@@ -2,13 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/edit_text_no_gradient"
     android:id="@+id/eatenFoodItem"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:paddingBottom="@dimen/common"
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/timeOfEat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common"
+        style="@style/textRegular"
         tools:text="time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -18,6 +22,7 @@
         android:id="@+id/foodName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/textTitle"
         tools:text="@string/foodName"
         app:layout_constraintStart_toEndOf="@id/timeOfEat"
         app:layout_constraintTop_toTopOf="@id/timeOfEat"
@@ -28,13 +33,14 @@
         android:id="@+id/poptionWeightTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/textRegular"
         app:layout_constraintStart_toEndOf="@id/foodName"
         app:layout_constraintTop_toTopOf="@id/foodName"
         app:layout_constraintBottom_toBottomOf="@id/foodName"
-        tools:text="@string/portionWeight">
+        android:text="@string/weight_g">
     </TextView>
     <TextView
-        android:layout_marginStart="@dimen/common"
+        android:layout_marginStart="@dimen/padding_edit_text"
         android:id="@+id/poptionWeightValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,10 +50,11 @@
         tools:text="0">
     </TextView>
     <TextView
-        android:layout_marginTop="@dimen/common"
+        android:layout_marginTop="@dimen/padding_edit_text"
         android:id="@+id/proteinsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/proteinsTextRegular"
         app:layout_constraintStart_toStartOf="@id/foodName"
         app:layout_constraintTop_toBottomOf="@id/foodName"
         android:text="@string/P">
@@ -56,6 +63,8 @@
         android:id="@+id/proteinsValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_edit_text"
+        style="@style/proteinsTextRegular"
         app:layout_constraintStart_toEndOf="@id/proteinsTitle"
         app:layout_constraintTop_toTopOf="@id/proteinsTitle"
         app:layout_constraintBottom_toBottomOf="@id/proteinsTitle"
@@ -66,6 +75,7 @@
         android:id="@+id/fatsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/fatsTextRegular"
         app:layout_constraintStart_toEndOf="@id/proteinsValue"
         app:layout_constraintTop_toTopOf="@id/proteinsValue"
         app:layout_constraintBottom_toBottomOf="@id/proteinsValue"
@@ -75,6 +85,8 @@
         android:id="@+id/fatsValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_edit_text"
+        style="@style/fatsTextRegular"
         app:layout_constraintStart_toEndOf="@id/fatsTitle"
         app:layout_constraintTop_toTopOf="@id/fatsTitle"
         app:layout_constraintBottom_toBottomOf="@id/fatsTitle"
@@ -85,6 +97,7 @@
         android:id="@+id/carbsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/carbsTextRegular"
         app:layout_constraintStart_toEndOf="@id/fatsValue"
         app:layout_constraintTop_toTopOf="@id/fatsValue"
         app:layout_constraintBottom_toBottomOf="@id/fatsValue"
@@ -94,6 +107,8 @@
         android:id="@+id/carbsValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_edit_text"
+        style="@style/carbsTextRegular"
         app:layout_constraintStart_toEndOf="@id/carbsTitle"
         app:layout_constraintTop_toTopOf="@id/carbsTitle"
         app:layout_constraintBottom_toBottomOf="@id/carbsTitle"
@@ -104,6 +119,7 @@
         android:id="@+id/caloriesTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/caloriesTextRegular"
         app:layout_constraintStart_toEndOf="@id/carbsValue"
         app:layout_constraintTop_toTopOf="@id/carbsValue"
         app:layout_constraintBottom_toBottomOf="@id/carbsValue"
@@ -113,10 +129,24 @@
         android:id="@+id/caloriesValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/padding_edit_text"
+        style="@style/caloriesTextRegular"
         app:layout_constraintStart_toEndOf="@id/caloriesTitle"
         app:layout_constraintTop_toTopOf="@id/caloriesTitle"
         app:layout_constraintBottom_toBottomOf="@id/caloriesTitle"
         tools:text="0">
     </TextView>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:icon="@drawable/delete_icon_48dp"
+        style="@style/Widget.AppTheme.IconButton"
+        android:layout_marginEnd="@dimen/common"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/foodName"
+        app:layout_constraintBottom_toBottomOf="@id/caloriesValue">
+
+    </com.google.android.material.button.MaterialButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

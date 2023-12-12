@@ -10,10 +10,11 @@
     <fragment
         android:id="@+id/userInfo"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tableNutrients"
         android:name="ru.korostylev.easycalories.ui.UserViewFragment"
         tools:layout="@layout/fragment_user_view">
     </fragment>
@@ -21,48 +22,49 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/tableNutrients"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/totalDiagram"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/common"
+        app:layout_constraintBottom_toTopOf="@id/dateAndDiagram"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userInfo">
 
-
         <View
             android:id="@+id/verticalDivider"
             android:layout_width="1dp"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/carbLabel"
             android:background="?android:attr/listDivider" />
 
         <TextView
             android:id="@+id/proteinLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common"
+            android:layout_marginTop="@dimen/common"
+            android:layout_marginEnd="@dimen/padding_edit_text"
             android:text="@string/proteins"
-            android:layout_marginStart="100dp"
+            style="@style/textRegular"
             app:layout_constraintEnd_toStartOf="@id/proteinValue"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
         </TextView>
 
         <TextView
             android:id="@+id/proteinValue"
             android:layout_width="@dimen/nutrient_value_weight_small"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common"
-            android:paddingTop="@dimen/padding_edit_text"
-            android:paddingBottom="@dimen/padding_edit_text"
+            android:padding="@dimen/padding_edit_text"
+            android:layout_marginEnd="@dimen/padding_edit_text"
             android:text="@string/proteins"
             android:textAlignment="center"
+            style="@style/textRegular"
             android:background="@drawable/proteins_value_view"
             app:layout_constraintEnd_toStartOf="@id/verticalDivider"
-
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintBottom_toBottomOf="@id/proteinLabel"
+            app:layout_constraintTop_toTopOf="@id/proteinLabel">
 
         </TextView>
 
@@ -70,9 +72,11 @@
             android:id="@+id/fatLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common"
+            android:layout_marginStart="@dimen/padding_edit_text"
+            android:layout_marginTop="@dimen/common"
             android:text="@string/fats"
-            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/textRegular"
+            app:layout_constraintStart_toEndOf="@id/fatValue"
             app:layout_constraintTop_toTopOf="parent">
 
         </TextView>
@@ -81,14 +85,15 @@
             android:id="@+id/fatValue"
             android:layout_width="@dimen/nutrient_value_weight_small"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common"
-            android:paddingTop="@dimen/padding_edit_text"
-            android:paddingBottom="@dimen/padding_edit_text"
+            android:padding="@dimen/padding_edit_text"
+            android:layout_marginStart="@dimen/padding_edit_text"
             android:text="@string/fats"
+            style="@style/textRegular"
             android:textAlignment="center"
             android:background="@drawable/fats_value_view"
             app:layout_constraintStart_toStartOf="@id/verticalDivider"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintBottom_toBottomOf="@id/fatLabel"
+            app:layout_constraintTop_toTopOf="@id/fatLabel">
 
         </TextView>
 
@@ -96,9 +101,11 @@
             android:id="@+id/carbLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common"
             android:text="@string/carbohydrates"
-            app:layout_constraintStart_toStartOf="parent"
+            style="@style/textRegular"
+            android:layout_marginEnd="@dimen/padding_edit_text"
+            android:layout_marginTop="@dimen/common"
+            app:layout_constraintEnd_toStartOf="@id/carbValue"
             app:layout_constraintTop_toBottomOf="@id/proteinLabel">
 
         </TextView>
@@ -107,24 +114,27 @@
             android:id="@+id/carbValue"
             android:layout_width="@dimen/nutrient_value_weight_small"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common"
-            android:paddingTop="@dimen/padding_edit_text"
-            android:paddingBottom="@dimen/padding_edit_text"
+            android:padding="@dimen/padding_edit_text"
+            android:layout_marginEnd="@dimen/padding_edit_text"
             android:text="@string/carbohydrates"
+            style="@style/textRegular"
             android:textAlignment="center"
             android:background="@drawable/carbs_value_view"
+            app:layout_constraintTop_toTopOf="@id/carbLabel"
+            app:layout_constraintBottom_toBottomOf="@id/carbLabel"
             app:layout_constraintEnd_toStartOf="@id/verticalDivider"
             app:layout_constraintTop_toBottomOf="@id/proteinLabel">
-
         </TextView>
 
         <TextView
             android:id="@+id/caloryLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common"
+            android:layout_marginStart="@dimen/padding_edit_text"
+            android:layout_marginTop="@dimen/common"
             android:text="@string/calories"
-            app:layout_constraintEnd_toEndOf="parent"
+            style="@style/textRegular"
+            app:layout_constraintStart_toEndOf="@id/caloryValue"
             app:layout_constraintTop_toBottomOf="@id/fatLabel">
 
         </TextView>
@@ -133,76 +143,105 @@
             android:id="@+id/caloryValue"
             android:layout_width="@dimen/nutrient_value_weight_small"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common"
-            android:paddingTop="@dimen/padding_edit_text"
-            android:paddingBottom="@dimen/padding_edit_text"
+            android:padding="@dimen/padding_edit_text"
+            android:layout_marginStart="@dimen/padding_edit_text"
             android:text="@string/calories"
+            style="@style/textRegular"
+            android:textAlignment="center"
+            android:background="@drawable/calories_value_view"
+            app:layout_constraintTop_toTopOf="@id/caloryLabel"
+            app:layout_constraintBottom_toBottomOf="@id/caloryLabel"
             app:layout_constraintStart_toStartOf="@id/verticalDivider"
             app:layout_constraintTop_toBottomOf="@id/fatLabel">
-
         </TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/dateAndDiagram"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/totalDiagram"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </TextView>
-
-    <ImageView
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/common"
-        android:src="@drawable/back_24"
-        app:layout_constraintBottom_toBottomOf="@id/date"
-        app:layout_constraintEnd_toStartOf="@id/date"
-        app:layout_constraintTop_toTopOf="@id/date">
-
-    </ImageView>
-
-    <ImageView
-        android:id="@+id/fwdButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common"
-        android:src="@drawable/fwd_24"
-        app:layout_constraintBottom_toBottomOf="@id/date"
-        app:layout_constraintStart_toEndOf="@id/date"
-        app:layout_constraintTop_toTopOf="@id/date">
-
-    </ImageView>
-
-    <!-- TODO: Update blank fragment layout -->
-    <ru.korostylev.easycalories.customview.TotalProteinFatCarbsView
-        android:id="@+id/totalDiagram"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/common"
+        app:layout_constraintTop_toBottomOf="@id/tableNutrients"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/dateText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+        </TextView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/common"
+            style="@style/Widget.AppTheme.DateButton"
+            app:icon="@drawable/back_button_48dp"
+            app:layout_constraintStart_toStartOf="@id/totalDiagram"
+            app:layout_constraintTop_toTopOf="@id/date"
+            app:layout_constraintBottom_toBottomOf="@id/date">
+
+        </com.google.android.material.button.MaterialButton>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/fwdButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common"
+            style="@style/Widget.AppTheme.DateButton"
+            app:icon="@drawable/fwd_button_48dp"
+            app:layout_constraintEnd_toEndOf="@id/totalDiagram"
+            app:layout_constraintTop_toTopOf="@id/date"
+            app:layout_constraintBottom_toBottomOf="@id/date">
+
+        </com.google.android.material.button.MaterialButton>
+
+        <!-- TODO: Update blank fragment layout -->
+        <ru.korostylev.easycalories.customview.TotalProteinFatCarbsView
+            android:id="@+id/totalDiagram"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
 
     <LinearLayout
         android:id="@+id/eatenFoods"
         android:orientation="vertical"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/totalDiagram"
-        app:layout_constraintStart_toStartOf="@id/totalDiagram"
-        app:layout_constraintEnd_toEndOf="@id/totalDiagram">
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/common"
+        android:layout_marginEnd="@dimen/common"
+        app:layout_constraintTop_toBottomOf="@id/dateAndDiagram"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
             android:id="@+id/eatenFoodsTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TOTAL">
+            style="@style/textTitle"
+            android:gravity="center"
+            android:text="@string/meals">
         </TextView>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/eatenFoodsRecyclerView"
@@ -218,7 +257,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="@dimen/common"
-        android:src="@drawable/add_icon_24">
+        android:src="@drawable/food_icon_48dp">
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
