@@ -5,6 +5,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import ru.korostylev.easycalories.entity.FoodItem
 import ru.korostylev.easycalories.entity.NutrientsEntity
 
@@ -14,10 +15,13 @@ interface FoodDao {
     fun getAll(): LiveData<List<FoodItem>>
 
     @Query("SELECT * FROM FoodItem WHERE name = (:foodName)")
-    fun getFoodItem(foodName: String): FoodItem
+    fun getFoodItem(foodName: String): FoodItem?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(foodItem: FoodItem)
+
+    @Update
+    fun update(foodItem: FoodItem)
 
     @Query("DELETE FROM FoodItem WHERE name = :name")
     fun delete(name: String)

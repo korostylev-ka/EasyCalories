@@ -4,39 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/edit_text_no_gradient"
     android:id="@+id/eatenFoodItem"
+    android:padding="@dimen/padding_edit_text"
     android:layout_width="match_parent"
-    android:paddingBottom="@dimen/common"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/padding_edit_text">
+
     <TextView
         android:id="@+id/timeOfEat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/common"
         style="@style/textRegular"
         tools:text="time"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@id/foodName"
+        app:layout_constraintBottom_toBottomOf="@id/foodName">
     </TextView>
     <TextView
         android:layout_marginStart="@dimen/common"
+        android:layout_marginEnd="@dimen/common"
         android:id="@+id/foodName"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         style="@style/textTitle"
         tools:text="@string/foodName"
         app:layout_constraintStart_toEndOf="@id/timeOfEat"
-        app:layout_constraintTop_toTopOf="@id/timeOfEat"
-        app:layout_constraintBottom_toBottomOf="@id/timeOfEat">
+        app:layout_constraintEnd_toStartOf="@id/deleteButton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/caloriesTitle">
     </TextView>
     <TextView
-        android:layout_marginStart="@dimen/common"
         android:id="@+id/poptionWeightTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_edit_text"
         style="@style/textRegular"
-        app:layout_constraintStart_toEndOf="@id/foodName"
-        app:layout_constraintTop_toTopOf="@id/foodName"
-        app:layout_constraintBottom_toBottomOf="@id/foodName"
+        app:layout_constraintStart_toStartOf="@id/timeOfEat"
+        app:layout_constraintTop_toBottomOf="@id/foodName"
         android:text="@string/weight_g">
     </TextView>
     <TextView
@@ -55,8 +58,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/proteinsTextRegular"
-        app:layout_constraintStart_toStartOf="@id/foodName"
-        app:layout_constraintTop_toBottomOf="@id/foodName"
+        app:layout_constraintStart_toStartOf="@id/poptionWeightTitle"
+        app:layout_constraintTop_toBottomOf="@id/poptionWeightTitle"
         android:text="@string/P">
     </TextView>
     <TextView
@@ -115,14 +118,14 @@
         tools:text="0">
     </TextView>
     <TextView
-        android:layout_marginStart="@dimen/common"
         android:id="@+id/caloriesTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common"
         style="@style/caloriesTextRegular"
-        app:layout_constraintStart_toEndOf="@id/carbsValue"
-        app:layout_constraintTop_toTopOf="@id/carbsValue"
-        app:layout_constraintBottom_toBottomOf="@id/carbsValue"
+        app:layout_constraintStart_toEndOf="@id/poptionWeightValue"
+        app:layout_constraintTop_toTopOf="@id/poptionWeightValue"
+        app:layout_constraintBottom_toBottomOf="@id/poptionWeightValue"
         android:text="@string/kcal">
     </TextView>
     <TextView
@@ -140,13 +143,12 @@
         android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        app:icon="@drawable/delete_icon_48dp"
-        style="@style/Widget.AppTheme.IconButton"
+        app:icon="@drawable/delete_button_new_48dp"
+        style="@style/Widget.AppTheme.DeleteButton"
         android:layout_marginEnd="@dimen/common"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/foodName"
-        app:layout_constraintBottom_toBottomOf="@id/caloriesValue">
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
     </com.google.android.material.button.MaterialButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

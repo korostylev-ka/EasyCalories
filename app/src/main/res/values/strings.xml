@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">EasyCalories</string>
+    <string name="chooseFood">Choose a food</string>
+    <string name="addingFood">Add a food</string>
+    <string name="editingPortion">Enter weight of the portion</string>
     <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="proteins">Proteins</string>
     <string name="P">P</string>
@@ -10,7 +13,7 @@
     <string name="calories">Сalories</string>
     <string name="calories_title">calories:</string>
     <string name="kcal">kcal</string>
-    <string name="weight_g">weight(g):</string>
+    <string name="weight_g">(g):</string>
     <string name="mon">MON</string>
     <string name="tue">TUE</string>
     <string name="wed">WED</string>
@@ -40,10 +43,15 @@
     <string name="enterNutrientsFor100Gr">Enter nutrients in 100 gr.</string>
     <string name="foodName">Food name</string>
     <string name="portionWeight">Weight of the portion</string>
+    <string name="glycemicIndex">Glycemic index</string>
     <string name="numberFormatException">Wrong type of value!</string>
     <string name="tooShort">The length must be at least 1 character!</string>
     <string name="editCaloriesLimitFragment">Edit calories limit</string>
-    <string name="checkTheFieldsAreCorrect">Check that the fields are filled in correctly</string>
+    <string name="checkTheFieldsAreCorrect">Check that the fields are filled in correctly!</string>
+    <string name="summOfNutrientsMoreThan100">Summ of nutrients can\'t be more? than 100!</string>
+    <string name="foodAlreadyExists">This food is already exists!</string>
+    <string name="tooMuchValue">Too much value!</string>
+    <string name="portionWeightWrong">Weight of the portion wrong!</string>
     <string name="percent">percent(%)</string>
     <string name="gramm">gramm(g)</string>
     <string name="search">Search</string>
@@ -55,8 +63,9 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="anthropometricData">Anthropometric data</string>
-    <string name="weight">Weight</string>
-    <string name="height">Height</string>
+    <string name="weight">Weight (kg)</string>
+    <string name="height">Height (cm)</string>
+    <string name="yourWeight">Your weight is:</string>
 
 
 </resources>

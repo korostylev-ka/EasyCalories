@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="textTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/main_color_blue</item>
         <item name="android:textStyle">bold</item>
     </style>
     <style name="dateText" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/main_color_blue</item>
     </style>
     <style name="textRegular" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="textRegularOverload" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/wrong</item>
     </style>
     <style name="recyclerTextTitle" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">18sp</item>
@@ -22,6 +26,10 @@
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
+    <style name="recyclerTextGILowRegular" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/gi_low</item>
+    </style>
     <style name="proteinsTextTitle" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/protein_fill</item>
@@ -30,7 +38,6 @@
     <style name="proteinsTextRegular" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/protein_fill</item>
-        <item name="android:textStyle">bold</item>
     </style>
     <style name="fatsTextTitle" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">18sp</item>

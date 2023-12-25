@@ -5,17 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.ProfileFragment">
-    <com.google.android.material.divider.MaterialDivider
-        android:id="@+id/divider"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        android:layout_marginStart="@dimen/divider_margin"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </com.google.android.material.divider.MaterialDivider>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/profileContainer"
@@ -24,6 +13,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/dividerProfile"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            android:layout_marginStart="@dimen/divider_margin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+        </com.google.android.material.divider.MaterialDivider>
         <TextView
             android:id="@+id/profile"
             android:layout_width="match_parent"
@@ -31,74 +30,77 @@
             android:layout_margin="@dimen/common"
             android:text="@string/profile"
             android:gravity="center"
+            style="@style/textTitle"
             android:background="@drawable/text_view_gradient"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent">
         </TextView>
-
         <TextView
             android:id="@+id/nameTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common"
+            android:layout_marginStart="@dimen/common"
             android:text="@string/name"
-            app:layout_constraintTop_toBottomOf="@id/profile"
+            app:layout_constraintTop_toTopOf="@id/nameValue"
+            app:layout_constraintBottom_toBottomOf="@id/nameValue"
             app:layout_constraintStart_toStartOf="parent">
         </TextView>
         <TextView
             android:id="@+id/age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common"
+            android:layout_marginStart="@dimen/common"
             android:text="@string/age"
-            app:layout_constraintTop_toBottomOf="@id/nameTitle"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ageValue"
+            app:layout_constraintBottom_toBottomOf="@id/ageValue">
         </TextView>
         <TextView
             android:id="@+id/gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common"
+            android:layout_marginStart="@dimen/common"
             android:text="@string/gender"
-            app:layout_constraintTop_toBottomOf="@id/age"
+            app:layout_constraintTop_toTopOf="@id/genderValue"
+            app:layout_constraintBottom_toBottomOf="@id/genderValue"
             app:layout_constraintStart_toStartOf="parent">
         </TextView>
         <EditText
             android:id="@+id/nameValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common"
+            android:layout_marginTop="@dimen/common"
             android:layout_marginEnd="@dimen/common"
+            android:padding="@dimen/padding_edit_text"
             android:background="@drawable/edit_text_no_gradient"
-            app:layout_constraintStart_toEndOf="@id/nameTitle"
+            app:layout_constraintStart_toEndOf="@id/dividerProfile"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/nameTitle"
-            app:layout_constraintBottom_toBottomOf="@id/nameTitle">
+            app:layout_constraintTop_toBottomOf="@id/profile">
         </EditText>
         <EditText
             android:id="@+id/ageValue"
             android:layout_width="@dimen/nutrient_value_weight_large"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common"
+            android:padding="@dimen/padding_edit_text"
             android:background="@drawable/edit_text_no_gradient"
-            app:layout_constraintStart_toStartOf="@id/nameValue"
-            app:layout_constraintTop_toTopOf="@id/age"
-            app:layout_constraintBottom_toBottomOf="@id/age">
+            app:layout_constraintStart_toStartOf="@id/dividerProfile"
+            app:layout_constraintTop_toBottomOf="@id/nameValue">
         </EditText>
-
         <TextView
             android:id="@+id/genderValue"
             android:layout_width="@dimen/nutrient_value_weight_large"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common"
+            android:padding="@dimen/padding_edit_text"
             android:background="@drawable/edit_text_no_gradient"
-            android:hint="GENDER"
-            app:layout_constraintStart_toStartOf="@id/nameValue"
-            app:layout_constraintTop_toTopOf="@id/gender"
-            app:layout_constraintBottom_toBottomOf="@id/gender">
-
+            android:text="@string/male"
+            app:layout_constraintStart_toStartOf="@id/dividerProfile"
+            app:layout_constraintTop_toBottomOf="@id/ageValue">
         </TextView>
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/anthropometricDataContainer"
         android:layout_width="match_parent"
@@ -107,63 +109,71 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/dividerData"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            android:layout_marginStart="@dimen/divider_margin"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+        </com.google.android.material.divider.MaterialDivider>
         <TextView
             android:id="@+id/anthropometricData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common"
             android:text="@string/anthropometricData"
+            style="@style/textTitle"
             android:gravity="center"
             android:background="@drawable/text_view_gradient"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent">
         </TextView>
-
         <TextView
             android:id="@+id/weight"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common"
+            android:layout_marginStart="@dimen/common"
             android:text="@string/weight"
-            app:layout_constraintTop_toBottomOf="@id/anthropometricData"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintTop_toTopOf="@id/weightValue"
+            app:layout_constraintBottom_toBottomOf="@id/weightValue"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/dividerData">
         </TextView>
-
         <EditText
             android:id="@+id/weightValue"
             android:layout_width="@dimen/nutrient_value_weight_large"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/common"
+            android:layout_marginTop="@dimen/common"
+            android:padding="@dimen/padding_edit_text"
             android:background="@drawable/edit_text_no_gradient"
-            app:layout_constraintStart_toEndOf="@id/weight"
-
-            app:layout_constraintTop_toTopOf="@id/weight"
-            app:layout_constraintBottom_toBottomOf="@id/weight">
+            app:layout_constraintStart_toEndOf="@id/dividerData"
+            app:layout_constraintTop_toBottomOf="@id/anthropometricData">
         </EditText>
         <TextView
             android:id="@+id/height"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/common"
+            android:layout_marginStart="@dimen/common"
             android:text="@string/height"
-            app:layout_constraintTop_toBottomOf="@id/weight"
+            app:layout_constraintTop_toTopOf="@id/heightValue"
+            app:layout_constraintBottom_toBottomOf="@id/heightValue"
+            app:layout_constraintEnd_toStartOf="@id/dividerData"
             app:layout_constraintStart_toStartOf="parent">
         </TextView>
-
         <EditText
             android:id="@+id/heightValue"
             android:layout_width="@dimen/nutrient_value_weight_large"
             android:layout_height="wrap_content"
-
+            android:layout_marginTop="@dimen/common"
+            android:padding="@dimen/padding_edit_text"
             android:background="@drawable/edit_text_no_gradient"
-            app:layout_constraintStart_toStartOf="@id/weightValue"
-            app:layout_constraintTop_toTopOf="@id/height"
-            app:layout_constraintBottom_toBottomOf="@id/height">
+            app:layout_constraintStart_toStartOf="@id/dividerData"
+            app:layout_constraintTop_toBottomOf="@id/weightValue">
         </EditText>
 
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

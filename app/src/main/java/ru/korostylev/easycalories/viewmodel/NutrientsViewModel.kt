@@ -11,8 +11,8 @@ import ru.korostylev.easycalories.repository.NutrientsRepositoryImpl
 
 class NutrientsViewModel(application: Application): AndroidViewModel(application) {
     private val repository: NutrientsRepository = NutrientsRepositoryImpl(NutrientsDB.getInstance(application).nutrientsDao)
-    val emptyNutrients = NutrientsEntity(0, 0F, 0F, 0F, 0F)
     val liveDataNutrients = repository.getAll()
+
     fun limitsOfNutrients() = repository.getLimits()
 
     fun getActualEatenNutrients(dayId: Int) = repository.getDayActualNutrients(dayId)

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "353303127774",
+    "firebase_url": "https://easycalories-7cf4f-default-rtdb.firebaseio.com",
+    "project_id": "easycalories-7cf4f",
+    "storage_bucket": "easycalories-7cf4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:353303127774:android:f895fa83ba251d6a39844f",
+        "android_client_info": {
+          "package_name": "ru.korostylev.easycalories"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVo8e-BskIxm8RMTxvHUX8JvWn-d-zMaA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

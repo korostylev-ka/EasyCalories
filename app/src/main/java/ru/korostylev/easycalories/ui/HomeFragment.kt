@@ -1,15 +1,19 @@
 package ru.korostylev.easycalories.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.behavior.SwipeDismissBehavior
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentHomeBinding
 import ru.korostylev.easycalories.entity.EatenFoods
@@ -20,47 +24,50 @@ import ru.korostylev.easycalories.utils.AndroidUtils
 import ru.korostylev.easycalories.viewmodel.EatenFoodsViewModel
 import ru.korostylev.easycalories.viewmodel.NutrientsViewModel
 import java.util.Calendar
+import kotlin.math.roundToInt
 
 private const val DATE_ID = "dateId"
 private const val HOME_FRAGMENT_TAG = "HomeFragment"
 
 class HomeFragment : Fragment() {
-    val calendar = Calendar.getInstance()
-    var date: Long = calendar.timeInMillis
-    val viewModel: NutrientsViewModel by activityViewModels()
-    val eatenFoodsViewModel: EatenFoodsViewModel by activityViewModels()
-    val listener = object: OnInteractionListener {
+    private val calendar = Calendar.getInstance()
+    private var date: Long = calendar.timeInMillis
+    private val viewModel: NutrientsViewModel by activityViewModels()
+    private val eatenFoodsViewModel: EatenFoodsViewModel by activityViewModels()
+    private val listener = object: OnInteractionListener {
         override fun remove(eatenFoods: EatenFoods) {
             viewModel.removeNutrients(eatenFoods)
             eatenFoodsViewModel.deleteEatenFood(eatenFoods.id)
         }
 
     }
-    var eatenFoodsAdapter: EatenFoodsListAdapter? = EatenFoodsListAdapter((emptyList()), listener)
-    var eatenFoodsRecyclerView: RecyclerView? = null
-    var day = 0
-    var dayOfWeek = 0
-    var month = 0
-    var year = 0
-    var dayId = 0
-    var proteinsLimit = 0.0f
-    var fatsLimit = 0.0f
-    var carbsLimit = 0.0f
-    var caloriesLimit = 0.0f
-    var proteinsActual = 0.0f
-    var fatsActual = 0.0f
-    var carbsActual = 0.0f
-    var caloriesActual = 0.0f
+    private var eatenFoodsAdapter: EatenFoodsListAdapter? = EatenFoodsListAdapter((emptyList()), listener)
+    private var eatenFoodsRecyclerView: RecyclerView? = null
+    private var day = 0
+    private var dayOfWeek = 0
+    private var month = 0
+    private var year = 0
+    private var dayId = 0
+    private var proteinsLimit = 0.0f
+    private var fatsLimit = 0.0f
+    private var carbsLimit = 0.0f
+    private var caloriesLimit = 0.0f
+    private var proteinsActual = 0.0f
+    private var fatsActual = 0.0f
+    private var carbsActual = 0.0f
+    private var caloriesActual = 0.0f
+    private var userWeightBundle = Bundle()
+    private var userWeight = userWeightBundle.getFloat(date.toString()) ?: 0F
 
     //get current date in digits
-    fun getCurrentDay(): Int {
+    private fun getCurrentDay(): Int {
         val day = "%02d".format(day)
         val month = "%02d".format(month)
         val year = year.toString()
         return (year + month + day).toInt()
     }
 
-    fun getStringDate(): String {
+    private fun getStringDate(): String {
         val dayOfWeek = getString(AndroidUtils.getDayOfWeek(dayOfWeek))
         val day = day.toString()
         val month = getString(AndroidUtils.getMonth(month))
@@ -68,13 +75,12 @@ class HomeFragment : Fragment() {
         return ("$dayOfWeek, $day $month $year")
     }
 
-    fun nutrientsValueName(limit: Float, actual: Float): String {
-        return ("${actual.toString()} / ${limit.toString()}")
+    private fun nutrientsValueName(limit: Float, actual: Float): String {
+        return ("${actual.roundToInt().toString()} / ${limit.roundToInt().toString()}")
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(HOME_FRAGMENT_TAG, "onCreate")
         //заполняем поля из аргументов
         date = arguments!!.getLong(DATE_ID)
         calendar.timeInMillis = date
@@ -83,22 +89,43 @@ class HomeFragment : Fragment() {
         month = calendar.get(Calendar.MONTH) + 1
         year = calendar.get(Calendar.YEAR)
         dayId = getCurrentDay()
+        userWeight = arguments!!.getFloat(DATE_ID)
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        requireActivity().setTitle(R.string.app_name)
         val homeFragmentBinding = FragmentHomeBinding.inflate(layoutInflater)
-        Log.d(HOME_FRAGMENT_TAG, "onCreateView")
+        homeFragmentBinding.weightValue.setText(userWeight.toString())
+        homeFragmentBinding.changeButton.setOnClickListener {
+            homeFragmentBinding.weightValue.isFocusableInTouchMode = true
+            homeFragmentBinding.weightValue.requestFocus()
+            homeFragmentBinding.changeButton.visibility = View.GONE
+            homeFragmentBinding.saveButton.visibility = View.VISIBLE
+        }
+        homeFragmentBinding.saveButton.setOnClickListener {
+            userWeight = (homeFragmentBinding.weightValue.text.toString()).toFloat()
+            userWeightBundle.putFloat(date.toString(), userWeight)
+            homeFragmentBinding.weightValue.clearFocus()
+            homeFragmentBinding.weightValue.isFocusable = false
+            homeFragmentBinding.changeButton.visibility = View.VISIBLE
+            homeFragmentBinding.saveButton.visibility = View.GONE
+
+        }
         eatenFoodsRecyclerView = homeFragmentBinding.eatenFoodsRecyclerView
         eatenFoodsRecyclerView!!.layoutManager = LinearLayoutManager(context)
         eatenFoodsRecyclerView!!.adapter = eatenFoodsAdapter
         eatenFoodsViewModel.getEatenFoodItemForDay(dayId).observe(
             viewLifecycleOwner,
             Observer {foods->
-                foods.let {
-                    eatenFoodsAdapter = EatenFoodsListAdapter(foods, listener)
+                val sortedFoods = foods.sortedByDescending {
+                    it.time
+                }
+                sortedFoods.let {
+                    eatenFoodsAdapter = EatenFoodsListAdapter(sortedFoods, listener)
                     eatenFoodsRecyclerView!!.adapter = eatenFoodsAdapter
                 }
             }
@@ -122,6 +149,38 @@ class HomeFragment : Fragment() {
                     caloryValue.text = nutrientsValueName(caloriesLimit, caloriesActual)
                     totalDiagram.data = actualNutrients
                     date.text = getStringDate()
+                    if (proteinsActual > proteinsLimit) {
+                        proteinValue.setBackgroundResource(R.drawable.proteins_value_view_overload)
+                        proteinLabelOverload.visibility = View.VISIBLE
+                        proteinLabelOverload.text = "+${(proteinsActual - proteinsLimit).roundToInt()}"
+                    } else {
+                        proteinValue.setBackgroundResource(R.drawable.proteins_value_view)
+                        proteinLabelOverload.visibility = View.GONE
+                    }
+                    if (fatsActual > fatsLimit) {
+                        fatValue.setBackgroundResource(R.drawable.fats_value_view_overload)
+                        fatLabelOverload.visibility = View.VISIBLE
+                        fatLabelOverload.text = "+${(fatsActual - fatsLimit).roundToInt()}"
+                    } else {
+                        fatValue.setBackgroundResource(R.drawable.fats_value_view)
+                        fatLabelOverload.visibility = View.GONE
+                    }
+                    if (carbsActual > carbsLimit) {
+                        carbValue.setBackgroundResource(R.drawable.carbs_value_view_overload)
+                        carbsLabelOverload.visibility = View.VISIBLE
+                        carbsLabelOverload.text = "+${(carbsActual - carbsLimit).roundToInt()}"
+                    } else {
+                        carbValue.setBackgroundResource(R.drawable.carbs_value_view)
+                        carbsLabelOverload.visibility = View.GONE
+                    }
+                    if (caloriesActual > caloriesLimit) {
+                        caloryValue.setBackgroundResource(R.drawable.calories_value_view_overload)
+                        caloryLabelOverload.visibility = View.VISIBLE
+                        caloryLabelOverload.text = "+${(caloriesActual - caloriesLimit).roundToInt()}"
+                    } else {
+                        caloryValue.setBackgroundResource(R.drawable.calories_value_view)
+                        caloryLabelOverload.visibility = View.GONE
+                    }
                 }
             }
 
@@ -137,6 +196,7 @@ class HomeFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+
         //fwd one day
         homeFragmentBinding.fwdButton.setOnClickListener {
             calendar.set(Calendar.YEAR, year)

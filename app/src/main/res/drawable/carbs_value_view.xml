@@ -7,5 +7,4 @@
     <corners android:radius="5dp" />
     <gradient android:startColor="@color/carbs_fill"
               android:endColor="@color/white"/>
-
 </shape>

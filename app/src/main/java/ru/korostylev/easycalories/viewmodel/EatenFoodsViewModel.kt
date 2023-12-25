@@ -9,9 +9,7 @@ import ru.korostylev.easycalories.repository.EatenFoodsRepository
 import ru.korostylev.easycalories.repository.EatenFoodsRepositoryImpl
 
 class EatenFoodsViewModel(application: Application): AndroidViewModel(application) {
-    val eatenFoodsRepository: EatenFoodsRepository = EatenFoodsRepositoryImpl(EatenFoodsDB.getInstance(application).eatenFoodsDao)
-    val eatenFoodsLiveData = eatenFoodsRepository.getFoodList()
-
+    private val eatenFoodsRepository: EatenFoodsRepository = EatenFoodsRepositoryImpl(EatenFoodsDB.getInstance(application).eatenFoodsDao)
 
     fun getEatenFoodItemForDay(dayId: Int): LiveData<List<EatenFoods>> {
         return eatenFoodsRepository.getEatenFoodsForDay(dayId)

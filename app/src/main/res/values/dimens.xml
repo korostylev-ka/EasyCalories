@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="common">16dp</dimen>
-    <dimen name="divider_margin">64dp</dimen>
+    <dimen name="small_dimen">16dp</dimen>
+    <dimen name="divider_margin">72dp</dimen>
     <dimen name="padding_edit_text">4dp</dimen>
     <dimen name="nutrient_value_weight_small">100dp</dimen>
     <dimen name="nutrient_value_weight_large">120dp</dimen>

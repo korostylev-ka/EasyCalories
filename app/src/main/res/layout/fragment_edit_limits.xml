@@ -23,9 +23,7 @@
             app:layout_constraintStart_toStartOf="@id/carbsValueAddPercent"
             app:layout_constraintEnd_toEndOf="@id/carbsValueAddGramm"
             app:layout_constraintTop_toBottomOf="@id/carbsValueAddPercent">
-
         </TextView>
-
         <EditText
             android:id="@+id/caloriesValueAdd"
             android:layout_width="0dp"
@@ -37,9 +35,7 @@
             app:layout_constraintStart_toStartOf="@id/carbsValueAddPercent"
             app:layout_constraintEnd_toEndOf="@id/carbsValueAddGramm"
             app:layout_constraintTop_toBottomOf="@id/caloriesTitle">
-
         </EditText>
-
         <TextView
             android:id="@+id/percent"
             android:layout_width="wrap_content"
@@ -49,7 +45,6 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/common"
             android:text="@string/percent" />
-
         <TextView
             android:id="@+id/gramm"
             android:layout_width="wrap_content"
@@ -59,7 +54,6 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/common"
             android:text="@string/gramm" />
-
         <TextView
             android:id="@+id/proteinsAdd"
             android:layout_width="wrap_content"
@@ -68,7 +62,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/percent"
             android:text="@string/P" />
-
         <EditText
             android:id="@+id/proteinsValueAddPercent"
             android:layout_width="@dimen/nutrient_value_weight_small"
@@ -93,7 +86,6 @@
             app:layout_constraintBottom_toBottomOf="@id/proteinsAdd"
             app:layout_constraintTop_toTopOf="@id/proteinsAdd">
         </EditText>
-
         <TextView
             android:id="@+id/fatsAdd"
             android:layout_width="wrap_content"
@@ -102,7 +94,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/proteinsAdd"
             android:text="@string/F" />
-
         <EditText
             android:id="@+id/fatsValueAddPercent"
             android:layout_width="@dimen/nutrient_value_weight_small"
@@ -129,7 +120,6 @@
             app:layout_constraintStart_toStartOf="@id/proteinsValueAddGramm"
             app:layout_constraintEnd_toEndOf="@id/proteinsValueAddGramm">
         </EditText>
-
         <TextView
             android:id="@+id/carbsAdd"
             android:layout_width="wrap_content"
@@ -138,7 +128,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/fatsAdd"
             android:text="@string/C" />
-
         <EditText
             android:id="@+id/carbsValueAddPercent"
             android:layout_width="@dimen/nutrient_value_weight_small"
@@ -165,19 +154,17 @@
             app:layout_constraintStart_toStartOf="@id/proteinsValueAddGramm"
             app:layout_constraintEnd_toEndOf="@id/proteinsValueAddGramm">
         </EditText>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/common"
-            style="@style/Widget.AppTheme.IconButton"
+            style="@style/Widget.AppTheme.IconButtonOk"
             app:layout_constraintStart_toStartOf="@id/caloriesValueAdd"
             app:layout_constraintTop_toBottomOf="@id/caloriesValueAdd"
             app:layout_constraintEnd_toStartOf="@id/backButton"
-            app:icon="@drawable/save_icon_48dp">
+            app:icon="@drawable/save_button_new_48dp">
         </com.google.android.material.button.MaterialButton>
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/backButton"
             android:layout_width="wrap_content"
@@ -188,13 +175,10 @@
             app:layout_constraintTop_toTopOf="@id/saveButton"
             app:layout_constraintBottom_toBottomOf="@id/saveButton"
             app:layout_constraintEnd_toEndOf="@id/caloriesValueAdd"
-            app:icon="@drawable/back_icon_48dp">
+            app:icon="@drawable/return_button_new_48dp">
         </com.google.android.material.button.MaterialButton>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

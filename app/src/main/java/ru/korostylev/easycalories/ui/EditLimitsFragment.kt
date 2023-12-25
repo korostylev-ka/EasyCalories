@@ -35,7 +35,6 @@ class EditLimitsFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("EditLimits", "onCreate")
         with(viewModel.limitsOfNutrients()) {
             proteinsLimit = this.proteins ?: 0F
             fatsLimit = this.fats ?: 0F
@@ -58,7 +57,6 @@ class EditLimitsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val editLimitsBinding = FragmentEditLimitsBinding.inflate(layoutInflater)
-        Log.d("EditLimits", "onCreateView")
         requireActivity().setTitle(R.string.editCaloriesLimitFragment)
         val nutrientsValueWatcher = object : TextWatcher {
             override fun beforeTextChanged(
@@ -76,8 +74,7 @@ class EditLimitsFragment : Fragment() {
                 count: Int,
                 after: Int
             ) {
-                //вызываем toString для объекта CharSequence, представляющего ввод пользователя
-                //editLimitsBinding.caloriesValueAdd.setText("CHANGED")
+
             }
 
             override fun afterTextChanged(sequence: Editable?) {
@@ -172,6 +169,11 @@ class EditLimitsFragment : Fragment() {
             val calories = editLimitsBinding.caloriesValueAdd.text.toString()
             caloriesLimit = calories.toFloat()
             viewModel.setLimit(NutrientsEntity(0, proteinsLimit, fatsLimit, carbsLimit, caloriesLimit))
+            requireActivity().setTitle(R.string.app_name)
+            val fm = requireActivity().supportFragmentManager
+            fm.popBackStack()
+        }
+        editLimitsBinding.backButton.setOnClickListener {
             val fm = requireActivity().supportFragmentManager
             fm.popBackStack()
         }

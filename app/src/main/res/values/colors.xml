@@ -2,6 +2,7 @@
 <resources>
     <color name="main_color_blue">#031D44</color>
     <color name="wrong">#E81708</color>
+    <color name="ok">#08E813</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -26,6 +27,9 @@
     <!--color name="calories_fill">#193EC8</color-->
 <!--    <color name="calories_fill">#BA7FAD</color>-->
     <color name="calories_fill">#04395E</color>
+    <color name="gi_low">#4CAF50</color>
+    <color name="gi_medium">#CDDC39</color>
+    <color name="gi_high">#F44336</color>
 
 
     <array name="colors">

@@ -3,6 +3,7 @@ package ru.korostylev.easycalories.ui
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,32 +14,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.korostylev.easycalories.recyclerview.FoodListAdapter
 import ru.korostylev.easycalories.R
+import ru.korostylev.easycalories.api.FirebaseDB
 import ru.korostylev.easycalories.databinding.FragmentFoodListBinding
 import ru.korostylev.easycalories.entity.FoodItem
 import ru.korostylev.easycalories.viewmodel.FoodViewModel
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FoodListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FoodListFragment : Fragment() {
-    var recyclerView: RecyclerView? = null
-    var adapter: FoodListAdapter? = FoodListAdapter(emptyList())
-    val viewModel: FoodViewModel by activityViewModels()
-    var foodList: List<FoodItem> = emptyList()
-
+    private var recyclerView: RecyclerView? = null
+    private var adapter: FoodListAdapter? = FoodListAdapter(emptyList())
+    private val viewModel: FoodViewModel by activityViewModels()
+    private var foodList: List<FoodItem> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        requireActivity().setTitle(R.string.chooseFood)
         val binding = FragmentFoodListBinding.inflate(layoutInflater)
+
         val filterTextWatcher = object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 val text = binding.filterText.text.toString()
@@ -53,7 +48,7 @@ class FoodListFragment : Fragment() {
             override fun afterTextChanged(s: Editable?) {
                 val text = binding.filterText.text.toString()
                 val editedList = foodList.filter {
-                    it.name.startsWith(text)
+                    it.name.startsWith(text, ignoreCase = true)
                 }
                 adapter = FoodListAdapter(editedList)
                 recyclerView!!.adapter = adapter
@@ -65,21 +60,25 @@ class FoodListFragment : Fragment() {
         recyclerView = binding.foodListRecyclerView
         recyclerView!!.layoutManager = LinearLayoutManager(context)
         recyclerView!!.adapter = adapter
-
         viewModel.foodListLiveData.observe(
             viewLifecycleOwner,
             Observer {foods->
+                val sortedFoods = foods.sortedBy {
+                    it.name
+                }
                 foodList = foods
                 foodList.let {
-                    adapter = FoodListAdapter(foods)
+                    adapter = FoodListAdapter(sortedFoods)
                     recyclerView!!.adapter = adapter
-
                 }
-
             }
         )
-
-
+        viewModel.foodListLiveDataFirebase.observe(
+            viewLifecycleOwner,
+            Observer {foodsFirebase->
+                viewModel.updateFromFirebase(foodsFirebase)
+            }
+        )
         binding.addFoodItem.setOnClickListener {
             val fragment = NewFoodItemFragment.newInstance()
             parentFragmentManager.beginTransaction()
@@ -91,16 +90,7 @@ class FoodListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        /*viewModel.foodListLiveData.observe(
-            viewLifecycleOwner,
-            Observer {foods->
-                foods.let {
-                    adapter = FoodListAdapter(foods)
-                    recyclerView!!.adapter = adapter
-                }
 
-            }
-        )*/
     }
 
     companion object {

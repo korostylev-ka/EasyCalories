@@ -10,7 +10,7 @@ import ru.korostylev.easycalories.entity.FoodItem
 
 @Dao
 interface EatenFoodsDao {
-    @Query("SELECT * FROM EatenFoods")
+    @Query("SELECT * FROM EatenFoods ORDER BY time DESC")
     fun getAll(): LiveData<List<EatenFoods>>
 
     @Query("SELECT * FROM EatenFoods WHERE dayId = (:dayId)")

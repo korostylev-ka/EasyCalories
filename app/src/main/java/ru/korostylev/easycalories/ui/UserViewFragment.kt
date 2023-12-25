@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentUserViewBinding
 
@@ -14,15 +17,15 @@ import ru.korostylev.easycalories.databinding.FragmentUserViewBinding
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [UserViewFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+private const val DATE_ID = "dateId"
+
 class UserViewFragment : Fragment() {
+    var date: Long = 0
+    var weight = date.toFloat()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        date = arguments!!.getLong(DATE_ID)
 
     }
 
@@ -31,27 +34,33 @@ class UserViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val userViewBinding = FragmentUserViewBinding.inflate(layoutInflater)
-//        userViewBinding.menu.setOnClickListener {
-//            PopupMenu(context, it).apply {
-//                inflate(R.menu.options_menu)
-//                setOnMenuItemClickListener {item ->
-//                    when (item.itemId) {
-//                        R.id.editLimits -> {
-//                            requireParentFragment().parentFragmentManager.beginTransaction()
-//                                .replace(R.id.fragmentContainer, EditLimitsFragment.newInstance())
-//                                .addToBackStack(null)
-//                                .commit()
-//                            true
-//                        }
-//                        else -> false
-//                    }
-//
-//
-//                }
-//            }
-//                .show()
-//        }
+        userViewBinding.weightValue.setText(weight.toString())
+
+
+        userViewBinding.changeButton.setOnClickListener {
+            userViewBinding.weightValue.isFocusableInTouchMode = true
+            userViewBinding.weightValue.requestFocus()
+            userViewBinding.changeButton.visibility = View.GONE
+            userViewBinding.saveButton.visibility = View.VISIBLE
+        }
+        userViewBinding.saveButton.setOnClickListener {
+            userViewBinding.weightValue.clearFocus()
+            userViewBinding.weightValue.isFocusable = false
+            userViewBinding.changeButton.visibility = View.VISIBLE
+            userViewBinding.saveButton.visibility = View.GONE
+
+        }
         return userViewBinding.root
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance(date: Long) = UserViewFragment().apply {
+            arguments = Bundle().apply {
+                putLong(DATE_ID, date)
+            }
+
+        }
     }
 
 

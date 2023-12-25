@@ -5,6 +5,7 @@
     android:layout_marginBottom="@dimen/common"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <TextView
         android:id="@+id/foodName"
         android:layout_width="wrap_content"
@@ -12,28 +13,41 @@
         style="@style/textTitle"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent">
-
     </TextView>
-
+    <TextView
+        android:id="@+id/giTitle"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        android:text="@string/glycemicIndex"
+        style="@style/recyclerTextRegular"
+        app:layout_constraintTop_toBottomOf="@id/foodName"
+        app:layout_constraintStart_toStartOf="parent">
+    </TextView>
+    <TextView
+        android:id="@+id/giValue"
+        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/foodName"
+        app:layout_constraintStart_toEndOf="@id/foodProteinsTitle">
+    </TextView>
     <TextView
         android:id="@+id/foodProteinsTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
         android:text="@string/proteins"
         style="@style/recyclerTextRegular"
-        app:layout_constraintTop_toBottomOf="@id/foodName"
+        app:layout_constraintTop_toBottomOf="@id/giTitle"
         app:layout_constraintStart_toStartOf="parent">
     </TextView>
-
     <TextView
         android:id="@+id/foodProteinsValue"
         android:layout_width="@dimen/nutrient_value_weight_large"
         android:layout_height="wrap_content"
         style="@style/proteinsTextRegular"
-        app:layout_constraintTop_toBottomOf="@id/foodName"
+        app:layout_constraintTop_toBottomOf="@id/giTitle"
         app:layout_constraintStart_toEndOf="@id/foodProteinsTitle">
     </TextView>
-
     <TextView
         android:id="@+id/foodFatsTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
@@ -43,7 +57,6 @@
         app:layout_constraintTop_toBottomOf="@id/foodProteinsTitle"
         app:layout_constraintStart_toStartOf="parent">
     </TextView>
-
     <TextView
         android:id="@+id/foodFatsValue"
         android:layout_width="@dimen/nutrient_value_weight_large"
@@ -52,7 +65,6 @@
         app:layout_constraintTop_toBottomOf="@id/foodProteinsValue"
         app:layout_constraintStart_toEndOf="@id/foodFatsTitle">
     </TextView>
-
     <TextView
         android:id="@+id/foodCarbsTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
@@ -62,7 +74,6 @@
         app:layout_constraintTop_toBottomOf="@id/foodFatsTitle"
         app:layout_constraintStart_toStartOf="parent">
     </TextView>
-
     <TextView
         android:id="@+id/foodCarbsValue"
         android:layout_width="@dimen/nutrient_value_weight_large"
@@ -71,7 +82,6 @@
         app:layout_constraintTop_toBottomOf="@id/foodFatsValue"
         app:layout_constraintStart_toEndOf="@id/foodCarbsTitle">
     </TextView>
-
     <TextView
         android:id="@+id/foodCaloriesTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
@@ -81,7 +91,6 @@
         app:layout_constraintTop_toBottomOf="@id/foodCarbsTitle"
         app:layout_constraintStart_toStartOf="parent">
     </TextView>
-
     <TextView
         android:id="@+id/foodCaloriessValue"
         android:layout_width="@dimen/nutrient_value_weight_large"

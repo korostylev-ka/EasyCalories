@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Легкие Калории</string>
+    <string name="chooseFood">Выберите продукт</string>
+    <string name="addingFood">Добавьте продукт</string>
+    <string name="editingPortion">Введите вес порции</string>
     <string name="proteins">Белки</string>
     <string name="P">Б</string>
     <string name="fats">Жиры</string>
@@ -10,7 +13,7 @@
     <string name="calories">Калории</string>
     <string name="calories_title">калории:</string>
     <string name="kcal">кКал</string>
-    <string name="weight_g">вес(г):</string>
+    <string name="weight_g">(г):</string>
     <string name="mon">ПН</string>
     <string name="tue">ВТ</string>
     <string name="wed">СР</string>
@@ -40,10 +43,15 @@
     <string name="enterNutrientsFor100Gr">Введите количество нутриентов в 100 гр.</string>
     <string name="foodName">Название блюда</string>
     <string name="portionWeight">Вес порции</string>
+    <string name="glycemicIndex">Гликемический индекс</string>
     <string name="numberFormatException">Неверное значение!</string>
     <string name="tooShort">Длина должна быть минимум 1 символ!</string>
     <string name="editCaloriesLimitFragment">Редактирование лимита калорий</string>
-    <string name="checkTheFieldsAreCorrect">Проверьте правильность заполнения полей</string>
+    <string name="checkTheFieldsAreCorrect">Проверьте правильность заполнения полей!</string>
+    <string name="summOfNutrientsMoreThan100">Сумма нутриентов не может превышать 100!</string>
+    <string name="foodAlreadyExists">Такой продукт уже существует!</string>
+    <string name="tooMuchValue">Слишком большое значение!</string>
+    <string name="portionWeightWrong">Ошибка при указании веса порции!</string>
     <string name="percent">процент(%)</string>
     <string name="gramm">грамм(г)</string>
     <string name="search">Поиск</string>
@@ -57,4 +65,5 @@
     <string name="anthropometricData">Антропометрические данные</string>
     <string name="weight">Вес</string>
     <string name="height">Рост</string>
+    <string name="yourWeight">Ваш вес:</string>
 </resources>

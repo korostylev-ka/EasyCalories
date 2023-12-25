@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.PointF
 import android.graphics.RectF
 import android.util.AttributeSet
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import ru.korostylev.easycalories.R
@@ -90,13 +91,21 @@ class TotalProteinFatCarbsView @JvmOverloads constructor(
 
     //координаты точки x центра сектора
     fun getPointXOfSector(angle: Float): Float {
-        return center.x + sin(((angle) * PI.toFloat() / 180)) * radius/2
+        return center.x + sin(((angle) * PI.toFloat() / 180)) * radius
     }
 
-    ////координаты точки y центра сектора
+//    fun getPointXOfSector(angle: Float): Float {
+//        return  -radius * sin((angle) * 180 / PI.toFloat())
+//    }
+
+    //координаты точки y центра сектора
     fun getPointYOfSector(angle: Float): Float {
-        return center.y +- cos(((angle) * PI.toFloat() / 180)) * radius/2
+        return center.y - cos(((angle) * PI.toFloat() / 180)) * radius
     }
+
+//    fun getPointYOfSector(angle: Float): Float {
+//        return -radius * cos((angle) * 180 / PI.toFloat())
+//    }
 
     //переопределяем метод изменения размеров
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -138,6 +147,12 @@ class TotalProteinFatCarbsView @JvmOverloads constructor(
         paint.style = Paint.Style.FILL
         paint.color = ContextCompat.getColor(context, R.color.carbs_fill)
         canvas.drawArc(oval, startFrom,angle, true, paint)
+//        canvas.drawText(
+//            "%.2f%%".format(textPercent *100),
+//            getPointXOfSector(angle),
+//            getPointYOfSector(angle),
+//            textPaint,
+//        )
         startFrom += angle
     }
     private fun randomColor() = Random.nextInt(0xFF000000.toInt(), 0xFFFFFFFF.toInt())

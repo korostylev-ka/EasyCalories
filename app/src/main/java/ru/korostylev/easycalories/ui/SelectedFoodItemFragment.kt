@@ -2,8 +2,6 @@ package ru.korostylev.easycalories.ui
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Context
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentSelectedFoodItemBinding
@@ -23,38 +20,33 @@ import ru.korostylev.easycalories.utils.AndroidUtils
 import ru.korostylev.easycalories.viewmodel.EatenFoodsViewModel
 import ru.korostylev.easycalories.viewmodel.FoodViewModel
 import ru.korostylev.easycalories.viewmodel.NutrientsViewModel
-import java.sql.Timestamp
-import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
-import javax.xml.datatype.DatatypeConstants.MONTHS
 
 private const val FOOD_NAME = "foodName"
 
 
 class SelectedFoodItemFragment : Fragment() {
-    var calendar = Calendar.getInstance()
-    var dateInMillis: Long = calendar.timeInMillis
-    var day = calendar.get(Calendar.DAY_OF_MONTH)
-    var selectedDay = 0
-    var dayOfWeek = 0
-    var month = calendar.get(Calendar.MONTH)
-    var selectedMonth = 0
-    var year = calendar.get(Calendar.YEAR)
-    var selectedYear = 0
-    var hour = calendar.get(Calendar.HOUR_OF_DAY)
-    var minute = calendar.get(Calendar.MINUTE)
-    var selectedHour = 0
-    var selectedMinute = 0
-    var dayId = getCurrentDay()
-    var currentTime = getCurrentStringTime()
-    var foodName = ""
-    var foodItem: FoodItem? = null
-    val foodViewModel: FoodViewModel by activityViewModels()
-    val nutrientsViewModel: NutrientsViewModel by activityViewModels()
-    val eatenFoodsViewModel: EatenFoodsViewModel by activityViewModels()
+    private var calendar = Calendar.getInstance()
+    private var day = calendar.get(Calendar.DAY_OF_MONTH)
+    private var selectedDay = 0
+    private var dayOfWeek = 0
+    private var month = calendar.get(Calendar.MONTH)
+    private var selectedMonth = 0
+    private var year = calendar.get(Calendar.YEAR)
+    private var selectedYear = 0
+    private var hour = calendar.get(Calendar.HOUR_OF_DAY)
+    private var minute = calendar.get(Calendar.MINUTE)
+    private var selectedHour = 0
+    private var selectedMinute = 0
+    private var dayId = getCurrentDay()
+    private var currentTime = getCurrentStringTime()
+    private var foodName = ""
+    private var foodItem: FoodItem? = null
+    private val foodViewModel: FoodViewModel by activityViewModels()
+    private val nutrientsViewModel: NutrientsViewModel by activityViewModels()
+    private val eatenFoodsViewModel: EatenFoodsViewModel by activityViewModels()
 
-    fun getStringDate(): String {
+    private fun getStringDate(): String {
         //val dayOfWeek = getString(AndroidUtils.getDayOfWeek(dayOfWeek))
         val day = day.toString()
         val month = getString(AndroidUtils.getMonth(month + 1))
@@ -63,7 +55,7 @@ class SelectedFoodItemFragment : Fragment() {
 
     }
 
-    fun getSelectedStringDate(): String {
+    private fun getSelectedStringDate(): String {
         //val dayOfWeek = getString(AndroidUtils.getDayOfWeek(dayOfWeek))
         val day = selectedDay
         val month = getString(AndroidUtils.getMonth(selectedMonth.toInt() + 1))
@@ -71,7 +63,7 @@ class SelectedFoodItemFragment : Fragment() {
         return ("$day $month $year")
     }
 
-    fun getCurrentStringTime(): String {
+    private fun getCurrentStringTime(): String {
         val hour = hour.toString()
         val minute = when (minute) {
             in 0..9 -> "0${minute.toString()}"
@@ -80,7 +72,7 @@ class SelectedFoodItemFragment : Fragment() {
         return ("$hour : $minute")
     }
 
-    fun getSelectedStringTime(): String {
+    private fun getSelectedStringTime(): String {
         val hour = selectedHour.toString()
         val minute = when (selectedMinute) {
             in 0..9 -> "0${selectedMinute.toString()}"
@@ -89,14 +81,14 @@ class SelectedFoodItemFragment : Fragment() {
         return ("$hour : $minute")
     }
 
-    fun getCurrentDay(): Int {
+    private fun getCurrentDay(): Int {
         val day = "%02d".format(day)
         val month = "%02d".format(month + 1)
         val year = year.toString()
         return (year + month + day).toInt()
     }
 
-    fun getSelectDay(): Int {
+    private fun getSelectDay(): Int {
         val day = "%02d".format(selectedDay)
         val month = "%02d".format(selectedMonth + 1)
         val year = selectedYear.toString()
@@ -115,13 +107,15 @@ class SelectedFoodItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        requireActivity().setTitle(R.string.editingPortion)
         val binding = FragmentSelectedFoodItemBinding.inflate(layoutInflater)
-        val portionWeightValueWatcher = object: TextWatcher {
+        val nutrientsValueWatcher = object: TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                binding.portionWeightValue.setBackgroundResource(R.drawable.edit_text_value)
 
             }
 
@@ -130,7 +124,6 @@ class SelectedFoodItemFragment : Fragment() {
                     with(binding) {
                         val portionWeight = portionWeightValue.text.toString()
                         val portionFloat = portionWeight.toFloat() / 100
-                        print(portionWeight)
                         proteinsValue.text = (foodItem!!.proteins * portionFloat).toString()
                         fatsValue.text = (foodItem!!.fats * portionFloat).toString()
                         carbsValue.text = (foodItem!!.carbs * portionFloat).toString()
@@ -147,7 +140,8 @@ class SelectedFoodItemFragment : Fragment() {
         }
 
         with(binding) {
-            portionWeightValue.addTextChangedListener(portionWeightValueWatcher)
+            portionWeightValue.requestFocus()
+            portionWeightValue.addTextChangedListener(nutrientsValueWatcher)
             foodNameValue.text = foodItem!!.name
             portionWeightValue.setText(foodItem!!.portionWeight.toString())
             val portionFloat = foodItem!!.portionWeight / 100
@@ -181,8 +175,7 @@ class SelectedFoodItemFragment : Fragment() {
                 }, hour, minute, true)
                 timePickerDialog.show()
             }
-            buttonDelete.setOnClickListener {
-                foodViewModel.deleteItem(foodItem!!.name)
+            buttonBack.setOnClickListener {
                 parentFragmentManager.popBackStack()
             }
             buttonSave.setOnClickListener {
@@ -198,9 +191,18 @@ class SelectedFoodItemFragment : Fragment() {
                 val portionWeightFloat = portionWeight.toFloat()
                 val nutrients = NutrientsEntity(dayId, proteinsFloat, fatsFloat, carbsFloat, caloriesFloat)
                 val food = EatenFoods(0, dayId, calendar.timeInMillis, foodName, portionWeightFloat, proteinsFloat, fatsFloat, carbsFloat, caloriesFloat)
+                if (portionWeightFloat < 1F) {
+                    Toast.makeText(context, R.string.portionWeightWrong, Toast.LENGTH_SHORT)
+                        .show()
+                    binding.portionWeightValue.requestFocus()
+                    binding.portionWeightValue.setBackgroundResource(R.drawable.edit_text_value_wrong)
+                    return@setOnClickListener
+                }
                 nutrientsViewModel.addNutrients(dayId, nutrients)
                 eatenFoodsViewModel.addEatenFood(food)
                 parentFragmentManager.popBackStack()
+                parentFragmentManager.popBackStack()
+                requireActivity().setTitle(R.string.app_name)
             }
         }
 

@@ -7,7 +7,6 @@
     android:background="@color/white"
     tools:context=".ui.NewFoodItemFragment">
 
-
     <View
         android:id="@+id/divider"
         android:visibility="invisible"
@@ -15,7 +14,6 @@
         android:layout_height="match_parent"
         app:layout_constraintStart_toEndOf="@id/carbsTitle"
         android:background="?android:attr/listDivider" />
-
     <TextView
         android:id="@+id/foodNameTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
@@ -34,9 +32,7 @@
         app:layout_constraintEnd_toStartOf="@id/divider"
         app:layout_constraintTop_toTopOf="@id/date"
         app:layout_constraintBottom_toBottomOf="@id/date">
-
     </ImageView>
-
     <TextView
         android:id="@+id/date"
         android:layout_width="@dimen/nutrient_value_weight_small"
@@ -48,7 +44,6 @@
         app:layout_constraintStart_toStartOf="@id/foodNameValue"
         app:layout_constraintTop_toTopOf="parent">
     </TextView>
-
     <ImageView
         android:id="@+id/clockIcon"
         android:layout_width="wrap_content"
@@ -71,7 +66,6 @@
         app:layout_constraintStart_toStartOf="@id/foodNameValue"
         app:layout_constraintTop_toBottomOf="@id/date">
     </TextView>
-
     <TextView
         android:id="@+id/foodNameValue"
         android:layout_width="0dp"
@@ -85,8 +79,6 @@
         app:layout_constraintTop_toTopOf="@id/foodNameTitle"
         app:layout_constraintBottom_toBottomOf="@id/foodNameTitle">
     </TextView>
-
-
     <TextView
         android:id="@+id/portionWeightTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
@@ -97,7 +89,6 @@
         app:layout_constraintTop_toBottomOf="@id/foodNameTitle"
         style="@style/textTitle"
         android:text="@string/portionWeight" />
-
     <EditText
         android:id="@+id/portionWeightValue"
         android:layout_width="0dp"
@@ -112,7 +103,6 @@
         app:layout_constraintTop_toTopOf="@id/portionWeightTitle"
         app:layout_constraintBottom_toBottomOf="@id/portionWeightTitle">
     </EditText>
-
     <TextView
         android:id="@+id/forHundredGrTitle"
         android:layout_width="match_parent"
@@ -123,7 +113,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/portionWeightTitle"
         android:text="@string/enterNutrientsFor100Gr" />
-
     <TextView
         android:id="@+id/proteinsTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
@@ -134,7 +123,6 @@
         app:layout_constraintTop_toBottomOf="@id/forHundredGrTitle"
         style="@style/proteinsTextTitle"
         android:text="@string/proteins" />
-
     <TextView
         android:id="@+id/proteinsValue"
         android:layout_width="0dp"
@@ -148,7 +136,6 @@
         android:layout_marginEnd="@dimen/common"
         app:layout_constraintBottom_toBottomOf="@id/proteinsTitle">
     </TextView>
-
     <TextView
         android:id="@+id/fatsTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
@@ -159,7 +146,6 @@
         app:layout_constraintTop_toBottomOf="@id/proteinsTitle"
         style="@style/fatsTextTitle"
         android:text="@string/fats" />
-
     <TextView
         android:id="@+id/fatsValue"
         android:layout_width="0dp"
@@ -173,7 +159,6 @@
         android:layout_marginEnd="@dimen/common"
         app:layout_constraintBottom_toBottomOf="@id/fatsTitle">
     </TextView>
-
     <TextView
         android:id="@+id/carbsTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
@@ -184,7 +169,6 @@
         app:layout_constraintTop_toBottomOf="@id/fatsTitle"
         style="@style/carbsTextTitle"
         android:text="@string/carbohydrates" />
-
     <TextView
         android:id="@+id/carbsValue"
         android:layout_width="0dp"
@@ -198,7 +182,6 @@
         android:layout_marginEnd="@dimen/common"
         app:layout_constraintBottom_toBottomOf="@id/carbsTitle">
     </TextView>
-
     <TextView
         android:id="@+id/caloriesTitle"
         android:layout_width="@dimen/nutrient_value_weight_large"
@@ -209,7 +192,6 @@
         app:layout_constraintTop_toBottomOf="@id/carbsTitle"
         style="@style/caloriesTextTitle"
         android:text="@string/calories" />
-
     <TextView
         android:id="@+id/caloriesValue"
         android:layout_width="0dp"
@@ -223,21 +205,22 @@
         android:layout_marginEnd="@dimen/common"
         app:layout_constraintBottom_toBottomOf="@id/caloriesTitle">
     </TextView>
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonSave"
-        android:text="save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common"
+        style="@style/Widget.AppTheme.IconButtonOk"
+        app:icon="@drawable/save_button_new_48dp"
         app:layout_constraintTop_toBottomOf="@id/caloriesValue"
         app:layout_constraintStart_toStartOf="parent">
     </com.google.android.material.button.MaterialButton>
-
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonDelete"
-        android:text="delete"
+        android:id="@+id/buttonBack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/Widget.AppTheme.IconButton"
+        app:icon="@drawable/return_button_new_48dp"
         app:layout_constraintTop_toBottomOf="@id/caloriesValue"
         app:layout_constraintStart_toEndOf="@id/buttonSave"
         android:layout_marginStart="@dimen/common"

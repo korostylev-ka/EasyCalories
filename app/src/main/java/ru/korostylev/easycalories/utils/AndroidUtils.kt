@@ -10,6 +10,7 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.util.Calendar
 import kotlin.math.ceil
+import kotlin.math.roundToInt
 
 object AndroidUtils {
     fun dp(context: Context, dp: Float): Int =
@@ -46,6 +47,10 @@ object AndroidUtils {
         var bd: BigDecimal = BigDecimal(value.toDouble())
         bd = bd.setScale(1, RoundingMode.CEILING)
         return bd.toFloat()
+    }
+
+    fun formatFloatValues(value: Float): Float {
+        return ((value * 100).roundToInt()) / 100.0F
     }
 
 //    fun dayIdToCalendar(date: String): Calendar {
