@@ -13,8 +13,8 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentSelectedFoodItemBinding
-import ru.korostylev.easycalories.entity.EatenFoods
-import ru.korostylev.easycalories.entity.FoodItem
+import ru.korostylev.easycalories.entity.EatenFoodsEntity
+import ru.korostylev.easycalories.entity.FoodItemEntity
 import ru.korostylev.easycalories.entity.NutrientsEntity
 import ru.korostylev.easycalories.utils.AndroidUtils
 import ru.korostylev.easycalories.viewmodel.EatenFoodsViewModel
@@ -41,7 +41,7 @@ class SelectedFoodItemFragment : Fragment() {
     private var dayId = getCurrentDay()
     private var currentTime = getCurrentStringTime()
     private var foodName = ""
-    private var foodItem: FoodItem? = null
+    private var foodItemEntity: FoodItemEntity? = null
     private val foodViewModel: FoodViewModel by activityViewModels()
     private val nutrientsViewModel: NutrientsViewModel by activityViewModels()
     private val eatenFoodsViewModel: EatenFoodsViewModel by activityViewModels()
@@ -100,7 +100,7 @@ class SelectedFoodItemFragment : Fragment() {
         arguments?.let {
             foodName = it.getString(FOOD_NAME) ?: ""
         }
-        foodItem = foodViewModel.getFoodItem(foodName)
+        foodItemEntity = foodViewModel.getFoodItem(foodName)
     }
 
     override fun onCreateView(
@@ -124,10 +124,10 @@ class SelectedFoodItemFragment : Fragment() {
                     with(binding) {
                         val portionWeight = portionWeightValue.text.toString()
                         val portionFloat = portionWeight.toFloat() / 100
-                        proteinsValue.text = (foodItem!!.proteins * portionFloat).toString()
-                        fatsValue.text = (foodItem!!.fats * portionFloat).toString()
-                        carbsValue.text = (foodItem!!.carbs * portionFloat).toString()
-                        caloriesValue.text = (foodItem!!.calories * portionFloat).toString()
+                        proteinsValue.text = (foodItemEntity!!.proteins * portionFloat).toString()
+                        fatsValue.text = (foodItemEntity!!.fats * portionFloat).toString()
+                        carbsValue.text = (foodItemEntity!!.carbs * portionFloat).toString()
+                        caloriesValue.text = (foodItemEntity!!.calories * portionFloat).toString()
                     }
                 } catch (e: java.lang.NumberFormatException) {
                     Toast.makeText(context, R.string.numberFormatException, Toast.LENGTH_LONG)
@@ -142,13 +142,13 @@ class SelectedFoodItemFragment : Fragment() {
         with(binding) {
             portionWeightValue.requestFocus()
             portionWeightValue.addTextChangedListener(nutrientsValueWatcher)
-            foodNameValue.text = foodItem!!.name
-            portionWeightValue.setText(foodItem!!.portionWeight.toString())
-            val portionFloat = foodItem!!.portionWeight / 100
-            proteinsValue.text = (foodItem!!.proteins * portionFloat).toString()
-            fatsValue.text = (foodItem!!.fats * portionFloat).toString()
-            carbsValue.text = (foodItem!!.carbs * portionFloat).toString()
-            caloriesValue.text = (foodItem!!.calories * portionFloat).toString()
+            foodNameValue.text = foodItemEntity!!.name
+            portionWeightValue.setText(foodItemEntity!!.portionWeight.toString())
+            val portionFloat = foodItemEntity!!.portionWeight / 100
+            proteinsValue.text = (foodItemEntity!!.proteins * portionFloat).toString()
+            fatsValue.text = (foodItemEntity!!.fats * portionFloat).toString()
+            carbsValue.text = (foodItemEntity!!.carbs * portionFloat).toString()
+            caloriesValue.text = (foodItemEntity!!.calories * portionFloat).toString()
             date.text = getStringDate()
             time.text = getCurrentStringTime()
             calendarIcon.setOnClickListener {
@@ -188,9 +188,9 @@ class SelectedFoodItemFragment : Fragment() {
                 val calories = caloriesValue.text.toString()
                 val caloriesFloat = calories.toFloat()
                 val portionWeight = portionWeightValue.text.toString()
-                val portionWeightFloat = portionWeight.toFloat()
+                val portionWeightFloat = portionWeight.toInt()
                 val nutrients = NutrientsEntity(dayId, proteinsFloat, fatsFloat, carbsFloat, caloriesFloat)
-                val food = EatenFoods(0, dayId, calendar.timeInMillis, foodName, portionWeightFloat, proteinsFloat, fatsFloat, carbsFloat, caloriesFloat)
+                val food = EatenFoodsEntity(0, dayId, calendar.timeInMillis, foodName, portionWeightFloat, proteinsFloat, fatsFloat, carbsFloat, caloriesFloat)
                 if (portionWeightFloat < 1F) {
                     Toast.makeText(context, R.string.portionWeightWrong, Toast.LENGTH_SHORT)
                         .show()

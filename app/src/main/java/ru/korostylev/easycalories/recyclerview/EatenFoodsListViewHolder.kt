@@ -1,27 +1,17 @@
 package ru.korostylev.easycalories.recyclerview
 
-import android.app.Application
 import android.content.Context
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.recyclerview.widget.RecyclerView
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.EatenFoodItemBinding
-import ru.korostylev.easycalories.databinding.FoodItemBinding
-import ru.korostylev.easycalories.entity.EatenFoods
-import ru.korostylev.easycalories.entity.FoodItem
+import ru.korostylev.easycalories.entity.EatenFoodsEntity
+import ru.korostylev.easycalories.interfaces.OnInteractionListener
 import ru.korostylev.easycalories.ui.EditEatenFoodItemFragment
-import ru.korostylev.easycalories.ui.SelectedFoodItemFragment
-import ru.korostylev.easycalories.viewmodel.EatenFoodsViewModel
-import ru.korostylev.easycalories.viewmodel.NutrientsViewModel
 import java.util.Calendar
 import kotlin.math.roundToInt
 
-interface OnInteractionListener {
-    fun remove(eatenFoods: EatenFoods)
-}
 
 class EatenFoodsListViewHolder(
     val binding: EatenFoodItemBinding,
@@ -29,23 +19,23 @@ class EatenFoodsListViewHolder(
     val listener: OnInteractionListener
 ): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
     var id = 0
-    fun bind(eatenFoods: EatenFoods) {
+    fun bind(eatenFoodsEntity: EatenFoodsEntity) {
         val date = Calendar.getInstance()
-        date.timeInMillis = eatenFoods.time
+        date.timeInMillis = eatenFoodsEntity.time
         val hour = date.get(Calendar.HOUR_OF_DAY)
         val minutes = date.get(Calendar.MINUTE)
         val time = getSelectedStringTime(hour, minutes)
         with (binding) {
-            id = eatenFoods.id
+            id = eatenFoodsEntity.id
             timeOfEat.text = time
-            foodName.text = eatenFoods.name
-            poptionWeightValue.text = eatenFoods.portionWeight.roundToInt().toString()
-            proteinsValue.text = eatenFoods.portionProteins.roundToInt().toString()
-            fatsValue.text = eatenFoods.portionFats.roundToInt().toString()
-            carbsValue.text = eatenFoods.portionCarbs.roundToInt().toString()
-            caloriesValue.text = eatenFoods.portionCalories.roundToInt().toString()
+            foodName.text = eatenFoodsEntity.name
+            poptionWeightValue.text = eatenFoodsEntity.portionWeight.toString()
+            proteinsValue.text = eatenFoodsEntity.portionProteins.roundToInt().toString()
+            fatsValue.text = eatenFoodsEntity.portionFats.roundToInt().toString()
+            carbsValue.text = eatenFoodsEntity.portionCarbs.roundToInt().toString()
+            caloriesValue.text = eatenFoodsEntity.portionCalories.roundToInt().toString()
             deleteButton.setOnClickListener {
-                listener.remove(eatenFoods)
+                listener.remove(eatenFoodsEntity)
             }
         }
     }

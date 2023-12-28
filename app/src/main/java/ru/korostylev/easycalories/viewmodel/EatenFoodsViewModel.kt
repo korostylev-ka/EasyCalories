@@ -4,22 +4,22 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import ru.korostylev.easycalories.db.EatenFoodsDB
-import ru.korostylev.easycalories.entity.EatenFoods
+import ru.korostylev.easycalories.entity.EatenFoodsEntity
 import ru.korostylev.easycalories.repository.EatenFoodsRepository
 import ru.korostylev.easycalories.repository.EatenFoodsRepositoryImpl
 
 class EatenFoodsViewModel(application: Application): AndroidViewModel(application) {
     private val eatenFoodsRepository: EatenFoodsRepository = EatenFoodsRepositoryImpl(EatenFoodsDB.getInstance(application).eatenFoodsDao)
 
-    fun getEatenFoodItemForDay(dayId: Int): LiveData<List<EatenFoods>> {
+    fun getEatenFoodItemForDay(dayId: Int): LiveData<List<EatenFoodsEntity>> {
         return eatenFoodsRepository.getEatenFoodsForDay(dayId)
     }
 
-    fun getEatenFoodItemById(id: Int): EatenFoods {
+    fun getEatenFoodItemById(id: Int): EatenFoodsEntity {
         return eatenFoodsRepository.getFoodItemById(id)
     }
 
-    fun addEatenFood(eatenFood: EatenFoods) {
+    fun addEatenFood(eatenFood: EatenFoodsEntity) {
         eatenFoodsRepository.addEatenFoodItem(eatenFood)
     }
 

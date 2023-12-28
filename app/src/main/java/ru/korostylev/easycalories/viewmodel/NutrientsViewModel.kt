@@ -2,9 +2,8 @@ package ru.korostylev.easycalories.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import ru.korostylev.easycalories.db.NutrientsDB
-import ru.korostylev.easycalories.entity.EatenFoods
+import ru.korostylev.easycalories.entity.EatenFoodsEntity
 import ru.korostylev.easycalories.entity.NutrientsEntity
 import ru.korostylev.easycalories.repository.NutrientsRepository
 import ru.korostylev.easycalories.repository.NutrientsRepositoryImpl
@@ -43,8 +42,8 @@ class NutrientsViewModel(application: Application): AndroidViewModel(application
         }
     }
 
-    fun removeNutrients(eatenFoods: EatenFoods) {
-        repository.removeNutrients(eatenFoods)
+    fun removeNutrients(eatenFoodsEntity: EatenFoodsEntity) {
+        repository.removeNutrients(eatenFoodsEntity)
     }
 
 }

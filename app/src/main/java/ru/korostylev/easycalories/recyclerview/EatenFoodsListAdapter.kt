@@ -4,11 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.korostylev.easycalories.databinding.EatenFoodItemBinding
-import ru.korostylev.easycalories.databinding.FoodItemBinding
-import ru.korostylev.easycalories.entity.EatenFoods
-import ru.korostylev.easycalories.entity.FoodItem
+import ru.korostylev.easycalories.entity.EatenFoodsEntity
+import ru.korostylev.easycalories.interfaces.OnInteractionListener
 
-class EatenFoodsListAdapter(val foodList: List<EatenFoods>, val listener: OnInteractionListener): RecyclerView.Adapter<EatenFoodsListViewHolder>() {
+class EatenFoodsListAdapter(val foodList: List<EatenFoodsEntity>, val listener: OnInteractionListener): RecyclerView.Adapter<EatenFoodsListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EatenFoodsListViewHolder {
         return EatenFoodsListViewHolder(EatenFoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false), parent.context, listener)
     }

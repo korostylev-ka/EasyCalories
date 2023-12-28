@@ -99,5 +99,29 @@
         app:layout_constraintTop_toBottomOf="@id/foodCarbsValue"
         app:layout_constraintStart_toEndOf="@id/foodCarbsTitle">
     </TextView>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:icon="@drawable/delete_button_new_48dp"
+        style="@style/Widget.AppTheme.DeleteButton"
+        app:layout_constraintBottom_toTopOf="@id/editButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+    </com.google.android.material.button.MaterialButton>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/editButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:icon="@drawable/edit_button_new_48dp"
+        style="@style/Widget.AppTheme.IconButton"
+        app:layout_constraintTop_toBottomOf="@id/deleteButton"
+        app:layout_constraintEnd_toEndOf="parent">
+
+    </com.google.android.material.button.MaterialButton>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

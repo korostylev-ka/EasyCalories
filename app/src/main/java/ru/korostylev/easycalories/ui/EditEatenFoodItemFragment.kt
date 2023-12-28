@@ -13,15 +13,13 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentSelectedFoodItemBinding
-import ru.korostylev.easycalories.entity.EatenFoods
-import ru.korostylev.easycalories.entity.FoodItem
+import ru.korostylev.easycalories.entity.EatenFoodsEntity
 import ru.korostylev.easycalories.entity.NutrientsEntity
 import ru.korostylev.easycalories.utils.AndroidUtils
 import ru.korostylev.easycalories.viewmodel.EatenFoodsViewModel
 import ru.korostylev.easycalories.viewmodel.FoodViewModel
 import ru.korostylev.easycalories.viewmodel.NutrientsViewModel
 import java.util.*
-import kotlin.math.roundToInt
 
 private const val ID = "id"
 
@@ -42,7 +40,7 @@ class EditEatenFoodItemFragment : Fragment() {
     private var currentTime = "$hour:$minute"
     private var foodName = ""
     private var eatenFoodId = 0
-    private var foodItem: EatenFoods? = null
+    private var foodItem: EatenFoodsEntity? = null
     private var weightProportion = 0.0f
     private var proteinsIn100 = 0.0f
     private var fatsIn100 = 0.0f
@@ -204,7 +202,7 @@ class EditEatenFoodItemFragment : Fragment() {
                 val calories = caloriesValue.text.toString()
                 val caloriesFloat = calories.toFloat()
                 val portionWeight = portionWeightValue.text.toString()
-                val portionWeightFloat = portionWeight.toFloat()
+                val portionWeightFloat = portionWeight.toInt()
                 val oldNutrients = NutrientsEntity(dayId, foodItem!!.portionProteins, foodItem!!.portionFats, foodItem!!.portionCarbs, foodItem!!.portionCalories)
                 val changedNutrients = NutrientsEntity(selectedDayId, proteinsFloat - foodItem!!.portionProteins, fatsFloat - foodItem!!.portionFats, carbsFloat - foodItem!!.portionCarbs, caloriesFloat - foodItem!!.portionCalories)
                 val newNutrients = NutrientsEntity(selectedDayId, proteinsFloat, fatsFloat, carbsFloat, caloriesFloat)

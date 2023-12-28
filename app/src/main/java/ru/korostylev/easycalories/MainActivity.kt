@@ -4,15 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import com.google.firebase.FirebaseApp
-import com.google.firebase.database.*
-import ru.korostylev.easycalories.api.FirebaseDB
-import ru.korostylev.easycalories.entity.FoodItem
 import ru.korostylev.easycalories.ui.EditLimitsFragment
 import ru.korostylev.easycalories.ui.HomeFragment
-import ru.korostylev.easycalories.ui.ProfileFragment
-import ru.korostylev.easycalories.ui.UserViewFragment
 import java.util.*
 
 class MainActivity : AppCompatActivity() {

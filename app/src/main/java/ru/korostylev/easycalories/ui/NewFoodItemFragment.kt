@@ -10,13 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import ru.korostylev.easycalories.R
-import ru.korostylev.easycalories.api.FirebaseDB
 import ru.korostylev.easycalories.databinding.FragmentNewFoodItemBinding
-import ru.korostylev.easycalories.entity.FoodItem
+
+import ru.korostylev.easycalories.entity.FoodItemEntity
 import ru.korostylev.easycalories.utils.AndroidUtils
 import ru.korostylev.easycalories.viewmodel.FoodViewModel
 import java.util.*
@@ -24,9 +21,11 @@ import java.util.*
 
 class NewFoodItemFragment : Fragment() {
     private val foodViewModel: FoodViewModel by activityViewModels()
+    private var foodId = 0
+    private var categoryId = 0
     private var name = ""
     private var glycemicIndex = 0
-    private var portionWeight = 100F
+    private var portionWeight = 100
     private var proteins = 0F
     private var fats = 0F
     private var carbs = 0F
@@ -45,6 +44,7 @@ class NewFoodItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("fragments", "newfood oncreateview")
         requireActivity().setTitle(R.string.addingFood)
         val binding = FragmentNewFoodItemBinding.inflate(layoutInflater)
         with(binding) {
@@ -152,11 +152,11 @@ class NewFoodItemFragment : Fragment() {
                     if (proteins >= 0F && fats >=0F && carbs >= 0F ) {
                         val isFoodExist = foodViewModel.getFoodItem(name)
                         if (isFoodExist == null) {
-                            val newFood = FoodItem(0, name, glycemicIndex, portionWeight, proteinsToAdd, fatsToAdd, carbsToAdd, caloriesToAdd, image, barcode, true)
-                            foodViewModel.addItem(newFood)
+                            val newFoodEntity = FoodItemEntity(0, foodId, categoryId, name, glycemicIndex, portionWeight, proteinsToAdd, fatsToAdd, carbsToAdd, caloriesToAdd, image, barcode, true)
+                            foodViewModel.addItem(newFoodEntity)
                             parentFragmentManager.popBackStack()
                             try {
-                                val key = foodViewModel.saveToFirebase(newFood)
+                                val key = foodViewModel.saveToFirebase(newFoodEntity.toFoodItem())
                                 val food = foodViewModel.getFoodItem(name)
                                 Log.d("fooditem", food.toString())
                                 foodViewModel.update(food!!.copy(key = key))

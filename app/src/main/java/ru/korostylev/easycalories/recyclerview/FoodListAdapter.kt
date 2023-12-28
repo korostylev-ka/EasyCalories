@@ -4,11 +4,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.korostylev.easycalories.databinding.FoodItemBinding
-import ru.korostylev.easycalories.entity.FoodItem
+import ru.korostylev.easycalories.entity.FoodItemEntity
+import ru.korostylev.easycalories.interfaces.APIListener
+import ru.korostylev.easycalories.interfaces.FoodEntityListener
+import ru.korostylev.easycalories.interfaces.OnInteractionListener
 
-class FoodListAdapter(val foodList: List<FoodItem>): RecyclerView.Adapter<FoodListViewHolder>() {
+class FoodListAdapter(val foodList: List<FoodItemEntity>, val apiListener: APIListener, val onInteractionListener: OnInteractionListener, val foodEntityListener: FoodEntityListener): RecyclerView.Adapter<FoodListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodListViewHolder {
-        return FoodListViewHolder(FoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false), parent.context)
+        return FoodListViewHolder(FoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false), parent.context, apiListener, onInteractionListener, foodEntityListener)
     }
 
     override fun getItemCount(): Int {

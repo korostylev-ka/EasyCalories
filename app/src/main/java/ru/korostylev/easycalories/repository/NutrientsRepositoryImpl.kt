@@ -1,9 +1,8 @@
 package ru.korostylev.easycalories.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import ru.korostylev.easycalories.dao.NutrientsDao
-import ru.korostylev.easycalories.entity.EatenFoods
+import ru.korostylev.easycalories.entity.EatenFoodsEntity
 import ru.korostylev.easycalories.entity.NutrientsEntity
 
 
@@ -37,13 +36,13 @@ class NutrientsRepositoryImpl(val nutrientsDao: NutrientsDao): NutrientsReposito
         nutrientsDao.insert(nutrients)
     }
 
-    override fun removeNutrients(eatenFoods: EatenFoods) {
-        val actualNutrients = nutrientsDao.getTheNutrients(eatenFoods.dayId)
-        val newProteins = actualNutrients.proteins - eatenFoods.portionProteins
-        val newFats = actualNutrients.fats - eatenFoods.portionFats
-        val newCarbs = actualNutrients.carbs - eatenFoods.portionCarbs
-        val newCalories = actualNutrients.calories - eatenFoods.portionCalories
-        val newNutrients = NutrientsEntity(eatenFoods.dayId, newProteins, newFats, newCarbs, newCalories)
+    override fun removeNutrients(eatenFoodsEntity: EatenFoodsEntity) {
+        val actualNutrients = nutrientsDao.getTheNutrients(eatenFoodsEntity.dayId)
+        val newProteins = actualNutrients.proteins - eatenFoodsEntity.portionProteins
+        val newFats = actualNutrients.fats - eatenFoodsEntity.portionFats
+        val newCarbs = actualNutrients.carbs - eatenFoodsEntity.portionCarbs
+        val newCalories = actualNutrients.calories - eatenFoodsEntity.portionCalories
+        val newNutrients = NutrientsEntity(eatenFoodsEntity.dayId, newProteins, newFats, newCarbs, newCalories)
         nutrientsDao.insert(newNutrients)
     }
 

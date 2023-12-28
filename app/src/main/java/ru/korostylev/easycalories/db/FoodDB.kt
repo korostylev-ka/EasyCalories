@@ -5,11 +5,9 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import ru.korostylev.easycalories.dao.FoodDao
-import ru.korostylev.easycalories.dao.NutrientsDao
-import ru.korostylev.easycalories.entity.FoodItem
-import ru.korostylev.easycalories.entity.NutrientsEntity
+import ru.korostylev.easycalories.entity.FoodItemEntity
 
-@Database(entities = [FoodItem::class], version = 1)
+@Database(entities = [FoodItemEntity::class], version = 1)
 abstract class FoodDB: RoomDatabase() {
     abstract val foodDao: FoodDao
 

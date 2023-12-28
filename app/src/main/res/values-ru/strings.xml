@@ -4,6 +4,7 @@
     <string name="chooseFood">Выберите продукт</string>
     <string name="addingFood">Добавьте продукт</string>
     <string name="editingPortion">Введите вес порции</string>
+    <string name="editingFood">Отредактируйте продукт</string>
     <string name="proteins">Белки</string>
     <string name="P">Б</string>
     <string name="fats">Жиры</string>

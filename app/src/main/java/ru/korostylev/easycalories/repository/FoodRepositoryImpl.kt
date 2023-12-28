@@ -2,46 +2,53 @@ package ru.korostylev.easycalories.repository
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import kotlinx.coroutines.currentCoroutineContext
+import ru.korostylev.easycalories.api.API
 import ru.korostylev.easycalories.api.FirebaseDB
 import ru.korostylev.easycalories.dao.FoodDao
-import ru.korostylev.easycalories.db.FoodDB
-import ru.korostylev.easycalories.entity.FoodItem
+import ru.korostylev.easycalories.dto.FoodItem
+import ru.korostylev.easycalories.entity.FoodItemEntity
 
-class FoodRepositoryImpl(val foodDao: FoodDao, val firebaseDB: FirebaseDB): FoodRepository {
+class FoodRepositoryImpl(val foodDao: FoodDao, val API: API): FoodRepository {
 
-    override fun getFoodList(): LiveData<List<FoodItem>> {
+
+
+    override fun getFoodList(): LiveData<List<FoodItemEntity>> {
         return foodDao.getAll()
     }
 
 
     override fun getFoodListFromFirebase(): LiveData<List<FoodItem>> {
-        return firebaseDB.liveDataFoods
+        return API.getAll()
     }
 
-    override fun getFoodItem(name: String): FoodItem? {
+    override fun getFoodItem(name: String): FoodItemEntity? {
         return foodDao.getFoodItem(name)
     }
 
-    override fun saveToFirebase(foodItem: FoodItem): String? {
-        return firebaseDB.saveFoodItem(foodItem)
+    override fun getFoodItemById(foodId: Int): FoodItemEntity? {
+        val food = foodDao.getFoodItemById(foodId)
+        Log.d("daofood", food.toString())
+        return foodDao.getFoodItemById(foodId)
+    }
+
+    override fun saveToFirebase(foodItemEntity: FoodItem): String? {
+        return API.add(foodItemEntity)
     }
 
     override fun editToFirebase(foodItem: FoodItem) {
-        firebaseDB.editFoodItem(foodItem)
+        API.edit(foodItem)
     }
 
-    override fun addItem(foodItem: FoodItem) {
-        foodDao.insert(foodItem)
+    override fun addItem(foodItemEntity: FoodItemEntity) {
+        foodDao.insert(foodItemEntity)
     }
 
-    override fun update(foodItem: FoodItem) {
-        foodDao.update(foodItem)
+    override fun update(foodItemEntity: FoodItemEntity) {
+        foodDao.update(foodItemEntity)
     }
 
-    override fun deleteItem(name: String) {
-        foodDao.delete(name)
+    override fun deleteItem(id: Int) {
+        foodDao.delete(id)
     }
 
     override fun changeItem(id: Long) {
@@ -50,14 +57,15 @@ class FoodRepositoryImpl(val foodDao: FoodDao, val firebaseDB: FirebaseDB): Food
 
     override fun updateFromFirebase(list: List<FoodItem>) {
         list.map { foodItem->
-            val currentFoodItem = getFoodItem(foodItem.name)
+            val foodFromEntity = getFoodItem(foodItem.name)
+            val foodFromFirebase = FoodItemEntity.fromFoodItem(foodItem)
             //if doesn't exist, add new food
-            if (currentFoodItem == null) {
-                addItem(foodItem)
+            if (foodFromEntity == null) {
+                addItem(foodFromFirebase)
             } else {
                 //if item was changed
-                if (currentFoodItem != foodItem) {
-                    update(foodItem.copy(id = currentFoodItem.id))
+                if (foodFromEntity != foodFromFirebase) {
+                    update(foodFromFirebase.copy(id = foodFromEntity.id, ownedByMe = foodFromEntity.ownedByMe))
                 }
             }
         }
@@ -65,7 +73,11 @@ class FoodRepositoryImpl(val foodDao: FoodDao, val firebaseDB: FirebaseDB): Food
 
     }
 
+    override fun deleteFromFirebase(foodItem: FoodItem) {
+        API.delete(foodItem)
+    }
+
     init {
-        firebaseDB.readFoodItems()
+        API.init()
     }
 }

@@ -1,17 +1,11 @@
 package ru.korostylev.easycalories.viewmodel
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import ru.korostylev.easycalories.api.FirebaseDB
 import ru.korostylev.easycalories.db.FoodDB
-import ru.korostylev.easycalories.entity.FoodItem
+import ru.korostylev.easycalories.dto.FoodItem
+import ru.korostylev.easycalories.entity.FoodItemEntity
 import ru.korostylev.easycalories.repository.FoodRepository
 import ru.korostylev.easycalories.repository.FoodRepositoryImpl
 
@@ -20,20 +14,24 @@ class FoodViewModel(application: Application): AndroidViewModel(application) {
     val foodListLiveData = repository.getFoodList()
     val foodListLiveDataFirebase = repository.getFoodListFromFirebase()
 
-    fun getFoodItem(name: String): FoodItem? {
+    fun getFoodItem(name: String): FoodItemEntity? {
         return repository.getFoodItem(name)
     }
 
-    fun addItem(foodItem: FoodItem) {
-        repository.addItem(foodItem)
+    fun getFoodItemById(foodId: Int): FoodItemEntity? {
+        return repository.getFoodItemById(foodId)
     }
 
-    fun deleteItem(name: String) {
-        repository.deleteItem(name)
+    fun addItem(foodItemEntity: FoodItemEntity) {
+        repository.addItem(foodItemEntity)
     }
 
-    fun update(foodItem: FoodItem) {
-        repository.update(foodItem)
+    fun deleteItem(id: Int) {
+        repository.deleteItem(id)
+    }
+
+    fun update(foodItemEntity: FoodItemEntity) {
+        repository.update(foodItemEntity)
     }
 
     fun saveToFirebase(foodItem: FoodItem): String? {
@@ -41,7 +39,12 @@ class FoodViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun editToFirebase(foodItem: FoodItem) {
+        repository.editToFirebase(foodItem)
 
+    }
+
+    fun deleteFromFirebase(foodItem: FoodItem) {
+        repository.deleteFromFirebase(foodItem)
     }
 
     fun updateFromFirebase(list: List<FoodItem>) {

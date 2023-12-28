@@ -5,26 +5,25 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import ru.korostylev.easycalories.entity.EatenFoods
-import ru.korostylev.easycalories.entity.FoodItem
+import ru.korostylev.easycalories.entity.EatenFoodsEntity
 
 @Dao
 interface EatenFoodsDao {
-    @Query("SELECT * FROM EatenFoods ORDER BY time DESC")
-    fun getAll(): LiveData<List<EatenFoods>>
+    @Query("SELECT * FROM EatenFoodsEntity ORDER BY time DESC")
+    fun getAll(): LiveData<List<EatenFoodsEntity>>
 
-    @Query("SELECT * FROM EatenFoods WHERE dayId = (:dayId)")
-    fun getEatenFoodsForDay(dayId: Int): LiveData<List<EatenFoods>>
+    @Query("SELECT * FROM EatenFoodsEntity WHERE dayId = (:dayId)")
+    fun getEatenFoodsForDay(dayId: Int): LiveData<List<EatenFoodsEntity>>
 
-    @Query("SELECT * FROM EatenFoods WHERE name = (:foodName)")
-    fun getFoodItem(foodName: String): EatenFoods
+    @Query("SELECT * FROM EatenFoodsEntity WHERE name = (:foodName)")
+    fun getFoodItem(foodName: String): EatenFoodsEntity
 
-    @Query("SELECT * FROM EatenFoods WHERE id = (:id)")
-    fun getFoodItemById(id: Int): EatenFoods
+    @Query("SELECT * FROM EatenFoodsEntity WHERE id = (:id)")
+    fun getFoodItemById(id: Int): EatenFoodsEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(eatenFoods: EatenFoods)
+    fun insert(eatenFoodsEntity: EatenFoodsEntity)
 
-    @Query("DELETE FROM EatenFoods WHERE id = :id")
+    @Query("DELETE FROM EatenFoodsEntity WHERE id = :id")
     fun delete(id: Int)
 }

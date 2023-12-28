@@ -14,18 +14,55 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ru.korostylev.easycalories.recyclerview.FoodListAdapter
 import ru.korostylev.easycalories.R
-import ru.korostylev.easycalories.api.FirebaseDB
 import ru.korostylev.easycalories.databinding.FragmentFoodListBinding
-import ru.korostylev.easycalories.entity.FoodItem
+import ru.korostylev.easycalories.dto.FoodItem
+import ru.korostylev.easycalories.entity.EatenFoodsEntity
+import ru.korostylev.easycalories.entity.FoodItemEntity
+import ru.korostylev.easycalories.interfaces.APIListener
+import ru.korostylev.easycalories.interfaces.FoodEntityListener
+import ru.korostylev.easycalories.interfaces.OnInteractionListener
+
 import ru.korostylev.easycalories.viewmodel.FoodViewModel
-import java.util.*
 
 
 class FoodListFragment : Fragment() {
     private var recyclerView: RecyclerView? = null
-    private var adapter: FoodListAdapter? = FoodListAdapter(emptyList())
+    private val apiListener = object: APIListener {
+        override fun remove(foodItem: FoodItem) {
+            viewModel.deleteFromFirebase(foodItem)
+        }
+
+    }
+    private val onInteractionListener = object : OnInteractionListener {
+        override fun remove(eatenFoodsEntity: EatenFoodsEntity) {
+            TODO("Not yet implemented")
+        }
+
+        override fun toEditFoodItemFragment(foodId: Int) {
+            val fragment = EditFoodItemFragment.newInstance(foodId)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
+    }
+
+    private val foodEntityListener = object : FoodEntityListener {
+        override fun getFoodItem(id: Int): FoodItemEntity {
+            TODO("Not yet implemented")
+        }
+
+        override fun delete(id: Int) {
+            viewModel.deleteItem(id)
+        }
+
+
+    }
+    private var adapter: FoodListAdapter? = FoodListAdapter(emptyList(), apiListener, onInteractionListener, foodEntityListener)
     private val viewModel: FoodViewModel by activityViewModels()
-    private var foodList: List<FoodItem> = emptyList()
+    private var foodList: List<FoodItemEntity> = emptyList()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +87,7 @@ class FoodListFragment : Fragment() {
                 val editedList = foodList.filter {
                     it.name.startsWith(text, ignoreCase = true)
                 }
-                adapter = FoodListAdapter(editedList)
+                adapter = FoodListAdapter(editedList, apiListener, onInteractionListener, foodEntityListener)
                 recyclerView!!.adapter = adapter
 
             }
@@ -68,7 +105,7 @@ class FoodListFragment : Fragment() {
                 }
                 foodList = foods
                 foodList.let {
-                    adapter = FoodListAdapter(sortedFoods)
+                    adapter = FoodListAdapter(sortedFoods, apiListener, onInteractionListener, foodEntityListener)
                     recyclerView!!.adapter = adapter
                 }
             }
