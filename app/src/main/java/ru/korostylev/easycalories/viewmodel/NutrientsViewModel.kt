@@ -3,6 +3,7 @@ package ru.korostylev.easycalories.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import ru.korostylev.easycalories.db.NutrientsDB
+import ru.korostylev.easycalories.db.WeightDB
 import ru.korostylev.easycalories.entity.EatenFoodsEntity
 import ru.korostylev.easycalories.entity.NutrientsEntity
 import ru.korostylev.easycalories.repository.NutrientsRepository

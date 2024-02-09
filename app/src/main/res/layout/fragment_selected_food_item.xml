@@ -16,7 +16,7 @@
         android:background="?android:attr/listDivider" />
     <TextView
         android:id="@+id/foodNameTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common"
         android:layout_marginTop="@dimen/common"
@@ -35,7 +35,7 @@
     </ImageView>
     <TextView
         android:id="@+id/date"
-        android:layout_width="@dimen/nutrient_value_weight_small"
+        android:layout_width="@dimen/nutrient_value_width_small"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/common"
         android:text="123"
@@ -55,7 +55,7 @@
     </ImageView>
     <TextView
         android:id="@+id/time"
-        android:layout_width="@dimen/nutrient_value_weight_small"
+        android:layout_width="@dimen/nutrient_value_width_small"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/common"
         android:padding="@dimen/padding_edit_text"
@@ -79,7 +79,7 @@
     </TextView>
     <TextView
         android:id="@+id/portionWeightTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common"
         android:layout_marginTop="@dimen/common"
@@ -113,7 +113,7 @@
         android:text="@string/enterNutrientsFor100Gr" />
     <TextView
         android:id="@+id/proteinsTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common"
         android:layout_marginTop="@dimen/common"
@@ -136,7 +136,7 @@
     </TextView>
     <TextView
         android:id="@+id/fatsTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common"
         android:layout_marginTop="@dimen/common"
@@ -159,7 +159,7 @@
     </TextView>
     <TextView
         android:id="@+id/carbsTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common"
         android:layout_marginTop="@dimen/common"
@@ -182,7 +182,7 @@
     </TextView>
     <TextView
         android:id="@+id/caloriesTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common"
         android:layout_marginTop="@dimen/common"

@@ -15,7 +15,7 @@
         android:background="?android:attr/listDivider" />
     <TextView
         android:id="@+id/editedFoodNameTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common"
         android:layout_marginTop="@dimen/common"
@@ -38,7 +38,7 @@
     </TextView>
     <TextView
         android:id="@+id/editedPortionWeightTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common"
         android:layout_marginTop="@dimen/common"
@@ -62,7 +62,7 @@
     </EditText>
     <TextView
         android:id="@+id/editedGlycemicIndexTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common"
         android:layout_marginTop="@dimen/common"
@@ -95,7 +95,7 @@
         android:text="@string/enterNutrientsFor100Gr" />
     <TextView
         android:id="@+id/editedProteinsTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common"
         android:layout_marginTop="@dimen/common"
@@ -119,7 +119,7 @@
     </EditText>
     <TextView
         android:id="@+id/editedFatsTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common"
         android:layout_marginTop="@dimen/common"
@@ -143,7 +143,7 @@
     </EditText>
     <TextView
         android:id="@+id/editedCarbsTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common"
         android:layout_marginTop="@dimen/common"
@@ -167,7 +167,7 @@
     </EditText>
     <TextView
         android:id="@+id/editedCaloriesTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/common"
         android:layout_marginTop="@dimen/common"

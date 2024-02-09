@@ -64,7 +64,11 @@
     <string name="male">Мужчина</string>
     <string name="female">Женщина</string>
     <string name="anthropometricData">Антропометрические данные</string>
-    <string name="weight">Вес</string>
-    <string name="height">Рост</string>
+    <string name="weight">Вес (кг)</string>
+    <string name="height">Рост (см)</string>
+    <string name="chestCirc">Грудь (см)</string>
+    <string name="waistCirc">Талия (см)</string>
+    <string name="hipCirc">Талия (см)</string>
+    <string name="neckCirc">Шея (см)</string>
     <string name="yourWeight">Ваш вес:</string>
 </resources>

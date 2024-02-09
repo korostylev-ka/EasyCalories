@@ -21,7 +21,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/userDataInfo"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -40,8 +40,10 @@
         <EditText
             android:layout_marginTop="@dimen/common"
             android:layout_marginStart="@dimen/padding_edit_text"
+            android:padding="@dimen/padding_edit_text"
             android:id="@+id/weightValue"
-            android:layout_width="@dimen/nutrient_value_weight_small"
+            android:gravity="center"
+            android:layout_width="@dimen/weight_width"
             android:background="@drawable/edit_text_no_gradient"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toEndOf="@id/weightTitle"
@@ -119,7 +121,7 @@
         </TextView>
         <TextView
             android:id="@+id/proteinValue"
-            android:layout_width="@dimen/nutrient_value_weight_small"
+            android:layout_width="@dimen/nutrient_value_width_small"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_edit_text"
             android:layout_marginEnd="@dimen/padding_edit_text"
@@ -157,7 +159,7 @@
         </TextView>
         <TextView
             android:id="@+id/fatValue"
-            android:layout_width="@dimen/nutrient_value_weight_small"
+            android:layout_width="@dimen/nutrient_value_width_small"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_edit_text"
             android:layout_marginStart="@dimen/padding_edit_text"
@@ -193,7 +195,7 @@
         </TextView>
         <TextView
             android:id="@+id/carbValue"
-            android:layout_width="@dimen/nutrient_value_weight_small"
+            android:layout_width="@dimen/nutrient_value_width_small"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_edit_text"
             android:layout_marginTop="@dimen/common"
@@ -229,7 +231,7 @@
         </TextView>
         <TextView
             android:id="@+id/caloryValue"
-            android:layout_width="@dimen/nutrient_value_weight_small"
+            android:layout_width="@dimen/nutrient_value_width_small"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common"
             android:padding="@dimen/padding_edit_text"

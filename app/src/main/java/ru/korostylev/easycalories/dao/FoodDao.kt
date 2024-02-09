@@ -10,8 +10,10 @@ import ru.korostylev.easycalories.entity.FoodItemEntity
 
 @Dao
 interface FoodDao {
+//    @Query("SELECT * FROM FoodItemEntity")
+//    suspend fun getAll(): LiveData<List<FoodItemEntity>>
     @Query("SELECT * FROM FoodItemEntity")
-    fun getAll(): LiveData<List<FoodItemEntity>>
+    suspend fun getAll(): List<FoodItemEntity>?
 
     @Query("SELECT * FROM FoodItemEntity WHERE name = (:foodName)")
     fun getFoodItem(foodName: String): FoodItemEntity?

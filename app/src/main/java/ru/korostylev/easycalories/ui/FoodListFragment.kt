@@ -110,10 +110,12 @@ class FoodListFragment : Fragment() {
                 }
             }
         )
+//        release observe firebase changes
         viewModel.foodListLiveDataFirebase.observe(
             viewLifecycleOwner,
             Observer {foodsFirebase->
                 viewModel.updateFromFirebase(foodsFirebase)
+                viewModel.getFoodList()
             }
         )
         binding.addFoodItem.setOnClickListener {

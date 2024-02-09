@@ -20,7 +20,7 @@
         android:layout_marginTop="@dimen/common"
         android:layout_marginStart="@dimen/padding_edit_text"
         android:id="@+id/weightValue"
-        android:layout_width="@dimen/nutrient_value_weight_small"
+        android:layout_width="@dimen/nutrient_value_width_small"
         android:background="@drawable/edit_text_no_gradient"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toEndOf="@id/weightTitle"

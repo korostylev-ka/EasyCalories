@@ -79,7 +79,7 @@
         </EditText>
         <EditText
             android:id="@+id/ageValue"
-            android:layout_width="@dimen/nutrient_value_weight_large"
+            android:layout_width="@dimen/nutrient_value_width_large"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common"
             android:padding="@dimen/padding_edit_text"
@@ -89,7 +89,7 @@
         </EditText>
         <TextView
             android:id="@+id/genderValue"
-            android:layout_width="@dimen/nutrient_value_weight_large"
+            android:layout_width="@dimen/nutrient_value_width_large"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common"
             android:padding="@dimen/padding_edit_text"
@@ -144,7 +144,7 @@
         </TextView>
         <EditText
             android:id="@+id/weightValue"
-            android:layout_width="@dimen/nutrient_value_weight_large"
+            android:layout_width="@dimen/nutrient_value_width_large"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common"
             android:padding="@dimen/padding_edit_text"
@@ -165,13 +165,97 @@
         </TextView>
         <EditText
             android:id="@+id/heightValue"
-            android:layout_width="@dimen/nutrient_value_weight_large"
+            android:layout_width="@dimen/nutrient_value_width_large"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common"
             android:padding="@dimen/padding_edit_text"
             android:background="@drawable/edit_text_no_gradient"
             app:layout_constraintStart_toStartOf="@id/dividerData"
             app:layout_constraintTop_toBottomOf="@id/weightValue">
+        </EditText>
+        <TextView
+            android:id="@+id/chest"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common"
+            android:text="@string/chestCirc"
+            app:layout_constraintTop_toTopOf="@id/chestValue"
+            app:layout_constraintBottom_toBottomOf="@id/chestValue"
+            app:layout_constraintEnd_toStartOf="@id/dividerData"
+            app:layout_constraintStart_toStartOf="parent">
+        </TextView>
+        <EditText
+            android:id="@+id/chestValue"
+            android:layout_width="@dimen/nutrient_value_width_large"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common"
+            android:padding="@dimen/padding_edit_text"
+            android:background="@drawable/edit_text_no_gradient"
+            app:layout_constraintStart_toStartOf="@id/dividerData"
+            app:layout_constraintTop_toBottomOf="@id/heightValue">
+        </EditText>
+        <TextView
+            android:id="@+id/waist"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common"
+            android:text="@string/waistCirc"
+            app:layout_constraintTop_toTopOf="@id/waistValue"
+            app:layout_constraintBottom_toBottomOf="@id/waistValue"
+            app:layout_constraintEnd_toStartOf="@id/dividerData"
+            app:layout_constraintStart_toStartOf="parent">
+        </TextView>
+        <EditText
+            android:id="@+id/waistValue"
+            android:layout_width="@dimen/nutrient_value_width_large"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common"
+            android:padding="@dimen/padding_edit_text"
+            android:background="@drawable/edit_text_no_gradient"
+            app:layout_constraintStart_toStartOf="@id/dividerData"
+            app:layout_constraintTop_toBottomOf="@id/chestValue">
+        </EditText>
+        <TextView
+            android:id="@+id/hip"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common"
+            android:text="@string/hipCirc"
+            app:layout_constraintTop_toTopOf="@id/hipValue"
+            app:layout_constraintBottom_toBottomOf="@id/hipValue"
+            app:layout_constraintEnd_toStartOf="@id/dividerData"
+            app:layout_constraintStart_toStartOf="parent">
+        </TextView>
+        <EditText
+            android:id="@+id/hipValue"
+            android:layout_width="@dimen/nutrient_value_width_large"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common"
+            android:padding="@dimen/padding_edit_text"
+            android:background="@drawable/edit_text_no_gradient"
+            app:layout_constraintStart_toStartOf="@id/dividerData"
+            app:layout_constraintTop_toBottomOf="@id/waistValue">
+        </EditText>
+        <TextView
+            android:id="@+id/neck"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common"
+            android:text="@string/neckCirc"
+            app:layout_constraintTop_toTopOf="@id/neckValue"
+            app:layout_constraintBottom_toBottomOf="@id/neckValue"
+            app:layout_constraintEnd_toStartOf="@id/dividerData"
+            app:layout_constraintStart_toStartOf="parent">
+        </TextView>
+        <EditText
+            android:id="@+id/neckValue"
+            android:layout_width="@dimen/nutrient_value_width_large"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common"
+            android:padding="@dimen/padding_edit_text"
+            android:background="@drawable/edit_text_no_gradient"
+            app:layout_constraintStart_toStartOf="@id/dividerData"
+            app:layout_constraintTop_toBottomOf="@id/hipValue">
         </EditText>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

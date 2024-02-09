@@ -1,13 +1,14 @@
 package ru.korostylev.easycalories.db
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import ru.korostylev.easycalories.dao.NutrientsDao
 import ru.korostylev.easycalories.entity.NutrientsEntity
 
-@Database(entities = [NutrientsEntity::class], version = 1)
+@Database(entities = [NutrientsEntity::class], version = 1, exportSchema = true)
 abstract class NutrientsDB: RoomDatabase() {
     abstract val nutrientsDao: NutrientsDao
 

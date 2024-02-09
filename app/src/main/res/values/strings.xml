@@ -66,6 +66,10 @@
     <string name="anthropometricData">Anthropometric data</string>
     <string name="weight">Weight (kg)</string>
     <string name="height">Height (cm)</string>
+    <string name="chestCirc">Chest (cm)</string>
+    <string name="waistCirc">Waist (cm)</string>
+    <string name="hipCirc">Hip (cm)</string>
+    <string name="neckCirc">Neck (cm)</string>
     <string name="yourWeight">Your weight is:</string>
 
 

@@ -2,6 +2,7 @@ package ru.korostylev.easycalories.repository
 
 import androidx.lifecycle.LiveData
 import ru.korostylev.easycalories.dao.NutrientsDao
+import ru.korostylev.easycalories.dao.WeightDao
 import ru.korostylev.easycalories.entity.EatenFoodsEntity
 import ru.korostylev.easycalories.entity.NutrientsEntity
 

@@ -1,7 +1,12 @@
 package ru.korostylev.easycalories.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import ru.korostylev.easycalories.api.FirebaseDB
 import ru.korostylev.easycalories.db.FoodDB
 import ru.korostylev.easycalories.dto.FoodItem
@@ -11,8 +16,15 @@ import ru.korostylev.easycalories.repository.FoodRepositoryImpl
 
 class FoodViewModel(application: Application): AndroidViewModel(application) {
     private val repository: FoodRepository = FoodRepositoryImpl(FoodDB.getInstance(application).foodDao, FirebaseDB().newInstance())
-    val foodListLiveData = repository.getFoodList()
-    val foodListLiveDataFirebase = repository.getFoodListFromFirebase()
+//    release
+//    val foodListLiveData = repository.getFoodList()
+    val foodListLiveData = repository.liveDataFromDB
+    val foodListLiveDataFirebase = repository.getFoodListFromAPI()
+
+    fun getFoodList() = viewModelScope.launch(Dispatchers.IO) {
+        repository.getFoodList()
+    }
+
 
     fun getFoodItem(name: String): FoodItemEntity? {
         return repository.getFoodItem(name)
@@ -35,24 +47,29 @@ class FoodViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun saveToFirebase(foodItem: FoodItem): String? {
-        return repository.saveToFirebase(foodItem)
+        return repository.saveToAPI(foodItem)
     }
 
     fun editToFirebase(foodItem: FoodItem) {
-        repository.editToFirebase(foodItem)
+        repository.editToAPI(foodItem)
 
     }
 
     fun deleteFromFirebase(foodItem: FoodItem) {
-        repository.deleteFromFirebase(foodItem)
+        repository.deleteFromAPI(foodItem)
     }
 
     fun updateFromFirebase(list: List<FoodItem>) {
-        repository.updateFromFirebase(list)
+        repository.updateFromAPI(list)
+    }
+
+    fun initAPI() = viewModelScope.launch(Dispatchers.IO) {
+        repository.initAPI()
     }
 
     init {
-        repository.getFoodList()
-
+        initAPI()
+        getFoodList()
+//        repository.getFoodList()
     }
 }

@@ -16,7 +16,7 @@
     </TextView>
     <TextView
         android:id="@+id/giTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:text="@string/glycemicIndex"
         style="@style/recyclerTextRegular"
@@ -25,7 +25,7 @@
     </TextView>
     <TextView
         android:id="@+id/giValue"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/foodName"
@@ -33,7 +33,7 @@
     </TextView>
     <TextView
         android:id="@+id/foodProteinsTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:text="@string/proteins"
         style="@style/recyclerTextRegular"
@@ -42,7 +42,7 @@
     </TextView>
     <TextView
         android:id="@+id/foodProteinsValue"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         style="@style/proteinsTextRegular"
         app:layout_constraintTop_toBottomOf="@id/giTitle"
@@ -50,7 +50,7 @@
     </TextView>
     <TextView
         android:id="@+id/foodFatsTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:text="@string/fats"
         style="@style/recyclerTextRegular"
@@ -59,7 +59,7 @@
     </TextView>
     <TextView
         android:id="@+id/foodFatsValue"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         style="@style/fatsTextRegular"
         app:layout_constraintTop_toBottomOf="@id/foodProteinsValue"
@@ -67,7 +67,7 @@
     </TextView>
     <TextView
         android:id="@+id/foodCarbsTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:text="@string/carbohydrates"
         style="@style/recyclerTextRegular"
@@ -76,7 +76,7 @@
     </TextView>
     <TextView
         android:id="@+id/foodCarbsValue"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         style="@style/carbsTextRegular"
         app:layout_constraintTop_toBottomOf="@id/foodFatsValue"
@@ -84,7 +84,7 @@
     </TextView>
     <TextView
         android:id="@+id/foodCaloriesTitle"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         android:text="@string/calories"
         style="@style/recyclerTextRegular"
@@ -93,7 +93,7 @@
     </TextView>
     <TextView
         android:id="@+id/foodCaloriessValue"
-        android:layout_width="@dimen/nutrient_value_weight_large"
+        android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
         style="@style/caloriesTextRegular"
         app:layout_constraintTop_toBottomOf="@id/foodCarbsValue"

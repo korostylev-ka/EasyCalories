@@ -9,15 +9,18 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.delay
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentHomeBinding
 import ru.korostylev.easycalories.entity.EatenFoodsEntity
+import ru.korostylev.easycalories.entity.WeightEntity
 import ru.korostylev.easycalories.interfaces.OnInteractionListener
 import ru.korostylev.easycalories.recyclerview.EatenFoodsListAdapter
 
 import ru.korostylev.easycalories.utils.AndroidUtils
 import ru.korostylev.easycalories.viewmodel.EatenFoodsViewModel
 import ru.korostylev.easycalories.viewmodel.NutrientsViewModel
+import ru.korostylev.easycalories.viewmodel.ProfileViewModel
 import java.util.Calendar
 import kotlin.math.roundToInt
 
@@ -29,6 +32,7 @@ class HomeFragment : Fragment() {
     private var date: Long = calendar.timeInMillis
     private val viewModel: NutrientsViewModel by activityViewModels()
     private val eatenFoodsViewModel: EatenFoodsViewModel by activityViewModels()
+    private val profileViewModel: ProfileViewModel by activityViewModels()
     private val listener = object: OnInteractionListener {
         override fun remove(eatenFoodsEntity: EatenFoodsEntity) {
             viewModel.removeNutrients(eatenFoodsEntity)
@@ -47,6 +51,7 @@ class HomeFragment : Fragment() {
     private var month = 0
     private var year = 0
     private var dayId = 0
+    private var weight: Float? = null
     private var proteinsLimit = 0.0f
     private var fatsLimit = 0.0f
     private var carbsLimit = 0.0f
@@ -55,8 +60,7 @@ class HomeFragment : Fragment() {
     private var fatsActual = 0.0f
     private var carbsActual = 0.0f
     private var caloriesActual = 0.0f
-    private var userWeightBundle = Bundle()
-    private var userWeight = userWeightBundle.getFloat(date.toString()) ?: 0F
+
 
     //get current date in digits
     private fun getCurrentDay(): Int {
@@ -88,7 +92,7 @@ class HomeFragment : Fragment() {
         month = calendar.get(Calendar.MONTH) + 1
         year = calendar.get(Calendar.YEAR)
         dayId = getCurrentDay()
-        userWeight = arguments!!.getFloat(DATE_ID)
+        weight = profileViewModel.getWeight(dayId)
 
     }
 
@@ -98,7 +102,12 @@ class HomeFragment : Fragment() {
     ): View? {
         requireActivity().setTitle(R.string.app_name)
         val homeFragmentBinding = FragmentHomeBinding.inflate(layoutInflater)
-        homeFragmentBinding.weightValue.setText(userWeight.toString())
+        homeFragmentBinding.weightValue.isFocusable = false
+        val weightValue = when(weight) {
+            null -> "not"
+            else -> weight
+        }
+        homeFragmentBinding.weightValue.setText(weightValue.toString())
         homeFragmentBinding.changeButton.setOnClickListener {
             homeFragmentBinding.weightValue.isFocusableInTouchMode = true
             homeFragmentBinding.weightValue.requestFocus()
@@ -106,8 +115,9 @@ class HomeFragment : Fragment() {
             homeFragmentBinding.saveButton.visibility = View.VISIBLE
         }
         homeFragmentBinding.saveButton.setOnClickListener {
-            userWeight = (homeFragmentBinding.weightValue.text.toString()).toFloat()
-            userWeightBundle.putFloat(date.toString(), userWeight)
+            val newWeightValue = homeFragmentBinding.weightValue.text.toString()
+            val weightFloat = newWeightValue.toFloat()
+            profileViewModel.saveWeight(WeightEntity(0, dayId, weightFloat))
             homeFragmentBinding.weightValue.clearFocus()
             homeFragmentBinding.weightValue.isFocusable = false
             homeFragmentBinding.changeButton.visibility = View.VISIBLE
