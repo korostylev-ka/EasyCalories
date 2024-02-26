@@ -57,6 +57,7 @@
     <string name="gramm">gramm(g)</string>
     <string name="search">Search</string>
     <string name="meals">MEALS:</string>
+<!--  Anthropometric data  -->
     <string name="profile">Profile</string>
     <string name="name">Name</string>
     <string name="age">Age</string>
@@ -71,6 +72,21 @@
     <string name="hipCirc">Hip (cm)</string>
     <string name="neckCirc">Neck (cm)</string>
     <string name="yourWeight">Your weight is:</string>
+    <string name="BMI">BMI:</string>
+    <string name="BMISevereThinness">Underweight (Severe thinness)</string>
+    <string name="BMIMildThinness">Underweight (Mild thinness)</string>
+    <string name="BMINormalRange">Normal range</string>
+    <string name="BMIOverweight">Overweight (Pre-obese)</string>
+    <string name="BMIObeseClassI">Obese (Class I)</string>
+    <string name="BMIObeseClassII">Obese (Class II)</string>
+    <string name="BMIObeseClassIII">Obese (Class III)</string>
+    <!--    Errors and response     -->
+    <string name="wrongResponse">Something wrong. Try again.</string>
+    <string name="responseCode">Response code: </string>
+    <string name="serverError">Server not answer. Try later. </string>
+    <!--    TOASTS    -->
+    <string name="startFrom0">Can\'t start with "0"</string>
+    <string name="startFrom.">Can\'t start with "."</string>
 
 
 </resources>

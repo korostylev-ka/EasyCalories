@@ -2,6 +2,7 @@ package ru.korostylev.easycalories.ui
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -10,7 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import kotlinx.coroutines.launch
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentSelectedFoodItemBinding
 import ru.korostylev.easycalories.entity.EatenFoodsEntity
@@ -100,7 +105,6 @@ class SelectedFoodItemFragment : Fragment() {
         arguments?.let {
             foodName = it.getString(FOOD_NAME) ?: ""
         }
-        foodItemEntity = foodViewModel.getFoodItem(foodName)
     }
 
     override fun onCreateView(
@@ -138,19 +142,46 @@ class SelectedFoodItemFragment : Fragment() {
                 }
             }
         }
+        viewLifecycleOwner.lifecycleScope.launch {
+            foodItemEntity = foodViewModel.getFoodItem(foodName)
+            with(binding) {
+                when (foodItemEntity!!.image) {
+                    null -> foodImage.visibility = View.GONE
+                    else -> {
+                        foodImage.visibility = View.VISIBLE
+                        Glide.with(foodImage)
+                            .load(foodItemEntity!!.image!!.toUri())
+                            .placeholder(R.drawable.empty_food_256dp)
+                            .into(foodImage)
+
+                    }
+                }
+                portionWeightValue.requestFocus()
+                portionWeightValue.addTextChangedListener(nutrientsValueWatcher)
+                foodNameValue.text = foodItemEntity!!.name
+                portionWeightValue.setText(foodItemEntity!!.portionWeight.toString())
+                val portionFloat = foodItemEntity!!.portionWeight / 100
+                proteinsValue.text = (foodItemEntity!!.proteins * portionFloat).toString()
+                fatsValue.text = (foodItemEntity!!.fats * portionFloat).toString()
+                carbsValue.text = (foodItemEntity!!.carbs * portionFloat).toString()
+                caloriesValue.text = (foodItemEntity!!.calories * portionFloat).toString()
+                date.text = getStringDate()
+                time.text = getCurrentStringTime()
+            }
+        }
 
         with(binding) {
-            portionWeightValue.requestFocus()
-            portionWeightValue.addTextChangedListener(nutrientsValueWatcher)
-            foodNameValue.text = foodItemEntity!!.name
-            portionWeightValue.setText(foodItemEntity!!.portionWeight.toString())
-            val portionFloat = foodItemEntity!!.portionWeight / 100
-            proteinsValue.text = (foodItemEntity!!.proteins * portionFloat).toString()
-            fatsValue.text = (foodItemEntity!!.fats * portionFloat).toString()
-            carbsValue.text = (foodItemEntity!!.carbs * portionFloat).toString()
-            caloriesValue.text = (foodItemEntity!!.calories * portionFloat).toString()
-            date.text = getStringDate()
-            time.text = getCurrentStringTime()
+//            portionWeightValue.requestFocus()
+//            portionWeightValue.addTextChangedListener(nutrientsValueWatcher)
+//            foodNameValue.text = foodItemEntity!!.name
+//            portionWeightValue.setText(foodItemEntity!!.portionWeight.toString())
+//            val portionFloat = foodItemEntity!!.portionWeight / 100
+//            proteinsValue.text = (foodItemEntity!!.proteins * portionFloat).toString()
+//            fatsValue.text = (foodItemEntity!!.fats * portionFloat).toString()
+//            carbsValue.text = (foodItemEntity!!.carbs * portionFloat).toString()
+//            caloriesValue.text = (foodItemEntity!!.calories * portionFloat).toString()
+//            date.text = getStringDate()
+//            time.text = getCurrentStringTime()
             calendarIcon.setOnClickListener {
                 val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     selectedDay = dayOfMonth

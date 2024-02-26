@@ -1,0 +1,82 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "ce69364344caefc1933c3ee4d594c420",
+    "entities": [
+      {
+        "tableName": "EatenFoodsEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `dayId` INTEGER NOT NULL, `time` INTEGER NOT NULL, `name` TEXT NOT NULL, `portionWeight` INTEGER NOT NULL, `portionProteins` REAL NOT NULL, `portionFats` REAL NOT NULL, `portionCarbs` REAL NOT NULL, `portionCalories` REAL NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dayId",
+            "columnName": "dayId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "time",
+            "columnName": "time",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "portionWeight",
+            "columnName": "portionWeight",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "portionProteins",
+            "columnName": "portionProteins",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "portionFats",
+            "columnName": "portionFats",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "portionCarbs",
+            "columnName": "portionCarbs",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "portionCalories",
+            "columnName": "portionCalories",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ce69364344caefc1933c3ee4d594c420')"
+    ]
+  }
+}

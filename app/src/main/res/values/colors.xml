@@ -3,6 +3,14 @@
     <color name="main_color_blue">#031D44</color>
     <color name="wrong">#E81708</color>
     <color name="ok">#08E813</color>
+    <color name="warning">#FF9800</color>
+    <color name="bmi_severe_thinness">#1900FF</color>
+    <color name="bmi_mild_thinness">#00D9FF</color>
+    <color name="bmi_normal">#08E813</color>
+    <color name="bmi_overweight">#B3EC70</color>
+    <color name="bmi_obese1">#FFEB3B</color>
+    <color name="bmi_obese2">#FF9800</color>
+    <color name="bmi_obese3">#E81708</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>

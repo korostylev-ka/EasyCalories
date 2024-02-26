@@ -1,10 +1,13 @@
 package ru.korostylev.easycalories.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -51,7 +54,7 @@ class HomeFragment : Fragment() {
     private var month = 0
     private var year = 0
     private var dayId = 0
-    private var weight: Float? = null
+    private var weight: Float = 0F
     private var proteinsLimit = 0.0f
     private var fatsLimit = 0.0f
     private var carbsLimit = 0.0f
@@ -92,8 +95,7 @@ class HomeFragment : Fragment() {
         month = calendar.get(Calendar.MONTH) + 1
         year = calendar.get(Calendar.YEAR)
         dayId = getCurrentDay()
-        weight = profileViewModel.getWeight(dayId)
-
+        weight = profileViewModel.getWeight(dayId) ?: 0F
     }
 
     override fun onCreateView(
@@ -102,12 +104,39 @@ class HomeFragment : Fragment() {
     ): View? {
         requireActivity().setTitle(R.string.app_name)
         val homeFragmentBinding = FragmentHomeBinding.inflate(layoutInflater)
+        val floatFieldWatcher = object : TextWatcher {
+            var position = 0
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                var position = 0
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                position = start
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val text = s.toString()
+                if (text.startsWith('0')) {
+                    s?.delete(position, position + 1)
+                    Toast.makeText(context, R.string.startFrom0, Toast.LENGTH_LONG)
+                        .show()
+                }
+                if ((text.startsWith('.')) || (text.startsWith(','))) {
+                    s?.delete(position, position + 1)
+                    Toast.makeText(context, R.string.startFrom_, Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        }
+
         homeFragmentBinding.weightValue.isFocusable = false
         val weightValue = when(weight) {
-            null -> "not"
-            else -> weight
+            0F -> ""
+            else -> weight.toString()
+
         }
-        homeFragmentBinding.weightValue.setText(weightValue.toString())
+        homeFragmentBinding.weightValue.setText(weightValue)
+        homeFragmentBinding.weightValue.addTextChangedListener(floatFieldWatcher)
         homeFragmentBinding.changeButton.setOnClickListener {
             homeFragmentBinding.weightValue.isFocusableInTouchMode = true
             homeFragmentBinding.weightValue.requestFocus()
@@ -116,8 +145,13 @@ class HomeFragment : Fragment() {
         }
         homeFragmentBinding.saveButton.setOnClickListener {
             val newWeightValue = homeFragmentBinding.weightValue.text.toString()
-            val weightFloat = newWeightValue.toFloat()
-            profileViewModel.saveWeight(WeightEntity(0, dayId, weightFloat))
+            if (!newWeightValue.isEmpty()) {
+                weight = newWeightValue.toFloat()
+                profileViewModel.saveWeight(WeightEntity(dayId, weight))
+            } else {
+                profileViewModel.saveWeight(WeightEntity(dayId, 0F))
+            }
+
             homeFragmentBinding.weightValue.clearFocus()
             homeFragmentBinding.weightValue.isFocusable = false
             homeFragmentBinding.changeButton.visibility = View.VISIBLE
@@ -158,7 +192,7 @@ class HomeFragment : Fragment() {
                     caloryValue.text = nutrientsValueName(caloriesLimit, caloriesActual)
                     totalDiagram.data = actualNutrients
                     date.text = getStringDate()
-                    if (proteinsActual > proteinsLimit) {
+                    if (proteinsActual.roundToInt() > proteinsLimit.roundToInt()) {
                         proteinValue.setBackgroundResource(R.drawable.proteins_value_view_overload)
                         proteinLabelOverload.visibility = View.VISIBLE
                         proteinLabelOverload.text = "+${(proteinsActual - proteinsLimit).roundToInt()}"
@@ -166,7 +200,7 @@ class HomeFragment : Fragment() {
                         proteinValue.setBackgroundResource(R.drawable.proteins_value_view)
                         proteinLabelOverload.visibility = View.GONE
                     }
-                    if (fatsActual > fatsLimit) {
+                    if (fatsActual.roundToInt() > fatsLimit.roundToInt()) {
                         fatValue.setBackgroundResource(R.drawable.fats_value_view_overload)
                         fatLabelOverload.visibility = View.VISIBLE
                         fatLabelOverload.text = "+${(fatsActual - fatsLimit).roundToInt()}"
@@ -174,7 +208,7 @@ class HomeFragment : Fragment() {
                         fatValue.setBackgroundResource(R.drawable.fats_value_view)
                         fatLabelOverload.visibility = View.GONE
                     }
-                    if (carbsActual > carbsLimit) {
+                    if (carbsActual.roundToInt() > carbsLimit.roundToInt()) {
                         carbValue.setBackgroundResource(R.drawable.carbs_value_view_overload)
                         carbsLabelOverload.visibility = View.VISIBLE
                         carbsLabelOverload.text = "+${(carbsActual - carbsLimit).roundToInt()}"
@@ -182,7 +216,7 @@ class HomeFragment : Fragment() {
                         carbValue.setBackgroundResource(R.drawable.carbs_value_view)
                         carbsLabelOverload.visibility = View.GONE
                     }
-                    if (caloriesActual > caloriesLimit) {
+                    if (caloriesActual.roundToInt() > caloriesLimit.roundToInt()) {
                         caloryValue.setBackgroundResource(R.drawable.calories_value_view_overload)
                         caloryLabelOverload.visibility = View.VISIBLE
                         caloryLabelOverload.text = "+${(caloriesActual - caloriesLimit).roundToInt()}"

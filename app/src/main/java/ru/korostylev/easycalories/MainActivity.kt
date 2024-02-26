@@ -7,6 +7,7 @@ import android.view.MenuItem
 import com.google.firebase.FirebaseApp
 import ru.korostylev.easycalories.ui.EditLimitsFragment
 import ru.korostylev.easycalories.ui.HomeFragment
+import ru.korostylev.easycalories.ui.ProfileFragment
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,13 +27,13 @@ class MainActivity : AppCompatActivity() {
                     .commit()
                 return true
             }
-//            R.id.editProfile -> {
-//                supportFragmentManager.beginTransaction()
-//                    .replace(R.id.fragmentContainer, ProfileFragment.newInstance())
-//                    .addToBackStack(null)
-//                    .commit()
-//                return true
-//            }
+            R.id.editProfile -> {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragmentContainer, ProfileFragment.newInstance())
+                    .addToBackStack(null)
+                    .commit()
+                return true
+            }
             else -> return false
         }
     }

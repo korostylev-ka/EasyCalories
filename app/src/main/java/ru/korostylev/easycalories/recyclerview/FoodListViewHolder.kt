@@ -20,8 +20,8 @@ class FoodListViewHolder(
     val binding: FoodItemBinding,
     val context: Context,
     val apiListener: APIListener,
-    val onInteractionListener: OnInteractionListener,
-    val foodEntityListener: FoodEntityListener
+    val onInteractionListener: OnInteractionListener
+
 ): RecyclerView.ViewHolder(binding.root), View.OnClickListener {
     @SuppressLint("ResourceAsColor")
     fun bind(foodItemEntity: FoodItemEntity) {
@@ -67,8 +67,8 @@ class FoodListViewHolder(
                 false -> View.GONE
             }
             deleteButton.setOnClickListener {
-                apiListener.remove(foodItemEntity.toFoodItem())
-                foodEntityListener.delete(foodItemEntity.id)
+                apiListener.remove(foodItemEntity.foodId)
+//                foodEntityListener.delete(foodItemEntity.id)
             }
             editButton.setOnClickListener {
                 onInteractionListener.toEditFoodItemFragment(foodItemEntity.id)

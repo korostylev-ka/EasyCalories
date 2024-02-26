@@ -3,6 +3,7 @@ package ru.korostylev.easycalories.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.korostylev.easycalories.dto.FoodItem
+import ru.korostylev.easycalories.dto.FoodItemFromDB
 
 @Entity
 data class FoodItemEntity(
@@ -26,7 +27,8 @@ data class FoodItemEntity(
         other as FoodItemEntity
         return (this.name == other.name) && (this.portionWeight == other.portionWeight) &&
                 (this.proteins == other.proteins) && (this.fats == other.fats) && (this.carbs == other.carbs) &&
-                (this.calories == other.calories) && (this.glycemicIndex == other.glycemicIndex)
+                (this.calories == other.calories) && (this.glycemicIndex == other.glycemicIndex) && (this.image == other.image) &&
+                (this.barcode == other.barcode)
     }
 
     fun toFoodItem(): FoodItem {
@@ -45,6 +47,24 @@ data class FoodItemEntity(
         )
     }
 
+        fun toFoodItemFromDB(): FoodItemFromDB {
+            return FoodItemFromDB(
+                0,
+                2,
+                this.categoryId,
+                this.name,
+                this.glycemicIndex,
+                this.proteins,
+                this.fats,
+                this.carbs,
+                this.calories,
+                null,
+                null,
+                null
+            )
+        }
+
+
     companion object {
         fun fromFoodItem(foodItem: FoodItem): FoodItemEntity {
             return FoodItemEntity(
@@ -62,6 +82,25 @@ data class FoodItemEntity(
                 foodItem.image,
                 false,
                 foodItem.key
+            )
+        }
+
+        fun fromFoodItemFromDB(foodItemFromDB: FoodItemFromDB): FoodItemEntity {
+            return FoodItemEntity(
+                0,
+                foodItemFromDB.id,
+                foodItemFromDB.category_id,
+                foodItemFromDB.name,
+                foodItemFromDB.GI ?: 0,
+                100,
+                foodItemFromDB.proteins,
+                foodItemFromDB.fats,
+                foodItemFromDB.carbs,
+                foodItemFromDB.calories,
+                foodItemFromDB.barcode,
+                foodItemFromDB.image,
+                false,
+                foodItemFromDB.key
             )
         }
     }

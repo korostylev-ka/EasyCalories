@@ -7,6 +7,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.FoodListFragment">
 
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/progressBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/foodListRecyclerView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="40dp"
+        android:maxWidth="40dp">
+
+    </ProgressBar>
+
     <EditText
         android:id="@+id/filterText"
         android:layout_width="match_parent"

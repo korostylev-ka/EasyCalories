@@ -10,6 +10,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.launch
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentNewFoodItemBinding
 
@@ -17,6 +19,7 @@ import ru.korostylev.easycalories.entity.FoodItemEntity
 import ru.korostylev.easycalories.utils.AndroidUtils
 import ru.korostylev.easycalories.viewmodel.FoodViewModel
 import java.util.*
+import kotlin.math.floor
 
 
 class NewFoodItemFragment : Fragment() {
@@ -44,7 +47,6 @@ class NewFoodItemFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d("fragments", "newfood oncreateview")
         requireActivity().setTitle(R.string.addingFood)
         val binding = FragmentNewFoodItemBinding.inflate(layoutInflater)
         with(binding) {
@@ -139,10 +141,10 @@ class NewFoodItemFragment : Fragment() {
                     proteins = proteinsString.toFloat()
                     fats = fatsString.toFloat()
                     carbs = carbsString.toFloat()
-                    val proteinsToAdd = AndroidUtils.formatFloatValues(proteins)
-                    val fatsToAdd = AndroidUtils.formatFloatValues(fats)
-                    val carbsToAdd = AndroidUtils.formatFloatValues(carbs)
-                    val caloriesToAdd = AndroidUtils.formatFloatValues(calories)
+                    val proteinsToAdd = Math.round(proteins * 10.0F) / 10.0F
+                    val fatsToAdd = Math.round(fats * 10.0F) / 10.0F
+                    val carbsToAdd = Math.round(carbs * 10.0F) / 10.0F
+                    val caloriesToAdd = Math.round(calories * 10.0F) / 10.0F
                     glycemicIndex = glycemicIndexString.toInt()
                     if ((proteins + fats + carbs) > 100) {
                         Toast.makeText(context, R.string.summOfNutrientsMoreThan100, Toast.LENGTH_LONG)
@@ -150,25 +152,30 @@ class NewFoodItemFragment : Fragment() {
                         return@setOnClickListener
                     }
                     if (proteins >= 0F && fats >=0F && carbs >= 0F ) {
-                        val isFoodExist = foodViewModel.getFoodItem(name)
-                        if (isFoodExist == null) {
-                            val newFoodEntity = FoodItemEntity(0, foodId, categoryId, name, glycemicIndex, portionWeight, proteinsToAdd, fatsToAdd, carbsToAdd, caloriesToAdd, image, barcode, true)
-                            foodViewModel.addItem(newFoodEntity)
-                            parentFragmentManager.popBackStack()
-                            try {
-                                val key = foodViewModel.saveToFirebase(newFoodEntity.toFoodItem())
-                                val food = foodViewModel.getFoodItem(name)
-                                Log.d("fooditem", food.toString())
-                                foodViewModel.update(food!!.copy(key = key))
-                            } catch (e: ru.korostylev.easycalories.error.Error) {
-                                throw e
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            val isFoodExist = foodViewModel.getFoodItem(name)
+                            if (isFoodExist == null) {
+                                val newFoodEntity = FoodItemEntity(0, 0, categoryId, name, glycemicIndex, portionWeight, proteinsToAdd, fatsToAdd, carbsToAdd, caloriesToAdd, image, barcode, true)
+//                                foodViewModel.addItem(newFoodEntity)
+                                Log.d("protein", "$proteins")
+                                foodViewModel.saveToApi(newFoodEntity)
+                                parentFragmentManager.popBackStack()
+                                try {
+//                                    val key = foodViewModel.saveToFirebase(newFoodEntity.toFoodItem())
+//                                    val food = foodViewModel.getFoodItem(name)
+//                                    Log.d("fooditem", food.toString())
+//                                    foodViewModel.update(food!!.copy(key = key))
+                                } catch (e: ru.korostylev.easycalories.error.Error) {
+                                    throw e
+                                }
+
+                            } else {
+                                binding.foodNameValue.requestFocus()
+                                binding.foodNameValue.setBackgroundResource(R.drawable.edit_text_value_wrong)
+                                Toast.makeText(context, R.string.foodAlreadyExists, Toast.LENGTH_SHORT)
+                                    .show()
                             }
 
-                        } else {
-                            binding.foodNameValue.requestFocus()
-                            binding.foodNameValue.setBackgroundResource(R.drawable.edit_text_value_wrong)
-                            Toast.makeText(context, R.string.foodAlreadyExists, Toast.LENGTH_SHORT)
-                                .show()
                         }
 
                     } else {

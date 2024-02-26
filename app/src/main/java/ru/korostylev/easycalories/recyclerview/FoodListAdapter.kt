@@ -9,9 +9,9 @@ import ru.korostylev.easycalories.interfaces.APIListener
 import ru.korostylev.easycalories.interfaces.FoodEntityListener
 import ru.korostylev.easycalories.interfaces.OnInteractionListener
 
-class FoodListAdapter(val foodList: List<FoodItemEntity>, val apiListener: APIListener, val onInteractionListener: OnInteractionListener, val foodEntityListener: FoodEntityListener): RecyclerView.Adapter<FoodListViewHolder>() {
+class FoodListAdapter(val foodList: List<FoodItemEntity>, val apiListener: APIListener, val onInteractionListener: OnInteractionListener): RecyclerView.Adapter<FoodListViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodListViewHolder {
-        return FoodListViewHolder(FoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false), parent.context, apiListener, onInteractionListener, foodEntityListener)
+        return FoodListViewHolder(FoodItemBinding.inflate(LayoutInflater.from(parent.context), parent, false), parent.context, apiListener, onInteractionListener)
     }
 
     override fun getItemCount(): Int {

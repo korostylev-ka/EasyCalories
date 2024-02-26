@@ -41,6 +41,7 @@
             android:layout_marginTop="@dimen/common"
             android:layout_marginStart="@dimen/padding_edit_text"
             android:padding="@dimen/padding_edit_text"
+            android:inputType="numberDecimal"
             android:id="@+id/weightValue"
             android:gravity="center"
             android:layout_width="@dimen/weight_width"
@@ -51,11 +52,12 @@
         </EditText>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/changeButton"
+            android:padding="@dimen/padding_edit_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/padding_edit_text"
             style="@style/Widget.AppTheme.IconButton"
-            app:icon="@drawable/edit_icon_48dp"
+            app:icon="@drawable/edit_icon_24dp"
             app:layout_constraintStart_toEndOf="@id/weightValue"
             app:layout_constraintTop_toTopOf="@id/weightValue"
             app:layout_constraintBottom_toBottomOf="@id/weightValue">
@@ -67,7 +69,7 @@
             android:layout_marginStart="@dimen/padding_edit_text"
             android:visibility="gone"
             style="@style/Widget.AppTheme.IconButton"
-            app:icon="@drawable/save_icon_48dp"
+            app:icon="@drawable/save_icon_24dp"
             app:layout_constraintStart_toEndOf="@id/weightValue"
             app:layout_constraintTop_toTopOf="@id/weightValue"
             app:layout_constraintBottom_toBottomOf="@id/weightValue">

@@ -9,7 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentEditFoodItemBinding
 import ru.korostylev.easycalories.entity.FoodItemEntity
@@ -40,21 +45,8 @@ class EditFoodItemFragment : Fragment() {
         arguments?.let {
             id = it.getInt(FOOD_ID)
         }
-        foodItemEntity = foodViewModel.getFoodItemById(id)
-        with(foodItemEntity) {
-            foodId = this!!.foodId
-            itemCategoryId = this!!.categoryId
-            itemName = this!!.name
-            itemProteins = this!!.proteins
-            itemFats = this.fats
-            itemCarbs = this!!.carbs
-            itemCalories = this!!.calories
-            itemPortionWeight = this!!.portionWeight
-            itemGlycemicIndex = this!!.glycemicIndex
-            itemImage = this!!.image
-            itemBarcode = this!!.barcode
-            itemKey = this.key
-        }
+
+
 
     }
 
@@ -64,18 +56,6 @@ class EditFoodItemFragment : Fragment() {
     ): View? {
         requireActivity().setTitle(R.string.editingFood)
         val binding = FragmentEditFoodItemBinding.inflate(layoutInflater)
-
-        with(binding) {
-            editedFoodNameValue.setText(itemName)
-            editedFoodNameValue.isFocusable = false
-            editedProteinsValue.setText(itemProteins.toString())
-            editedFatsValue.setText(itemFats.toString())
-            editedCarbsValue.setText(itemCarbs.toString())
-            editedCaloriesValue.setText(itemCalories.toString())
-            editedGlycemicIndexValue.setText(itemGlycemicIndex.toString())
-            editedPortionWeightValue.setText(itemPortionWeight.toString())
-        }
-
         val nameFieldTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -83,11 +63,9 @@ class EditFoodItemFragment : Fragment() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 binding.editedFoodNameValue.setBackgroundResource(R.drawable.edit_text_value)
-
             }
 
             override fun afterTextChanged(s: Editable?) {
-
             }
 
         }
@@ -134,10 +112,51 @@ class EditFoodItemFragment : Fragment() {
             }
 
         }
-        binding.editedFoodNameValue.addTextChangedListener(nameFieldTextWatcher)
-        binding.editedProteinsValue.addTextChangedListener(caloriesValueWatcher)
-        binding.editedFatsValue.addTextChangedListener(caloriesValueWatcher)
-        binding.editedCarbsValue.addTextChangedListener(caloriesValueWatcher)
+
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            foodItemEntity = foodViewModel.getFoodItemById(id)
+            with(foodItemEntity) {
+                foodId = this!!.foodId
+                itemCategoryId = this!!.categoryId
+                itemName = this!!.name
+                itemProteins = this!!.proteins
+                itemFats = this.fats
+                itemCarbs = this!!.carbs
+                itemCalories = this!!.calories
+                itemPortionWeight = this!!.portionWeight
+                itemGlycemicIndex = this!!.glycemicIndex
+                itemImage = this!!.image
+                itemBarcode = this!!.barcode
+                itemKey = this.key
+            }
+            with(binding) {
+                when (foodItemEntity!!.image) {
+                    null -> foodImage.visibility = View.GONE
+                    else -> {
+                        foodImage.visibility = View.VISIBLE
+                        Glide.with(foodImage)
+                            .load(foodItemEntity!!.image!!.toUri())
+                            .placeholder(R.drawable.empty_food_256dp)
+                            .into(foodImage)
+
+                    }
+                }
+                editedFoodNameValue.setText(itemName)
+                editedFoodNameValue.isFocusable = false
+                editedProteinsValue.setText(itemProteins.toString())
+                editedFatsValue.setText(itemFats.toString())
+                editedCarbsValue.setText(itemCarbs.toString())
+                editedCaloriesValue.setText(itemCalories.toString())
+                editedGlycemicIndexValue.setText(itemGlycemicIndex.toString())
+                editedPortionWeightValue.setText(itemPortionWeight.toString())
+            }
+            binding.editedFoodNameValue.addTextChangedListener(nameFieldTextWatcher)
+            binding.editedProteinsValue.addTextChangedListener(caloriesValueWatcher)
+            binding.editedFatsValue.addTextChangedListener(caloriesValueWatcher)
+            binding.editedCarbsValue.addTextChangedListener(caloriesValueWatcher)
+        }
+
         binding.editedButtonSave.setOnClickListener {
             with(binding) {
                 editedFoodNameValue.setBackgroundResource(R.drawable.edit_text_value)
@@ -160,10 +179,10 @@ class EditFoodItemFragment : Fragment() {
                     itemProteins = proteinsString.toFloat()
                     itemFats = fatsString.toFloat()
                     itemCarbs = carbsString.toFloat()
-                    val proteinsToAdd = AndroidUtils.formatFloatValues(itemProteins)
-                    val fatsToAdd = AndroidUtils.formatFloatValues(itemFats)
-                    val carbsToAdd = AndroidUtils.formatFloatValues(itemCarbs)
-                    val caloriesToAdd = AndroidUtils.formatFloatValues(itemCalories)
+                    val proteinsToAdd = Math.round(itemProteins * 10.0F) / 10.0F
+                    val fatsToAdd = Math.round(itemFats * 10.0F) / 10.0F
+                    val carbsToAdd = Math.round(itemCarbs * 10.0F) / 10.0F
+                    val caloriesToAdd = Math.round(itemCalories * 10.0F) / 10.0F
                     itemGlycemicIndex = glycemicIndexString.toInt()
                     if ((itemProteins + itemFats + itemCarbs) > 100) {
                         Toast.makeText(context, R.string.summOfNutrientsMoreThan100, Toast.LENGTH_LONG)
@@ -171,15 +190,16 @@ class EditFoodItemFragment : Fragment() {
                         return@setOnClickListener
                     }
                     if (itemProteins >= 0F && itemFats >=0F && itemCarbs >= 0F ) {
-                        val newFoodEntity = FoodItemEntity(id, foodId, itemCategoryId, name, itemGlycemicIndex, itemPortionWeight, proteinsToAdd, fatsToAdd, carbsToAdd, caloriesToAdd, itemImage, itemBarcode, true, itemKey)
-                        foodViewModel.update(newFoodEntity)
-                        foodViewModel.editToFirebase(newFoodEntity.toFoodItem())
+                        val newFoodEntity = FoodItemEntity(id, foodId, itemCategoryId, name, itemGlycemicIndex, itemPortionWeight, proteinsToAdd, fatsToAdd, carbsToAdd, caloriesToAdd, itemBarcode, itemImage, true, itemKey)
+//                        foodViewModel.update(newFoodEntity)
+                        foodViewModel.editToAPI(foodId, newFoodEntity)
                         parentFragmentManager.popBackStack()
                     } else {
                         Toast.makeText(context, R.string.checkTheFieldsAreCorrect, Toast.LENGTH_LONG)
                             .show()
                     }
                 } catch (e: java.lang.NumberFormatException) {
+                    Log.d("wrong", "IllegalArgumentException_buttonsave")
                     Toast.makeText(context, R.string.numberFormatException, Toast.LENGTH_LONG)
                         .show()
                 }

@@ -1,0 +1,94 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "a1cc07fcf24cadd81026084b9ce35cc5",
+    "entities": [
+      {
+        "tableName": "ProfileEntity",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT, `gender` TEXT, `age` INTEGER, `weight` REAL, `height` INTEGER, `chest` REAL, `waist` REAL, `hip` REAL, `neck` REAL, `bmi` REAL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "gender",
+            "columnName": "gender",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "age",
+            "columnName": "age",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "weight",
+            "columnName": "weight",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "height",
+            "columnName": "height",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "chest",
+            "columnName": "chest",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "waist",
+            "columnName": "waist",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "hip",
+            "columnName": "hip",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "neck",
+            "columnName": "neck",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bmi",
+            "columnName": "bmi",
+            "affinity": "REAL",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a1cc07fcf24cadd81026084b9ce35cc5')"
+    ]
+  }
+}

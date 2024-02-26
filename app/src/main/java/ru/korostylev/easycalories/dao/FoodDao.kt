@@ -16,17 +16,20 @@ interface FoodDao {
     suspend fun getAll(): List<FoodItemEntity>?
 
     @Query("SELECT * FROM FoodItemEntity WHERE name = (:foodName)")
-    fun getFoodItem(foodName: String): FoodItemEntity?
+    suspend fun getFoodItem(foodName: String): FoodItemEntity?
 
     @Query("SELECT * FROM FoodItemEntity WHERE id = (:id)")
-    fun getFoodItemById(id: Int): FoodItemEntity?
+    suspend fun getFoodItemById(id: Int): FoodItemEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(foodItemEntity: FoodItemEntity)
+    suspend fun insert(foodItemEntity: FoodItemEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(foods: List<FoodItemEntity>)
 
     @Update
-    fun update(foodItemEntity: FoodItemEntity)
+    suspend fun update(foodItemEntity: FoodItemEntity)
 
-    @Query("DELETE FROM FoodItemEntity WHERE id = :id")
-    fun delete(id: Int)
+    @Query("DELETE FROM FoodItemEntity WHERE foodId = :id")
+    suspend fun delete(id: Int)
 }

@@ -23,7 +23,7 @@ abstract class FoodDB: RoomDatabase() {
             FoodDB::class.java,
             "foods.db"
         )
-            .allowMainThreadQueries()
+//            .allowMainThreadQueries()
             .build()
     }
 
