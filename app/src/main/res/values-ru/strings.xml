@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Легкие Калории</string>
+    <string name="back">Назад</string>
     <string name="chooseFood">Выберите продукт</string>
     <string name="addingFood">Добавьте продукт</string>
     <string name="editingPortion">Введите вес порции</string>
@@ -36,6 +37,7 @@
     <string name="dec">ДЕК</string>
     <string name="editProfile">Редактировать профиль</string>
     <string name="editLimits">Редактировать лимиты калорий</string>
+    <string name="about">О приложении</string>
     <string name="enterProteinsPercent">Укажите % белков</string>
     <string name="enterFatsPercent">Укажите % жиров</string>
     <string name="enterCarbsPercent">Укажите % углеводов</string>
@@ -71,8 +73,9 @@
     <string name="waistCirc">Талия (см)</string>
     <string name="hipCirc">Талия (см)</string>
     <string name="neckCirc">Шея (см)</string>
-    <string name="yourWeight">Ваш вес:</string>
-    <string name="BMI">ИМТ:</string>
+    <string name="setWeigt">Укажите ваш вес сегодня</string>
+    <string name="yourWeight">Ваш вес сегодня:</string>
+    <string name="BMI">ИМТ</string>
     <string name="BMISevereThinness">Выраженный дефицит массы тела</string>
     <string name="BMIMildThinness">Недостаточная масса тела</string>
     <string name="BMINormalRange">Норма</string>
@@ -84,8 +87,18 @@
     <string name="wrongResponse">Ошибка выполения. Попробуйте позже.</string>
     <string name="responseCode">Код ответа: </string>
     <string name="serverError">Сервер не отвечает. Попробуйте позже. </string>
+    <string name="nullActivity">Ошибка приложения</string>
     <!--    TOASTS      -->
     <string name="startFrom0">Не может начинаться с "0"</string>
     <string name="startFrom.">Не может начинаться с "."</string>
+    <!--    ABOUT    -->
+    <string name="nameApp">Легкие Калории V1.1</string>
+    <string name="developer">Разработчик: Коростылев К.А.</string>
+    <string name="email">Email: developkirill@yandex.ru</string>
+    <!--    CONTENT DESCRIPTION     -->
+    <string name="backButtonDescr">Кнопка назад</string>
+    <string name="fwdButtonDescr">Кнопка вперед</string>
+    <string name="changeButtonDescr">Кнопка изменить</string>
+    <string name="weightDescr">Вес</string>
 
 </resources>

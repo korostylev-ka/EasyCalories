@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="@dimen/common"
     android:paddingBottom="@dimen/common"
     tools:context=".ui.ProfileFragment">
 
@@ -290,6 +289,17 @@
                 android:background="@drawable/edit_text_no_gradient"
                 app:layout_constraintStart_toStartOf="@id/dividerData"
                 app:layout_constraintTop_toBottomOf="@id/neckValue">
+            </TextView>
+            <TextView
+                android:id="@+id/bmiStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/padding_edit_text"
+                android:background="@drawable/edit_text_value_no_border"
+                app:layout_constraintStart_toEndOf="@id/bmiValue"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/bmiValue"
+                app:layout_constraintBottom_toBottomOf="@id/bmiValue">
             </TextView>
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonSave"

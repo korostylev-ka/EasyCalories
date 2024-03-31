@@ -151,6 +151,7 @@ class SelectedFoodItemFragment : Fragment() {
                         foodImage.visibility = View.VISIBLE
                         Glide.with(foodImage)
                             .load(foodItemEntity!!.image!!.toUri())
+                            .circleCrop()
                             .placeholder(R.drawable.empty_food_256dp)
                             .into(foodImage)
 
@@ -171,18 +172,7 @@ class SelectedFoodItemFragment : Fragment() {
         }
 
         with(binding) {
-//            portionWeightValue.requestFocus()
-//            portionWeightValue.addTextChangedListener(nutrientsValueWatcher)
-//            foodNameValue.text = foodItemEntity!!.name
-//            portionWeightValue.setText(foodItemEntity!!.portionWeight.toString())
-//            val portionFloat = foodItemEntity!!.portionWeight / 100
-//            proteinsValue.text = (foodItemEntity!!.proteins * portionFloat).toString()
-//            fatsValue.text = (foodItemEntity!!.fats * portionFloat).toString()
-//            carbsValue.text = (foodItemEntity!!.carbs * portionFloat).toString()
-//            caloriesValue.text = (foodItemEntity!!.calories * portionFloat).toString()
-//            date.text = getStringDate()
-//            time.text = getCurrentStringTime()
-            calendarIcon.setOnClickListener {
+            date.setOnClickListener {
                 val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     selectedDay = dayOfMonth
                     selectedMonth = monthOfYear
@@ -231,6 +221,8 @@ class SelectedFoodItemFragment : Fragment() {
                 }
                 nutrientsViewModel.addNutrients(dayId, nutrients)
                 eatenFoodsViewModel.addEatenFood(food)
+                val newFoodItemEntity = foodItemEntity!!.copy(portionWeight = portionWeightFloat, timesEaten=foodItemEntity!!.timesEaten + 1)
+                foodViewModel.update(newFoodItemEntity)
                 parentFragmentManager.popBackStack()
                 parentFragmentManager.popBackStack()
                 requireActivity().setTitle(R.string.app_name)

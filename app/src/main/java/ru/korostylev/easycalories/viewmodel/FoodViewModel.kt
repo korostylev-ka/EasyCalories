@@ -3,6 +3,8 @@ package ru.korostylev.easycalories.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -12,25 +14,26 @@ import ru.korostylev.easycalories.api.FirebaseDB
 import ru.korostylev.easycalories.db.FoodDB
 import ru.korostylev.easycalories.dto.FoodItem
 import ru.korostylev.easycalories.entity.FoodItemEntity
+import ru.korostylev.easycalories.model.PhotoModel
 import ru.korostylev.easycalories.repository.FoodRepository
 import ru.korostylev.easycalories.repository.FoodRepositoryImpl
 
 class FoodViewModel(application: Application): AndroidViewModel(application) {
     private val repository: FoodRepository = FoodRepositoryImpl(FoodDB.getInstance(application).foodDao)
-//    release
-//    val foodListLiveData = repository.getFoodList()
     val foodListLiveData = repository.liveDataFromDB
     val infoModel = repository.liveDataInfoModel
-//    val foodListLiveDataFirebase = repository.getFoodListFromAPI()
     var foodItem: FoodItemEntity? = null
+    private val noPhoto = PhotoModel(null)
+    //медиавложение(изображение)
+    private val _photo = MutableLiveData(noPhoto)
+    val photo: LiveData<PhotoModel>
+        get() = _photo
 
     fun getFoodList() = viewModelScope.launch(Dispatchers.IO) {
-
         val foodList = launch {
             repository.getFoodListFromAPI()
         }
         repository.getFoodList()
-
     }
 
 
@@ -50,9 +53,6 @@ class FoodViewModel(application: Application): AndroidViewModel(application) {
         repository.getFoodItemById(foodId)
     }.await()
 
-
-
-
 //    fun addItem(foodItemEntity: FoodItemEntity) {
 //        repository.addItem(foodItemEntity)
 //    }
@@ -61,9 +61,9 @@ class FoodViewModel(application: Application): AndroidViewModel(application) {
         repository.deleteFoodItemById(id)
     }
 
-//    fun update(foodItemEntity: FoodItemEntity) {
-//        repository.update(foodItemEntity)
-//    }
+    fun update(foodItemEntity: FoodItemEntity) = viewModelScope.launch(Dispatchers.IO) {
+        repository.update(foodItemEntity)
+    }
 
 //    fun saveToFirebase(foodItem: FoodItem): String? {
 ////        return repository.saveToAPI(foodItem)
@@ -96,8 +96,6 @@ class FoodViewModel(application: Application): AndroidViewModel(application) {
     }
 
     init {
-//        initAPI()
         getFoodList()
-//        repository.getFoodList()
     }
 }

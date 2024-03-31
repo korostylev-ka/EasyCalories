@@ -81,7 +81,6 @@ class FoodListFragment : Fragment() {
                 }
                 adapter = FoodListAdapter(editedList, apiListener, onInteractionListener)
                 recyclerView!!.adapter = adapter
-
             }
 
         }
@@ -92,25 +91,19 @@ class FoodListFragment : Fragment() {
         viewModel.foodListLiveData.observe(
             viewLifecycleOwner,
             Observer {foods->
-                val sortedFoods = foods.sortedBy {
+                val sortedByNameFoods = foods.sortedBy {
                     it.name
+                }
+                val sortedByTimesEaten = sortedByNameFoods.sortedByDescending {
+                    it.timesEaten
                 }
                 foodList = foods
                 foodList.let {
-                    adapter = FoodListAdapter(sortedFoods, apiListener, onInteractionListener)
+                    adapter = FoodListAdapter(sortedByTimesEaten, apiListener, onInteractionListener)
                     recyclerView!!.adapter = adapter
                 }
             }
         )
-//        release observe firebase changes
-//        viewModel.foodListLiveDataFirebase.observe(
-//            viewLifecycleOwner,
-//            Observer {foodsFirebase->
-//                viewModel.updateFromFirebase(foodsFirebase)
-//                viewModel.getFoodList()
-//            }
-//        )
-
         viewModel.infoModel.observe(
             viewLifecycleOwner,
             Observer {
@@ -136,11 +129,11 @@ class FoodListFragment : Fragment() {
                 .commit()
         }
 
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        viewModel.getFoodList()
 
     }
 

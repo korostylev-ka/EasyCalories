@@ -1,13 +1,14 @@
 package ru.korostylev.easycalories.db
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import ru.korostylev.easycalories.dao.FoodDao
 import ru.korostylev.easycalories.entity.FoodItemEntity
 
-@Database(entities = [FoodItemEntity::class], version = 1)
+@Database(entities = [FoodItemEntity::class], version = 2, autoMigrations = [AutoMigration(from = 1, to = 2)])
 abstract class FoodDB: RoomDatabase() {
     abstract val foodDao: FoodDao
 

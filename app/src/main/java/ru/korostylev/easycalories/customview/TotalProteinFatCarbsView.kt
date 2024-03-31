@@ -69,7 +69,7 @@ class TotalProteinFatCarbsView @JvmOverloads constructor(
     var data = emptyValue
         set(value) {
             with (value) {
-                if (this.proteins == 0F && this.fats == 0F && this.carbs == 0F) {
+                if (this.proteins < 0.1F && this.fats < 0.1F && this.carbs < 0.1F) {
                     field = emptyValue.copy(id=value.id)
                 } else {
                     field = value

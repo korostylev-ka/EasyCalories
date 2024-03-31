@@ -4,6 +4,7 @@
     <color name="wrong">#E81708</color>
     <color name="ok">#08E813</color>
     <color name="warning">#FF9800</color>
+    <color name="foodEaten">#03A9F4</color>
     <color name="bmi_severe_thinness">#1900FF</color>
     <color name="bmi_mild_thinness">#00D9FF</color>
     <color name="bmi_normal">#08E813</color>

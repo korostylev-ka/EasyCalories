@@ -6,4 +6,6 @@
     </item>
     <item android:id="@+id/editLimits" android:title="@string/editLimits">
     </item>
+    <item android:id="@+id/about" android:title="@string/about">
+    </item>
 </menu>

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">EasyCalories</string>
+    <string name="back">Back</string>
     <string name="chooseFood">Choose a food</string>
     <string name="addingFood">Add a food</string>
     <string name="editingPortion">Enter weight of the portion</string>
@@ -36,6 +37,7 @@
     <string name="dec">DEC</string>
     <string name="editProfile">Edit profile</string>
     <string name="editLimits">Edit calories limit</string>
+    <string name="about">About the app</string>
     <string name="enterValue">Enter the value</string>
     <string name="enterProteinsPercent">Enter % of proteins</string>
     <string name="enterFatsPercent">Enter % of fats</string>
@@ -57,7 +59,7 @@
     <string name="gramm">gramm(g)</string>
     <string name="search">Search</string>
     <string name="meals">MEALS:</string>
-<!--  Anthropometric data  -->
+    <!--  Anthropometric data  -->
     <string name="profile">Profile</string>
     <string name="name">Name</string>
     <string name="age">Age</string>
@@ -71,8 +73,9 @@
     <string name="waistCirc">Waist (cm)</string>
     <string name="hipCirc">Hip (cm)</string>
     <string name="neckCirc">Neck (cm)</string>
+    <string name="setWeigt">Set weight today</string>
     <string name="yourWeight">Your weight is:</string>
-    <string name="BMI">BMI:</string>
+    <string name="BMI">BMI</string>
     <string name="BMISevereThinness">Underweight (Severe thinness)</string>
     <string name="BMIMildThinness">Underweight (Mild thinness)</string>
     <string name="BMINormalRange">Normal range</string>
@@ -84,9 +87,19 @@
     <string name="wrongResponse">Something wrong. Try again.</string>
     <string name="responseCode">Response code: </string>
     <string name="serverError">Server not answer. Try later. </string>
+    <string name="nullActivity">App Error(null activity)</string>
     <!--    TOASTS    -->
     <string name="startFrom0">Can\'t start with "0"</string>
     <string name="startFrom.">Can\'t start with "."</string>
+    <!--    ABOUT    -->
+    <string name="nameApp">Easy Calories V1.1</string>
+    <string name="developer">Developer: Korostylev K.A.</string>
+    <string name="email">Email: developkirill@yandex.ru</string>
+    <!--    CONTENT DESCRIPTION     -->
+    <string name="backButtonDescr">Back button</string>
+    <string name="fwdButtonDescr">Forward button</string>
+    <string name="changeButtonDescr">Change button</string>
+    <string name="weightDescr">Weight</string>
 
 
 </resources>

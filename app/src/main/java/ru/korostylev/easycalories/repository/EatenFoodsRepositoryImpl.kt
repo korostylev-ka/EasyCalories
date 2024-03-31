@@ -29,8 +29,4 @@ class EatenFoodsRepositoryImpl(val eatenFoodsDao: EatenFoodsDao) : EatenFoodsRep
         eatenFoodsDao.delete(id)
     }
 
-    init {
-        //addFoodItem(EatenFoods(0, 25112023, 54039, "name", 120.0,2.0, 3.0, 4.0, 5.0))
-    }
-
 }

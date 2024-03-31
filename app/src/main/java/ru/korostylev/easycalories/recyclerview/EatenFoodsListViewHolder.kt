@@ -30,10 +30,10 @@ class EatenFoodsListViewHolder(
             timeOfEat.text = time
             foodName.text = eatenFoodsEntity.name
             poptionWeightValue.text = eatenFoodsEntity.portionWeight.toString()
-            proteinsValue.text = eatenFoodsEntity.portionProteins.roundToInt().toString()
-            fatsValue.text = eatenFoodsEntity.portionFats.roundToInt().toString()
-            carbsValue.text = eatenFoodsEntity.portionCarbs.roundToInt().toString()
-            caloriesValue.text = eatenFoodsEntity.portionCalories.roundToInt().toString()
+            proteinsValue.text = (Math.round(eatenFoodsEntity.portionProteins * 10F) / 10F).toString()
+            fatsValue.text = (Math.round(eatenFoodsEntity.portionFats * 10F) / 10F).toString()
+            carbsValue.text = (Math.round(eatenFoodsEntity.portionCarbs * 10F) / 10F).toString()
+            caloriesValue.text = (Math.round(eatenFoodsEntity.portionCalories * 10F) / 10F).toString()
             deleteButton.setOnClickListener {
                 listener.remove(eatenFoodsEntity)
             }

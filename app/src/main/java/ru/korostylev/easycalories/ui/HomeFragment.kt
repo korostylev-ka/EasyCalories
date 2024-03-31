@@ -10,9 +10,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentHomeBinding
 import ru.korostylev.easycalories.entity.EatenFoodsEntity
@@ -22,6 +24,7 @@ import ru.korostylev.easycalories.recyclerview.EatenFoodsListAdapter
 
 import ru.korostylev.easycalories.utils.AndroidUtils
 import ru.korostylev.easycalories.viewmodel.EatenFoodsViewModel
+import ru.korostylev.easycalories.viewmodel.FoodViewModel
 import ru.korostylev.easycalories.viewmodel.NutrientsViewModel
 import ru.korostylev.easycalories.viewmodel.ProfileViewModel
 import java.util.Calendar
@@ -34,10 +37,17 @@ class HomeFragment : Fragment() {
     private val calendar = Calendar.getInstance()
     private var date: Long = calendar.timeInMillis
     private val viewModel: NutrientsViewModel by activityViewModels()
+    private val foodViewModel: FoodViewModel by activityViewModels()
     private val eatenFoodsViewModel: EatenFoodsViewModel by activityViewModels()
     private val profileViewModel: ProfileViewModel by activityViewModels()
     private val listener = object: OnInteractionListener {
         override fun remove(eatenFoodsEntity: EatenFoodsEntity) {
+            val foodItemEntity = lifecycleScope.launch {
+                val foodItemEntity = foodViewModel.getFoodItem(eatenFoodsEntity.name)
+                if (foodItemEntity != null) {
+                    foodViewModel.update(foodItemEntity.copy(timesEaten = foodItemEntity.timesEaten - 1))
+                }
+            }
             viewModel.removeNutrients(eatenFoodsEntity)
             eatenFoodsViewModel.deleteEatenFood(eatenFoodsEntity.id)
         }
@@ -128,6 +138,18 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+        fun reloadWeight() {
+            when(weight) {
+                0F -> {
+                    homeFragmentBinding.weightValue.visibility = View.GONE
+                    homeFragmentBinding.weightTitle.setText(R.string.setWeigt)
+                }
+                else -> {
+                    homeFragmentBinding.weightValue.visibility = View.VISIBLE
+                    homeFragmentBinding.weightTitle.setText(R.string.yourWeight)
+                }
+            }
+        }
 
         homeFragmentBinding.weightValue.isFocusable = false
         val weightValue = when(weight) {
@@ -135,9 +157,12 @@ class HomeFragment : Fragment() {
             else -> weight.toString()
 
         }
+        reloadWeight()
+
         homeFragmentBinding.weightValue.setText(weightValue)
         homeFragmentBinding.weightValue.addTextChangedListener(floatFieldWatcher)
         homeFragmentBinding.changeButton.setOnClickListener {
+            homeFragmentBinding.weightValue.visibility = View.VISIBLE
             homeFragmentBinding.weightValue.isFocusableInTouchMode = true
             homeFragmentBinding.weightValue.requestFocus()
             homeFragmentBinding.changeButton.visibility = View.GONE
@@ -149,14 +174,14 @@ class HomeFragment : Fragment() {
                 weight = newWeightValue.toFloat()
                 profileViewModel.saveWeight(WeightEntity(dayId, weight))
             } else {
-                profileViewModel.saveWeight(WeightEntity(dayId, 0F))
+                weight = 0F
+                profileViewModel.saveWeight(WeightEntity(dayId, weight))
             }
-
             homeFragmentBinding.weightValue.clearFocus()
             homeFragmentBinding.weightValue.isFocusable = false
             homeFragmentBinding.changeButton.visibility = View.VISIBLE
             homeFragmentBinding.saveButton.visibility = View.GONE
-
+            reloadWeight()
         }
         eatenFoodsRecyclerView = homeFragmentBinding.eatenFoodsRecyclerView
         eatenFoodsRecyclerView!!.layoutManager = LinearLayoutManager(context)
@@ -250,7 +275,6 @@ class HomeFragment : Fragment() {
                 .replace(R.id.fragmentContainer,fragment)
                 .addToBackStack(null)
                 .commit()
-
         }
         //add food eat
         homeFragmentBinding.addFood.setOnClickListener {

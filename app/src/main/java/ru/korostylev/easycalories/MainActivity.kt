@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.google.firebase.FirebaseApp
+import ru.korostylev.easycalories.ui.AboutFragment
 import ru.korostylev.easycalories.ui.EditLimitsFragment
 import ru.korostylev.easycalories.ui.HomeFragment
 import ru.korostylev.easycalories.ui.ProfileFragment
@@ -32,6 +33,12 @@ class MainActivity : AppCompatActivity() {
                     .replace(R.id.fragmentContainer, ProfileFragment.newInstance())
                     .addToBackStack(null)
                     .commit()
+                return true
+            }
+            R.id.about -> {
+                val myDialogFragment = AboutFragment()
+                val manager = supportFragmentManager
+                myDialogFragment.show(manager, "myDialog")
                 return true
             }
             else -> return false

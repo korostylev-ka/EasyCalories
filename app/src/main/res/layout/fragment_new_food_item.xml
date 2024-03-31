@@ -108,7 +108,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_edit_text"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:hint="@string/enterValue"
         android:background="@drawable/edit_text_value"
         app:layout_constraintStart_toEndOf="@id/divider"
@@ -132,7 +132,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_edit_text"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:hint="@string/enterValue"
         android:background="@drawable/edit_text_value"
         app:layout_constraintStart_toEndOf="@id/divider"
@@ -156,7 +156,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_edit_text"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:hint="@string/enterValue"
         android:background="@drawable/edit_text_value"
         app:layout_constraintStart_toEndOf="@id/divider"
@@ -180,7 +180,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_edit_text"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:hint="@string/enterValue"
         android:background="@drawable/edit_text_value"
         app:layout_constraintStart_toEndOf="@id/divider"
@@ -189,13 +189,23 @@
         android:layout_marginEnd="@dimen/common"
         app:layout_constraintBottom_toBottomOf="@id/caloriesTitle">
     </EditText>
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/common"
+        app:layout_constraintTop_toBottomOf="@id/caloriesValue"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </ImageView>
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/common"
+        android:layout_marginStart="@dimen/common"
         style="@style/Widget.AppTheme.IconButtonOk"
-        app:layout_constraintTop_toBottomOf="@id/caloriesValue"
+        app:layout_constraintTop_toBottomOf="@id/image"
         app:layout_constraintStart_toStartOf="parent"
         app:icon="@drawable/save_button_new_48dp">
     </com.google.android.material.button.MaterialButton>
@@ -208,6 +218,15 @@
         app:layout_constraintBottom_toBottomOf="@id/buttonSave"
         app:layout_constraintStart_toEndOf="@id/buttonSave"
         app:icon="@drawable/return_button_new_48dp">
+    </com.google.android.material.button.MaterialButton>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/addPhoto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppTheme.IconButton"
+        app:layout_constraintTop_toBottomOf="@id/buttonSave"
+        app:layout_constraintStart_toEndOf="@id/buttonSave"
+        app:icon="@drawable/gallery_icon_48dp">
     </com.google.android.material.button.MaterialButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

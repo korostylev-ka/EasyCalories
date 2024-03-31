@@ -57,6 +57,11 @@ class FoodListViewHolder(
                     binding.giValue.setTextColor(ContextCompat.getColor(context, R.color.gi_high))
                 }
             }
+            if (foodItemEntity.timesEaten > 0) {
+                binding.foodName.setTextColor(ContextCompat.getColor(context, R.color.foodEaten))
+            } else {
+                binding.foodName.setTextColor(ContextCompat.getColor(context, R.color.main_color_blue))
+            }
             giValue.text = foodItemEntity.glycemicIndex.toString()
             deleteButton.visibility = when(foodItemEntity.ownedByMe) {
                 true -> View.VISIBLE

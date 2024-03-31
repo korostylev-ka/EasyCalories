@@ -10,13 +10,11 @@ import ru.korostylev.easycalories.dto.FoodItem
 import ru.korostylev.easycalories.dto.FoodItemFromDB
 
 private const val BASE_URL = "https://easycalories.ru"
-//private const val BASE_URL = "http://10.0.2.2:8000"
 
 class TokenIntercepter: Interceptor {
     override fun intercept(chain: Interceptor.Chain): okhttp3.Response {
         val newRequest = chain.request().newBuilder()
             .addHeader("Authorization", "Token 85b8e4c07d1d75d43937d066591e35d5f5439d38")
-//            .addHeader("Authorization", "Token 0c5ec45eb189f14d0e748ba4fce532ac692c23bc")
             .build()
         return chain.proceed(newRequest)
     }
@@ -24,7 +22,6 @@ class TokenIntercepter: Interceptor {
 
 private val okhttp = OkHttpClient.Builder()
     .addInterceptor(TokenIntercepter())
-//    .addInterceptor(logging)
     .build()
 
 private val retrofit = Retrofit.Builder()

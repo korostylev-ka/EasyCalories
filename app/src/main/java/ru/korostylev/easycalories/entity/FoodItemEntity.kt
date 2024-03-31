@@ -1,5 +1,6 @@
 package ru.korostylev.easycalories.entity
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.korostylev.easycalories.dto.FoodItem
@@ -21,12 +22,13 @@ data class FoodItemEntity(
     var barcode: String? = null,
     var image: String? = null,
     var ownedByMe: Boolean = false,
-    var key: String? = null
+    var key: String? = null,
+    @ColumnInfo(defaultValue = "0")
+    var timesEaten: Int = 0
 ) {
     override fun equals(other: Any?): Boolean {
         other as FoodItemEntity
-        return (this.name == other.name) && (this.portionWeight == other.portionWeight) &&
-                (this.proteins == other.proteins) && (this.fats == other.fats) && (this.carbs == other.carbs) &&
+        return (this.name == other.name) && (this.proteins == other.proteins) && (this.fats == other.fats) && (this.carbs == other.carbs) &&
                 (this.calories == other.calories) && (this.glycemicIndex == other.glycemicIndex) && (this.image == other.image) &&
                 (this.barcode == other.barcode)
     }

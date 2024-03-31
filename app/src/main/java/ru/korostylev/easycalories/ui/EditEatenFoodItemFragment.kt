@@ -166,7 +166,7 @@ class EditEatenFoodItemFragment : Fragment() {
             caloriesValue.text = foodItem!!.portionCalories.toString()
             date.text = getStringDate()
             time.text = getCurrentStringTime()
-            calendarIcon.setOnClickListener {
+            date.setOnClickListener {
                 val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                     calendar.set(Calendar.YEAR, year)
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)

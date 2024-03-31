@@ -1,5 +1,6 @@
 package ru.korostylev.easycalories.ui
 
+import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,11 +10,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import com.github.dhaval2404.imagepicker.ImagePicker
+import com.github.dhaval2404.imagepicker.constant.ImageProvider
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentNewFoodItemBinding
+
 
 import ru.korostylev.easycalories.entity.FoodItemEntity
 import ru.korostylev.easycalories.utils.AndroidUtils
@@ -56,6 +62,20 @@ class NewFoodItemFragment : Fragment() {
             portionWeightValue.setText(portionWeight.toString())
             glycemicIndexValue.setText(glycemicIndex.toString())
         }
+        
+        val pickPhotoLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                when (it.resultCode) {
+                    ImagePicker.RESULT_ERROR -> {
+                        Snackbar.make(
+                            binding.root,
+                            ImagePicker.getError(it.data),
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                    Activity.RESULT_OK -> TODO()//viewModel.changePhoto(it.data?.data)
+                }
+            }
 
         val nameFieldTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -119,6 +139,20 @@ class NewFoodItemFragment : Fragment() {
         binding.proteinsValue.addTextChangedListener(caloriesValueWatcher)
         binding.fatsValue.addTextChangedListener(caloriesValueWatcher)
         binding.carbsValue.addTextChangedListener(caloriesValueWatcher)
+        //прикрепить фото
+        binding.addPhoto.setOnClickListener {
+            ImagePicker.with(this)
+                .crop()
+                .compress(2048)
+                .provider(ImageProvider.GALLERY)
+                .galleryMimeTypes(
+                    arrayOf(
+                        "image/png",
+                        "image/jpeg",
+                    )
+                )
+                .createIntent(pickPhotoLauncher::launch)
+        }
         binding.buttonSave.setOnClickListener {
             with(binding) {
                 foodNameValue.setBackgroundResource(R.drawable.edit_text_value)
@@ -151,13 +185,12 @@ class NewFoodItemFragment : Fragment() {
                             .show()
                         return@setOnClickListener
                     }
-                    if (proteins >= 0F && fats >=0F && carbs >= 0F ) {
+                    if (proteins >= 0F && fats >=0F && carbs >= 0F && calories > 0F) {
                         viewLifecycleOwner.lifecycleScope.launch {
                             val isFoodExist = foodViewModel.getFoodItem(name)
                             if (isFoodExist == null) {
                                 val newFoodEntity = FoodItemEntity(0, 0, categoryId, name, glycemicIndex, portionWeight, proteinsToAdd, fatsToAdd, carbsToAdd, caloriesToAdd, image, barcode, true)
 //                                foodViewModel.addItem(newFoodEntity)
-                                Log.d("protein", "$proteins")
                                 foodViewModel.saveToApi(newFoodEntity)
                                 parentFragmentManager.popBackStack()
                                 try {

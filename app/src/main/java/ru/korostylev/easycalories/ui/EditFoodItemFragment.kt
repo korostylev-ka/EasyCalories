@@ -137,6 +137,7 @@ class EditFoodItemFragment : Fragment() {
                         foodImage.visibility = View.VISIBLE
                         Glide.with(foodImage)
                             .load(foodItemEntity!!.image!!.toUri())
+                            .circleCrop()
                             .placeholder(R.drawable.empty_food_256dp)
                             .into(foodImage)
 

@@ -1,5 +1,6 @@
 package ru.korostylev.easycalories.ui
 
+import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.AndroidViewModel
 import ru.korostylev.easycalories.R
@@ -68,27 +70,69 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        requireActivity().setTitle(R.string.profile)
         val profileBinding = FragmentProfileBinding.inflate(layoutInflater)
+        @SuppressLint("ResourceAsColor")
         fun calcBMI() {
             if (heightV != null && weightV != null) {
                 val bmi = weightV!! / ((heightV!!.toFloat() / 100F).pow(2.0F))
                 bmiV = Math.round(bmi * 10F) / 10F
                 profileBinding.bmiValue.text = bmiV.toString()
+                profileBinding.bmiStatus.visibility = View.VISIBLE
                 when (bmiV ?: 0F) {
-                    in 0.1F..15.99F -> profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_severe)
-                    in 16F..18.49F -> profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_mild)
-                    in 18.5F..24.99F -> profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_normal)
-                    in 25F..29.99F -> profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_overweight)
-                    in 30F..34.99F -> profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese1)
-                    in 35F..39.99F -> profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese2)
-                    in 40F..Float.MAX_VALUE -> profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese3)
-                    else -> profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_no_gradient)
+                    in 0.1F..15.99F -> {
+                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_severe)
+                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_severe_thinness))
+                        profileBinding.bmiStatus.setText(R.string.BMISevereThinness)
+                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_severe_thinness))
+                    }
+                    in 16F..18.49F -> {
+                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_mild)
+                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_mild_thinness))
+                        profileBinding.bmiStatus.setText(R.string.BMIMildThinness)
+                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_mild_thinness))
+                    }
+                    in 18.5F..24.99F -> {
+                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_normal)
+                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_normal))
+                        profileBinding.bmiStatus.setText(R.string.BMINormalRange)
+                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_normal))
+                    }
+                    in 25F..29.99F -> {
+                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_overweight)
+                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_overweight))
+                        profileBinding.bmiStatus.setText(R.string.BMIOverweight)
+                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_overweight))
+                    }
+                    in 30F..34.99F -> {
+                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese1)
+                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_obese1))
+                        profileBinding.bmiStatus.setText(R.string.BMIObeseClassI)
+                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_obese1))
+                    }
+                    in 35F..39.99F -> {
+                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese2)
+                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_obese2))
+                        profileBinding.bmiStatus.setText(R.string.BMIObeseClassII)
+                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_obese2))
+                    }
+                    in 40F..Float.MAX_VALUE -> {
+                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese3)
+                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_obese3))
+                        profileBinding.bmiStatus.setText(R.string.BMIObeseClassIII)
+                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_obese3))
+                    }
+                    else -> {
+                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_no_gradient)
+                        profileBinding.bmiStatus.visibility = View.GONE
+                    }
                 }
 
             } else {
                 bmiV = null
                 profileBinding.bmiValue.text = ""
                 profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_no_gradient)
+                profileBinding.bmiStatus.visibility = View.GONE
             }
         }
         val digitFieldWatcher = object : TextWatcher {
@@ -127,16 +171,7 @@ class ProfileFragment : Fragment() {
             hipValue.setText(hipV?.toString() ?: "")
             neckValue.setText(neckV?.toString() ?: "")
             bmiValue.setText(bmiV?.toString() ?: "")
-            when (bmiV ?: 0F) {
-                in 0.1F..15.99F -> bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_severe)
-                in 16F..18.49F -> bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_mild)
-                in 18.5F..24.99F -> bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_normal)
-                in 25F..29.99F -> bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_overweight)
-                in 30F..34.99F -> bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese1)
-                in 35F..39.99F -> bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese2)
-                in 40F..Float.MAX_VALUE -> bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese3)
-                else -> bmiValue.setBackgroundResource(R.drawable.edit_text_no_gradient)
-            }
+            calcBMI()
             weightValue.addTextChangedListener(digitFieldWatcher)
             ageValue.addTextChangedListener(digitFieldWatcher)
             heightValue.addTextChangedListener(digitFieldWatcher)
