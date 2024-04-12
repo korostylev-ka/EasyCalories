@@ -1,32 +1,24 @@
 package ru.korostylev.easycalories.repository
 
-
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
-import retrofit2.Response
-import ru.korostylev.easycalories.R
-import ru.korostylev.easycalories.api.API
-import ru.korostylev.easycalories.api.APIService
-import ru.korostylev.easycalories.api.FirebaseDB
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import ru.korostylev.easycalories.api.FoodsApi
 import ru.korostylev.easycalories.dao.FoodDao
-import ru.korostylev.easycalories.dao.WeightDao
-import ru.korostylev.easycalories.dto.FoodItem
 import ru.korostylev.easycalories.dto.FoodItemFromDB
 import ru.korostylev.easycalories.dto.InfoModel
 import ru.korostylev.easycalories.entity.FoodItemEntity
+import ru.korostylev.easycalories.media.MediaUpload
+import java.io.IOException
+
 
 class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
-
-//    override val liveDataFromDB: LiveData<List<FoodItemEntity>>
-//        get() = foodDao.getAll()
     val emptyList: List<FoodItemEntity> = emptyList()
-
     val infoModel = InfoModel()
     private val data = MutableLiveData(emptyList)
     private val dataInfoModel = MutableLiveData<InfoModel>()
@@ -67,7 +59,6 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
 
     override suspend fun getFoodItemById(foodId: Int): FoodItemEntity? {
         val food = foodDao.getFoodItemById(foodId)
-        Log.d("daofood", food.toString())
         return foodDao.getFoodItemById(foodId)
     }
 
@@ -78,7 +69,7 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
             if (response.isSuccessful) {
                 val newFoodEntity = FoodItemEntity.fromFoodItemFromDB(response.body()!!).copy(ownedByMe = true)
                 foodDao.insert(newFoodEntity)
-                getFoodList()
+                getFoodListFromAPI()
             } else {
                 dataInfoModel.postValue(infoModel.copy(successResponse = false, responseCode = "${response.code()}"))
 
@@ -93,10 +84,8 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
         try {
             val response = FoodsApi.service.edit(foodId, foodItemEntity.toFoodItemFromDB())
             val body = FoodItemEntity.fromFoodItemFromDB(response.body()!!)
-
             if (response.isSuccessful) {
-                update(foodItemEntity)
-                getFoodList()
+                getFoodListFromAPI()
             } else {
                 dataInfoModel.postValue(infoModel.copy(successResponse = false, responseCode = "${response.code()}"))
             }
@@ -123,22 +112,6 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
         TODO("Not yet implemented")
     }
 
-//    override fun updateFromAPI(list: List<FoodItem>?) {
-//        list?.map { foodItem->
-//            val foodFromEntity = getFoodItem(foodItem.name)
-//            val foodFromAPI = FoodItemEntity.fromFoodItem(foodItem)
-//            //if doesn't exist, add new food
-//            if (foodFromEntity == null) {
-//                addItem(foodFromAPI)
-//            } else {
-//                //if item was changed
-//                if (foodFromEntity != foodFromAPI) {
-//                    update(foodFromAPI.copy(id = foodFromEntity.id, ownedByMe = foodFromEntity.ownedByMe))
-//                }
-//            }
-//        }
-//    }
-
     override suspend fun updateFromAPI(list: List<FoodItemFromDB>?) {
         list?.map { foodItem->
             val foodFromEntity = getFoodItem(foodItem.name)
@@ -149,7 +122,7 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
             } else {
                 //if item was changed
                 if (foodFromEntity != foodFromAPI) {
-                    update(foodFromAPI.copy(id = foodFromEntity.id, ownedByMe = foodFromEntity.ownedByMe))
+                    update(foodFromAPI.copy(id = foodFromEntity.id, ownedByMe = foodFromEntity.ownedByMe, timesEaten = foodFromEntity.timesEaten))
                 }
             }
         }
@@ -159,7 +132,6 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
     override suspend fun deleteByIdFromAPI(foodId: Int) {
         try {
             val response = FoodsApi.service.removeFoodById(foodId)
-            Log.d("body", "${response.code()}, ${response.isSuccessful}")
             if ((response.isSuccessful) || (response.code() == 404)) {
                 foodDao.delete(foodId)
                 getFoodList()
@@ -176,7 +148,21 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
         }
     }
 
-    init {
-//        API.init()
+    override suspend fun upload(upload: MediaUpload): String {
+        try {
+            val media = MultipartBody.Part.createFormData(
+                "file", upload.file.name, upload.file.asRequestBody()
+            )
+            val response = FoodsApi.service.upload(media)
+            if (!response.isSuccessful) {
+                throw Exception()
+            }
+            return response.body() ?: throw Exception()
+        } catch (e: IOException) {
+            throw e
+        } catch (e: Exception) {
+            throw e
+        }
     }
+
 }

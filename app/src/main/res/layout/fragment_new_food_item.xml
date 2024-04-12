@@ -1,232 +1,276 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="@dimen/common"
     tools:context=".ui.NewFoodItemFragment">
 
-    <View
-        android:id="@+id/divider"
-        android:visibility="invisible"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        app:layout_constraintStart_toEndOf="@id/carbsTitle"
-        android:background="?android:attr/listDivider" />
-    <TextView
-        android:id="@+id/foodNameTitle"
-        android:layout_width="@dimen/nutrient_value_width_large"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common"
-        android:layout_marginTop="@dimen/common"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        style="@style/textTitle"
-        android:text="@string/foodName" />
-    <EditText
-        android:id="@+id/foodNameValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_edit_text"
-        android:background="@drawable/edit_text_value"
-        android:hint="@string/enterValue"
-        app:layout_constraintStart_toEndOf="@id/divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/common"
-        app:layout_constraintTop_toTopOf="@id/foodNameTitle"
-        app:layout_constraintBottom_toBottomOf="@id/foodNameTitle">
-    </EditText>
-    <TextView
-        android:id="@+id/portionWeightTitle"
-        android:layout_width="@dimen/nutrient_value_width_large"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common"
-        android:layout_marginTop="@dimen/common"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/foodNameTitle"
-        style="@style/textTitle"
-        android:text="@string/portionWeight" />
-    <EditText
-        android:id="@+id/portionWeightValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_edit_text"
-        android:hint="@string/enterValue"
-        android:inputType="number"
-        android:background="@drawable/edit_text_value"
-        app:layout_constraintStart_toEndOf="@id/divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/common"
-        app:layout_constraintTop_toTopOf="@id/portionWeightTitle"
-        app:layout_constraintBottom_toBottomOf="@id/portionWeightTitle">
-    </EditText>
-    <TextView
-        android:id="@+id/glycemicIndexTitle"
-        android:layout_width="@dimen/nutrient_value_width_large"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common"
-        android:layout_marginTop="@dimen/common"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/portionWeightTitle"
-        style="@style/textTitle"
-        android:text="@string/glycemicIndex" />
-    <EditText
-        android:id="@+id/glycemicIndexValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_edit_text"
-        android:hint="@string/enterValue"
-        android:inputType="number"
-        android:background="@drawable/edit_text_value"
-        app:layout_constraintStart_toEndOf="@id/divider"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/common"
-        app:layout_constraintTop_toTopOf="@id/glycemicIndexTitle"
-        app:layout_constraintBottom_toBottomOf="@id/glycemicIndexTitle">
-    </EditText>
-    <TextView
-        android:id="@+id/forHundredGrTitle"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common"
-        android:textAlignment="center"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/glycemicIndexTitle"
-        android:text="@string/enterNutrientsFor100Gr" />
-    <TextView
-        android:id="@+id/proteinsTitle"
-        android:layout_width="@dimen/nutrient_value_width_large"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common"
-        android:layout_marginTop="@dimen/common"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/forHundredGrTitle"
-        style="@style/proteinsTextTitle"
-        android:text="@string/proteins" />
-    <EditText
-        android:id="@+id/proteinsValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_edit_text"
-        android:inputType="numberDecimal"
-        android:hint="@string/enterValue"
-        android:background="@drawable/edit_text_value"
-        app:layout_constraintStart_toEndOf="@id/divider"
-        app:layout_constraintTop_toTopOf="@id/proteinsTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/common"
-        app:layout_constraintBottom_toBottomOf="@id/proteinsTitle">
-    </EditText>
-    <TextView
-        android:id="@+id/fatsTitle"
-        android:layout_width="@dimen/nutrient_value_width_large"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common"
-        android:layout_marginTop="@dimen/common"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/proteinsTitle"
-        style="@style/fatsTextTitle"
-        android:text="@string/fats" />
-    <EditText
-        android:id="@+id/fatsValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_edit_text"
-        android:inputType="numberDecimal"
-        android:hint="@string/enterValue"
-        android:background="@drawable/edit_text_value"
-        app:layout_constraintStart_toEndOf="@id/divider"
-        app:layout_constraintTop_toTopOf="@id/fatsTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/common"
-        app:layout_constraintBottom_toBottomOf="@id/fatsTitle">
-    </EditText>
-    <TextView
-        android:id="@+id/carbsTitle"
-        android:layout_width="@dimen/nutrient_value_width_large"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common"
-        android:layout_marginTop="@dimen/common"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fatsTitle"
-        style="@style/carbsTextTitle"
-        android:text="@string/carbohydrates" />
-    <EditText
-        android:id="@+id/carbsValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_edit_text"
-        android:inputType="numberDecimal"
-        android:hint="@string/enterValue"
-        android:background="@drawable/edit_text_value"
-        app:layout_constraintStart_toEndOf="@id/divider"
-        app:layout_constraintTop_toTopOf="@id/carbsTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/common"
-        app:layout_constraintBottom_toBottomOf="@id/carbsTitle">
-    </EditText>
-    <TextView
-        android:id="@+id/caloriesTitle"
-        android:layout_width="@dimen/nutrient_value_width_large"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/common"
-        android:layout_marginTop="@dimen/common"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/carbsTitle"
-        style="@style/caloriesTextTitle"
-        android:text="@string/calories" />
-    <EditText
-        android:id="@+id/caloriesValue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/padding_edit_text"
-        android:inputType="numberDecimal"
-        android:hint="@string/enterValue"
-        android:background="@drawable/edit_text_value"
-        app:layout_constraintStart_toEndOf="@id/divider"
-        app:layout_constraintTop_toTopOf="@id/caloriesTitle"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/common"
-        app:layout_constraintBottom_toBottomOf="@id/caloriesTitle">
-    </EditText>
-    <ImageView
-        android:id="@+id/image"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common"
-        app:layout_constraintTop_toBottomOf="@id/caloriesValue"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_height="match_parent">
 
-    </ImageView>
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/common"
-        android:layout_marginStart="@dimen/common"
-        style="@style/Widget.AppTheme.IconButtonOk"
-        app:layout_constraintTop_toBottomOf="@id/image"
-        app:layout_constraintStart_toStartOf="parent"
-        app:icon="@drawable/save_button_new_48dp">
-    </com.google.android.material.button.MaterialButton>
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/buttonBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppTheme.IconButton"
-        app:layout_constraintTop_toTopOf="@id/buttonSave"
-        app:layout_constraintBottom_toBottomOf="@id/buttonSave"
-        app:layout_constraintStart_toEndOf="@id/buttonSave"
-        app:icon="@drawable/return_button_new_48dp">
-    </com.google.android.material.button.MaterialButton>
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/addPhoto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppTheme.IconButton"
-        app:layout_constraintTop_toBottomOf="@id/buttonSave"
-        app:layout_constraintStart_toEndOf="@id/buttonSave"
-        app:icon="@drawable/gallery_icon_48dp">
-    </com.google.android.material.button.MaterialButton>
+        <View
+            android:id="@+id/divider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            android:visibility="invisible"
+            app:layout_constraintStart_toEndOf="@id/carbsTitle" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/foodNameTitle"
+            style="@style/textTitle"
+            android:layout_width="@dimen/nutrient_value_width_large"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common"
+            android:layout_marginTop="@dimen/common"
+            android:text="@string/foodName"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/foodNameValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/common"
+            android:background="@drawable/edit_text_value"
+            android:hint="@string/enterValue"
+            android:padding="@dimen/padding_edit_text"
+            app:layout_constraintBottom_toBottomOf="@id/foodNameTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/divider"
+            app:layout_constraintTop_toTopOf="@id/foodNameTitle" />
+
+        <TextView
+            android:id="@+id/portionWeightTitle"
+            style="@style/textTitle"
+            android:layout_width="@dimen/nutrient_value_width_large"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common"
+            android:layout_marginTop="@dimen/common"
+            android:text="@string/portionWeight"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/foodNameTitle" />
+
+        <EditText
+            android:id="@+id/portionWeightValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/common"
+            android:background="@drawable/edit_text_value"
+            android:hint="@string/enterValue"
+            android:inputType="number"
+            android:padding="@dimen/padding_edit_text"
+            app:layout_constraintBottom_toBottomOf="@id/portionWeightTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/divider"
+            app:layout_constraintTop_toTopOf="@id/portionWeightTitle" />
+
+        <TextView
+            android:id="@+id/glycemicIndexTitle"
+            style="@style/textTitle"
+            android:layout_width="@dimen/nutrient_value_width_large"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common"
+            android:layout_marginTop="@dimen/common"
+            android:text="@string/glycemicIndex"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/portionWeightTitle" />
+
+        <EditText
+            android:id="@+id/glycemicIndexValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/common"
+            android:background="@drawable/edit_text_value"
+            android:hint="@string/enterValue"
+            android:inputType="number"
+            android:padding="@dimen/padding_edit_text"
+            app:layout_constraintBottom_toBottomOf="@id/glycemicIndexTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/divider"
+            app:layout_constraintTop_toTopOf="@id/glycemicIndexTitle" />
+
+        <TextView
+            android:id="@+id/forHundredGrTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common"
+            android:text="@string/enterNutrientsFor100Gr"
+            android:textAlignment="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/glycemicIndexTitle" />
+
+        <TextView
+            android:id="@+id/proteinsTitle"
+            style="@style/proteinsTextTitle"
+            android:layout_width="@dimen/nutrient_value_width_large"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common"
+            android:layout_marginTop="@dimen/common"
+            android:text="@string/proteins"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/forHundredGrTitle" />
+
+        <EditText
+            android:id="@+id/proteinsValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/common"
+            android:background="@drawable/edit_text_value"
+            android:hint="@string/enterValue"
+            android:inputType="numberDecimal"
+            android:padding="@dimen/padding_edit_text"
+            app:layout_constraintBottom_toBottomOf="@id/proteinsTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/divider"
+            app:layout_constraintTop_toTopOf="@id/proteinsTitle" />
+
+        <TextView
+            android:id="@+id/fatsTitle"
+            style="@style/fatsTextTitle"
+            android:layout_width="@dimen/nutrient_value_width_large"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common"
+            android:layout_marginTop="@dimen/common"
+            android:text="@string/fats"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/proteinsTitle" />
+
+        <EditText
+            android:id="@+id/fatsValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/common"
+            android:background="@drawable/edit_text_value"
+            android:hint="@string/enterValue"
+            android:inputType="numberDecimal"
+            android:padding="@dimen/padding_edit_text"
+            app:layout_constraintBottom_toBottomOf="@id/fatsTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/divider"
+            app:layout_constraintTop_toTopOf="@id/fatsTitle" />
+
+        <TextView
+            android:id="@+id/carbsTitle"
+            style="@style/carbsTextTitle"
+            android:layout_width="@dimen/nutrient_value_width_large"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common"
+            android:layout_marginTop="@dimen/common"
+            android:text="@string/carbohydrates"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fatsTitle" />
+
+        <EditText
+            android:id="@+id/carbsValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/common"
+            android:background="@drawable/edit_text_value"
+            android:hint="@string/enterValue"
+            android:inputType="numberDecimal"
+            android:padding="@dimen/padding_edit_text"
+            app:layout_constraintBottom_toBottomOf="@id/carbsTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/divider"
+            app:layout_constraintTop_toTopOf="@id/carbsTitle" />
+
+        <TextView
+            android:id="@+id/caloriesTitle"
+            style="@style/caloriesTextTitle"
+            android:layout_width="@dimen/nutrient_value_width_large"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common"
+            android:layout_marginTop="@dimen/common"
+            android:text="@string/calories"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/carbsTitle" />
+
+        <EditText
+            android:id="@+id/caloriesValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/common"
+            android:background="@drawable/edit_text_value"
+            android:hint="@string/enterValue"
+            android:inputType="numberDecimal"
+            android:padding="@dimen/padding_edit_text"
+            app:layout_constraintBottom_toBottomOf="@id/caloriesTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/divider"
+            app:layout_constraintTop_toTopOf="@id/caloriesTitle" />
+
+        <ImageView
+            android:id="@+id/photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/caloriesValue">
+
+        </ImageView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonSave"
+            style="@style/Widget.AppTheme.IconButtonOk"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/common"
+            android:layout_marginTop="@dimen/common"
+            app:icon="@drawable/save_button_new_48dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/addPhoto" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonBack"
+            style="@style/Widget.AppTheme.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/return_button_new_48dp"
+            app:layout_constraintBottom_toBottomOf="@id/buttonSave"
+            app:layout_constraintStart_toEndOf="@id/buttonSave"
+            app:layout_constraintTop_toTopOf="@id/buttonSave" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/takePhoto"
+            style="@style/Widget.AppTheme.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common"
+            app:icon="@drawable/add_cam_photo_icon_48dp"
+            app:layout_constraintEnd_toStartOf="@id/addPhoto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toBottomOf="@id/photo" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addPhoto"
+            style="@style/Widget.AppTheme.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common"
+            app:icon="@drawable/add_photo_icon_48dp"
+            app:layout_constraintEnd_toStartOf="@id/deletePhoto"
+            app:layout_constraintStart_toEndOf="@id/takePhoto"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toBottomOf="@id/photo" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/deletePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/delete_photo_button_48dp"
+            app:layout_constraintBottom_toBottomOf="@id/addPhoto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/addPhoto"
+            app:layout_constraintTop_toTopOf="@id/addPhoto" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
+
+
+

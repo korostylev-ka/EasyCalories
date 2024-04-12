@@ -1,8 +1,10 @@
 package ru.korostylev.easycalories.dto
 
+import java.io.File
+
 data class FoodItemFromDB(
     var id: Int = 0,
-    var user: Int = 1,
+    var user: Int = 2,
     var category_id: Int = 0,
     var name: String = "",
     var GI: Int? = null,

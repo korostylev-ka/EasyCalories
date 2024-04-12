@@ -1,10 +1,12 @@
 package ru.korostylev.easycalories.entity
 
+import androidx.core.net.toUri
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import ru.korostylev.easycalories.dto.FoodItem
 import ru.korostylev.easycalories.dto.FoodItemFromDB
+import java.io.File
 
 @Entity
 data class FoodItemEntity(
@@ -61,7 +63,7 @@ data class FoodItemEntity(
                 this.carbs,
                 this.calories,
                 null,
-                null,
+                this.image,
                 null
             )
         }

@@ -33,6 +33,7 @@ class FoodListFragment : Fragment() {
     private val apiListener = object: APIListener {
         override fun remove(foodId: Int) {
             viewModel.deleteByIdFromAPI(foodId)
+            viewModel.getFoodList()
         }
 
     }
@@ -133,7 +134,7 @@ class FoodListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel.getFoodList()
+//        viewModel.getFoodList()
 
     }
 

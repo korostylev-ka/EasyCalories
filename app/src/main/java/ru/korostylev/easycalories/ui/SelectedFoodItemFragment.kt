@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -144,6 +145,7 @@ class SelectedFoodItemFragment : Fragment() {
         }
         viewLifecycleOwner.lifecycleScope.launch {
             foodItemEntity = foodViewModel.getFoodItem(foodName)
+            Log.d("URI", foodItemEntity.toString())
             with(binding) {
                 when (foodItemEntity!!.image) {
                     null -> foodImage.visibility = View.GONE
@@ -161,7 +163,7 @@ class SelectedFoodItemFragment : Fragment() {
                 portionWeightValue.addTextChangedListener(nutrientsValueWatcher)
                 foodNameValue.text = foodItemEntity!!.name
                 portionWeightValue.setText(foodItemEntity!!.portionWeight.toString())
-                val portionFloat = foodItemEntity!!.portionWeight / 100
+                val portionFloat = foodItemEntity!!.portionWeight / 100F
                 proteinsValue.text = (foodItemEntity!!.proteins * portionFloat).toString()
                 fatsValue.text = (foodItemEntity!!.fats * portionFloat).toString()
                 carbsValue.text = (foodItemEntity!!.carbs * portionFloat).toString()
@@ -223,6 +225,7 @@ class SelectedFoodItemFragment : Fragment() {
                 eatenFoodsViewModel.addEatenFood(food)
                 val newFoodItemEntity = foodItemEntity!!.copy(portionWeight = portionWeightFloat, timesEaten=foodItemEntity!!.timesEaten + 1)
                 foodViewModel.update(newFoodItemEntity)
+                foodViewModel.getFoodList()
                 parentFragmentManager.popBackStack()
                 parentFragmentManager.popBackStack()
                 requireActivity().setTitle(R.string.app_name)

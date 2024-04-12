@@ -206,8 +206,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/common"
+        android:layout_marginStart="@dimen/common"
         style="@style/Widget.AppTheme.IconButtonOk"
-        app:layout_constraintTop_toBottomOf="@id/foodImage"
+        app:layout_constraintTop_toBottomOf="@id/addPhoto"
         app:layout_constraintStart_toStartOf="parent"
         app:icon="@drawable/save_button_new_48dp">
     </com.google.android.material.button.MaterialButton>
@@ -221,7 +222,39 @@
         app:layout_constraintStart_toEndOf="@id/editedButtonSave"
         app:icon="@drawable/return_button_new_48dp">
     </com.google.android.material.button.MaterialButton>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/takePhoto"
+            style="@style/Widget.AppTheme.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common"
+            app:icon="@drawable/add_cam_photo_icon_48dp"
+            app:layout_constraintEnd_toStartOf="@id/addPhoto"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toBottomOf="@id/foodImage" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addPhoto"
+            style="@style/Widget.AppTheme.IconButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/common"
+            app:icon="@drawable/add_photo_icon_48dp"
+            app:layout_constraintEnd_toStartOf="@id/deletePhoto"
+            app:layout_constraintStart_toEndOf="@id/takePhoto"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintTop_toBottomOf="@id/foodImage" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/deletePhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/delete_photo_button_48dp"
+            app:layout_constraintBottom_toBottomOf="@id/addPhoto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/addPhoto"
+            app:layout_constraintTop_toTopOf="@id/addPhoto" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

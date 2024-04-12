@@ -1,10 +1,10 @@
 package ru.korostylev.easycalories.repository
 
 import androidx.lifecycle.LiveData
-import ru.korostylev.easycalories.dto.FoodItem
 import ru.korostylev.easycalories.dto.FoodItemFromDB
 import ru.korostylev.easycalories.dto.InfoModel
 import ru.korostylev.easycalories.entity.FoodItemEntity
+import ru.korostylev.easycalories.media.MediaUpload
 
 interface FoodRepository {
     val liveDataFromDB: LiveData<List<FoodItemEntity>>
@@ -20,6 +20,7 @@ interface FoodRepository {
     suspend fun addItem(foodItemEntity: FoodItemEntity)
     suspend fun update(foodItemEntity: FoodItemEntity)
     suspend fun deleteFoodItemById(foodId: Int)
+    suspend fun upload(upload: MediaUpload): String
     fun changeItem(id: Long)
     suspend fun initAPI()
 }

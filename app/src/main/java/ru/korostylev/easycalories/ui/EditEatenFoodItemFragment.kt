@@ -230,7 +230,9 @@ class EditEatenFoodItemFragment : Fragment() {
                         .replace(R.id.fragmentContainer, fragment)
                         .commit()
                 }
-                eatenFoodsViewModel.addEatenFood(food)           }
+                eatenFoodsViewModel.addEatenFood(food)
+
+            }
         }
 
         return binding.root

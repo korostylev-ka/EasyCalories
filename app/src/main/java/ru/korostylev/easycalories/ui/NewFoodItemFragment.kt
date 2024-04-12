@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toFile
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.github.dhaval2404.imagepicker.ImagePicker
@@ -19,14 +20,11 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentNewFoodItemBinding
-
-
 import ru.korostylev.easycalories.entity.FoodItemEntity
+import ru.korostylev.easycalories.media.MediaUpload
 import ru.korostylev.easycalories.utils.AndroidUtils
 import ru.korostylev.easycalories.viewmodel.FoodViewModel
 import java.util.*
-import kotlin.math.floor
-
 
 class NewFoodItemFragment : Fragment() {
     private val foodViewModel: FoodViewModel by activityViewModels()
@@ -44,6 +42,7 @@ class NewFoodItemFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        foodViewModel.changePhoto(null)
         arguments?.let {
 
         }
@@ -73,7 +72,7 @@ class NewFoodItemFragment : Fragment() {
                             Snackbar.LENGTH_LONG
                         ).show()
                     }
-                    Activity.RESULT_OK -> TODO()//viewModel.changePhoto(it.data?.data)
+                    Activity.RESULT_OK -> foodViewModel.changePhoto(it.data?.data)
                 }
             }
 
@@ -135,15 +134,28 @@ class NewFoodItemFragment : Fragment() {
             }
 
         }
+
         binding.foodNameValue.addTextChangedListener(nameFieldTextWatcher)
         binding.proteinsValue.addTextChangedListener(caloriesValueWatcher)
         binding.fatsValue.addTextChangedListener(caloriesValueWatcher)
         binding.carbsValue.addTextChangedListener(caloriesValueWatcher)
-        //прикрепить фото
+        foodViewModel.photo.observe(viewLifecycleOwner) {
+            if (it.uri == null) {
+                binding.photo.visibility = View.GONE
+                binding.deletePhoto.visibility = View.GONE
+                return@observe
+            } else {
+                binding.deletePhoto.visibility = View.VISIBLE
+            }
+
+            binding.photo.visibility = View.VISIBLE
+            binding.photo.setImageURI(it.uri)
+        }
+        //attach photo
         binding.addPhoto.setOnClickListener {
             ImagePicker.with(this)
                 .crop()
-                .compress(2048)
+                .compress(400)
                 .provider(ImageProvider.GALLERY)
                 .galleryMimeTypes(
                     arrayOf(
@@ -152,6 +164,17 @@ class NewFoodItemFragment : Fragment() {
                     )
                 )
                 .createIntent(pickPhotoLauncher::launch)
+        }
+        //make photo
+        binding.takePhoto.setOnClickListener {
+            ImagePicker.with(this)
+                .crop()
+                .compress(400)
+                .provider(ImageProvider.CAMERA)
+                .createIntent(pickPhotoLauncher::launch)
+        }
+        binding.deletePhoto.setOnClickListener {
+            foodViewModel.changePhoto(null)
         }
         binding.buttonSave.setOnClickListener {
             with(binding) {
@@ -187,21 +210,19 @@ class NewFoodItemFragment : Fragment() {
                     }
                     if (proteins >= 0F && fats >=0F && carbs >= 0F && calories > 0F) {
                         viewLifecycleOwner.lifecycleScope.launch {
+                            if (foodViewModel.photo.value != null) {
+                                image = try {
+                                    foodViewModel.uploadPhoto(MediaUpload(foodViewModel.photo.value?.uri!!.toFile()))
+                                } catch (e: Exception) {
+                                    null
+                                }
+                            }
                             val isFoodExist = foodViewModel.getFoodItem(name)
                             if (isFoodExist == null) {
-                                val newFoodEntity = FoodItemEntity(0, 0, categoryId, name, glycemicIndex, portionWeight, proteinsToAdd, fatsToAdd, carbsToAdd, caloriesToAdd, image, barcode, true)
-//                                foodViewModel.addItem(newFoodEntity)
+                                val newFoodEntity = FoodItemEntity(0, 0, categoryId, name, glycemicIndex, portionWeight, proteinsToAdd, fatsToAdd, carbsToAdd, caloriesToAdd, barcode, image, true)
                                 foodViewModel.saveToApi(newFoodEntity)
+                                foodViewModel.changePhoto(null)
                                 parentFragmentManager.popBackStack()
-                                try {
-//                                    val key = foodViewModel.saveToFirebase(newFoodEntity.toFoodItem())
-//                                    val food = foodViewModel.getFoodItem(name)
-//                                    Log.d("fooditem", food.toString())
-//                                    foodViewModel.update(food!!.copy(key = key))
-                                } catch (e: ru.korostylev.easycalories.error.Error) {
-                                    throw e
-                                }
-
                             } else {
                                 binding.foodNameValue.requestFocus()
                                 binding.foodNameValue.setBackgroundResource(R.drawable.edit_text_value_wrong)

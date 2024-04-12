@@ -5,7 +5,6 @@ import ru.korostylev.easycalories.entity.EatenFoodsEntity
 import ru.korostylev.easycalories.entity.NutrientsEntity
 
 interface NutrientsRepository {
-    //var limitsOfNutrientsLiveData: LiveData<NutrientsEntity>
     fun getAll(): LiveData<List<NutrientsEntity>>
     fun setLimits(limits: NutrientsEntity)
     fun getLimits(): NutrientsEntity
