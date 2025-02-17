@@ -4,7 +4,7 @@ import android.app.Application
 import android.widget.Toast
 import com.my.tracker.MyTracker
 
-val SDK_KEY = "41915942302847665979"
+val SDK_KEY = "08698165858771370987"
 
 class EasyCaloriesApplication: Application() {
     override fun onCreate() {
