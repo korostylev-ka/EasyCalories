@@ -48,7 +48,7 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
             }
 
             dataInfoModel.postValue(infoModel.copy(loading = false))
-        } catch (e: java.net.SocketTimeoutException) {
+        } catch (e: Exception) {
             dataInfoModel.postValue(infoModel.copy(isError = true))
         }
     }

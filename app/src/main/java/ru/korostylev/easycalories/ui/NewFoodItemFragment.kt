@@ -61,7 +61,7 @@ class NewFoodItemFragment : Fragment() {
             portionWeightValue.setText(portionWeight.toString())
             glycemicIndexValue.setText(glycemicIndex.toString())
         }
-        
+
         val pickPhotoLauncher =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
                 when (it.resultCode) {
@@ -72,6 +72,7 @@ class NewFoodItemFragment : Fragment() {
                             Snackbar.LENGTH_LONG
                         ).show()
                     }
+
                     Activity.RESULT_OK -> foodViewModel.changePhoto(it.data?.data)
                 }
             }
@@ -92,7 +93,7 @@ class NewFoodItemFragment : Fragment() {
 
         }
 
-        val caloriesValueWatcher = object: TextWatcher {
+        val caloriesValueWatcher = object : TextWatcher {
             var position = 0
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -204,11 +205,15 @@ class NewFoodItemFragment : Fragment() {
                     val caloriesToAdd = Math.round(calories * 10.0F) / 10.0F
                     glycemicIndex = glycemicIndexString.toInt()
                     if ((proteins + fats + carbs) > 100) {
-                        Toast.makeText(context, R.string.summOfNutrientsMoreThan100, Toast.LENGTH_LONG)
+                        Toast.makeText(
+                            context,
+                            R.string.summOfNutrientsMoreThan100,
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                         return@setOnClickListener
                     }
-                    if (proteins >= 0F && fats >=0F && carbs >= 0F && calories > 0F) {
+                    if (proteins >= 0F && fats >= 0F && carbs >= 0F && calories > 0F) {
                         viewLifecycleOwner.lifecycleScope.launch {
                             if (foodViewModel.photo.value != null) {
                                 image = try {
@@ -219,21 +224,43 @@ class NewFoodItemFragment : Fragment() {
                             }
                             val isFoodExist = foodViewModel.getFoodItem(name)
                             if (isFoodExist == null) {
-                                val newFoodEntity = FoodItemEntity(0, 0, categoryId, name, glycemicIndex, portionWeight, proteinsToAdd, fatsToAdd, carbsToAdd, caloriesToAdd, barcode, image, true)
+                                val newFoodEntity = FoodItemEntity(
+                                    0,
+                                    0,
+                                    categoryId,
+                                    name,
+                                    glycemicIndex,
+                                    portionWeight,
+                                    proteinsToAdd,
+                                    fatsToAdd,
+                                    carbsToAdd,
+                                    caloriesToAdd,
+                                    barcode,
+                                    image,
+                                    true
+                                )
                                 foodViewModel.saveToApi(newFoodEntity)
                                 foodViewModel.changePhoto(null)
                                 parentFragmentManager.popBackStack()
                             } else {
                                 binding.foodNameValue.requestFocus()
                                 binding.foodNameValue.setBackgroundResource(R.drawable.edit_text_value_wrong)
-                                Toast.makeText(context, R.string.foodAlreadyExists, Toast.LENGTH_SHORT)
+                                Toast.makeText(
+                                    context,
+                                    R.string.foodAlreadyExists,
+                                    Toast.LENGTH_SHORT
+                                )
                                     .show()
                             }
 
                         }
 
                     } else {
-                        Toast.makeText(context, R.string.checkTheFieldsAreCorrect, Toast.LENGTH_LONG)
+                        Toast.makeText(
+                            context,
+                            R.string.checkTheFieldsAreCorrect,
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                     }
                 } catch (e: java.lang.NumberFormatException) {

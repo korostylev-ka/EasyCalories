@@ -29,7 +29,8 @@ import ru.korostylev.easycalories.viewmodel.FoodViewModel
 
 
 class FoodListFragment : Fragment() {
-    private var recyclerView: RecyclerView? = null
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: FoodListAdapter
     private val apiListener = object: APIListener {
         override fun remove(foodId: Int) {
             viewModel.deleteByIdFromAPI(foodId)
@@ -51,44 +52,40 @@ class FoodListFragment : Fragment() {
         }
 
     }
-
-    private var adapter: FoodListAdapter? = FoodListAdapter(emptyList(), apiListener, onInteractionListener)
     private val viewModel: FoodViewModel by activityViewModels()
     private var foodList: List<FoodItemEntity> = emptyList()
+    private var _binding: FragmentFoodListBinding? = null
+    private val binding: FragmentFoodListBinding
+        get() = _binding ?: throw RuntimeException("FragmentFoodListBinding is null")
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         requireActivity().setTitle(R.string.chooseFood)
-        val binding = FragmentFoodListBinding.inflate(layoutInflater)
+        _binding = FragmentFoodListBinding.inflate(layoutInflater)
+        return binding.root
+    }
 
-        val filterTextWatcher = object: TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                val text = binding.filterText.text.toString()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        addObservers()
+        addFilterTextWatcher()
+        setupRV()
+        addClickListeners()
+    }
 
-            }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val text = binding.filterText.text.toString()
-
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                val text = binding.filterText.text.toString()
-                val editedList = foodList.filter {
-                    it.name.startsWith(text, ignoreCase = true)
-                }
-                adapter = FoodListAdapter(editedList, apiListener, onInteractionListener)
-                recyclerView!!.adapter = adapter
-            }
-
-        }
-        binding.filterText.addTextChangedListener(filterTextWatcher)
+    private fun setupRV() {
         recyclerView = binding.foodListRecyclerView
-        recyclerView!!.layoutManager = LinearLayoutManager(context)
-        recyclerView!!.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(context)
+    }
+
+    private fun addObservers() {
         viewModel.foodListLiveData.observe(
             viewLifecycleOwner,
             Observer {foods->
@@ -100,7 +97,8 @@ class FoodListFragment : Fragment() {
                 }
                 foodList = foods
                 foodList.let {
-                    adapter = FoodListAdapter(sortedByTimesEaten, apiListener, onInteractionListener)
+                    adapter = FoodListAdapter(apiListener, onInteractionListener)
+                    adapter?.submitList(sortedByTimesEaten)
                     recyclerView!!.adapter = adapter
                 }
             }
@@ -122,6 +120,33 @@ class FoodListFragment : Fragment() {
                 }
             }
         )
+    }
+
+    private fun addFilterTextWatcher() {
+        val filterTextWatcher = object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                val text = binding.filterText.text.toString()
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val text = binding.filterText.text.toString()
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                val text = binding.filterText.text.toString()
+                val editedList = foodList.filter {
+                    it.name.startsWith(text, ignoreCase = true)
+                }
+                adapter = FoodListAdapter(apiListener, onInteractionListener)
+                recyclerView!!.adapter = adapter
+            }
+        }
+        binding.filterText.addTextChangedListener(filterTextWatcher)
+    }
+
+    private fun addClickListeners() {
         binding.addFoodItem.setOnClickListener {
             val fragment = NewFoodItemFragment.newInstance()
             parentFragmentManager.beginTransaction()
@@ -129,16 +154,10 @@ class FoodListFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        viewModel.getFoodList()
-
     }
 
     companion object {
+
         fun newInstance(): FoodListFragment {
             return FoodListFragment()
         }

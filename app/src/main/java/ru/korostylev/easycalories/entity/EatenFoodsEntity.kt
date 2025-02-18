@@ -9,7 +9,6 @@ data class EatenFoodsEntity(
     val id: Int,
     val dayId: Int,
     val time: Long,
-//    val time: String,
     val name: String,
     val portionWeight: Int,
     val portionProteins: Float,

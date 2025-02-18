@@ -29,9 +29,12 @@ import ru.korostylev.easycalories.utils.AndroidUtils
 import ru.korostylev.easycalories.viewmodel.FoodViewModel
 import java.util.*
 
-private const val FOOD_ID = "FOOD_ID"
+
 class EditFoodItemFragment : Fragment() {
     private val foodViewModel: FoodViewModel by activityViewModels()
+    private var _binding: FragmentEditFoodItemBinding? = null
+    private val binding: FragmentEditFoodItemBinding
+        get() = _binding ?: throw RuntimeException("FragmentEditFoodItemBinding is null")
     private var foodItemEntity: FoodItemEntity? = null
     private var id = 0
     private var foodId = 0
@@ -49,17 +52,39 @@ class EditFoodItemFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            id = it.getInt(FOOD_ID)
-        }
+        getFoodId()
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         requireActivity().setTitle(R.string.editingFood)
-        val binding = FragmentEditFoodItemBinding.inflate(layoutInflater)
+        _binding = FragmentEditFoodItemBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        addNameTextWatcher()
+        addNutrientsValueTextWatcher()
+        addClickListeners()
+        addObservers()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun getFoodId() {
+        arguments?.let {
+            id = it.getInt(FOOD_ID)
+        }
+    }
+
+    private fun addNameTextWatcher() {
         val nameFieldTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -73,22 +98,11 @@ class EditFoodItemFragment : Fragment() {
             }
 
         }
+        binding.editedFoodNameValue.addTextChangedListener(nameFieldTextWatcher)
+    }
 
-        val pickPhotoLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                when (it.resultCode) {
-                    ImagePicker.RESULT_ERROR -> {
-                        Snackbar.make(
-                            binding.root,
-                            ImagePicker.getError(it.data),
-                            Snackbar.LENGTH_LONG
-                        ).show()
-                    }
-                    Activity.RESULT_OK -> foodViewModel.changePhoto(it.data?.data)
-                }
-            }
-
-        val caloriesValueWatcher = object: TextWatcher {
+    private fun addNutrientsValueTextWatcher() {
+        val valueWatcher = object: TextWatcher {
             var position = 0
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -130,7 +144,138 @@ class EditFoodItemFragment : Fragment() {
             }
 
         }
+        binding.editedProteinsValue.addTextChangedListener(valueWatcher)
+        binding.editedFatsValue.addTextChangedListener(valueWatcher)
+        binding.editedCarbsValue.addTextChangedListener(valueWatcher)
+    }
 
+    private fun addClickListeners() {
+        val pickPhotoLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                when (it.resultCode) {
+                    ImagePicker.RESULT_ERROR -> {
+                        Snackbar.make(
+                            binding.root,
+                            ImagePicker.getError(it.data),
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+                    Activity.RESULT_OK -> foodViewModel.changePhoto(it.data?.data)
+                }
+            }
+        //make photo
+        binding.takePhoto.setOnClickListener {
+            ImagePicker.with(this)
+                .crop()
+                .compress(400)
+                .provider(ImageProvider.CAMERA)
+                .createIntent(pickPhotoLauncher::launch)
+        }
+        binding.deletePhoto.setOnClickListener {
+            foodViewModel.changePhoto(null)
+        }
+        //attach photo
+        binding.addPhoto.setOnClickListener {
+            ImagePicker.with(this)
+                .crop()
+                .compress(400)
+                .provider(ImageProvider.GALLERY)
+                .galleryMimeTypes(
+                    arrayOf(
+                        "image/png",
+                        "image/jpeg",
+                    )
+                )
+                .createIntent(pickPhotoLauncher::launch)
+        }
+        binding.editedButtonSave.setOnClickListener {
+            with(binding) {
+                editedFoodNameValue.setBackgroundResource(R.drawable.edit_text_value)
+                val name = editedFoodNameValue.text.toString()
+                    .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
+                if (name.isEmpty()) {
+                    editedFoodNameValue.requestFocus()
+                    editedFoodNameValue.setBackgroundResource(R.drawable.edit_text_value_wrong)
+                    Toast.makeText(context, R.string.tooShort, Toast.LENGTH_LONG)
+                        .show()
+                    return@setOnClickListener
+                }
+                val glycemicIndexString = editedGlycemicIndexValue.text.toString()
+                val portionWeightString = editedPortionWeightValue.text.toString()
+                val proteinsString = editedProteinsValue.text.toString()
+                val fatsString = editedFatsValue.text.toString()
+                val carbsString = editedCarbsValue.text.toString()
+                val caloriesString = editedCaloriesValue.text.toString()
+                try {
+                    itemProteins = proteinsString.toFloat()
+                    itemFats = fatsString.toFloat()
+                    itemCarbs = carbsString.toFloat()
+                    val proteinsToAdd = Math.round(itemProteins * 10.0F) / 10.0F
+                    val fatsToAdd = Math.round(itemFats * 10.0F) / 10.0F
+                    val carbsToAdd = Math.round(itemCarbs * 10.0F) / 10.0F
+                    val caloriesToAdd = Math.round(itemCalories * 10.0F) / 10.0F
+                    itemGlycemicIndex = glycemicIndexString.toInt()
+                    if ((itemProteins + itemFats + itemCarbs) > 100) {
+                        Toast.makeText(
+                            context,
+                            R.string.summOfNutrientsMoreThan100,
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                        return@setOnClickListener
+                    }
+                    if (itemProteins >= 0F && itemFats >= 0F && itemCarbs >= 0F) {
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            if (foodViewModel.photo.value != null) {
+                                itemImage = try {
+                                    foodViewModel.uploadPhoto(MediaUpload(foodViewModel.photo.value?.uri!!.toFile()))
+                                } catch (e: Exception) {
+                                    null
+                                }
+                            }
+                            val newFoodEntity = FoodItemEntity(
+                                id,
+                                foodId,
+                                itemCategoryId,
+                                name,
+                                itemGlycemicIndex,
+                                itemPortionWeight,
+                                proteinsToAdd,
+                                fatsToAdd,
+                                carbsToAdd,
+                                caloriesToAdd,
+                                itemBarcode,
+                                itemImage,
+                                true,
+                                itemKey
+                            )
+                            foodViewModel.editToAPI(foodId, newFoodEntity)
+                            parentFragmentManager.popBackStack()
+                        }
+
+                    } else {
+                        Toast.makeText(
+                            context,
+                            R.string.checkTheFieldsAreCorrect,
+                            Toast.LENGTH_LONG
+                        )
+                            .show()
+                    }
+                } catch (e: java.lang.NumberFormatException) {
+                    Toast.makeText(context, R.string.numberFormatException, Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+
+        }
+
+        binding.editedButtonBack.setOnClickListener {
+            val fm = requireActivity().supportFragmentManager
+            fm.popBackStack()
+        }
+    }
+
+    private fun addObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             foodItemEntity = foodViewModel.getFoodItemById(id)
             with(foodItemEntity) {
@@ -165,10 +310,6 @@ class EditFoodItemFragment : Fragment() {
                 editedGlycemicIndexValue.setText(itemGlycemicIndex.toString())
                 editedPortionWeightValue.setText(itemPortionWeight.toString())
             }
-            binding.editedFoodNameValue.addTextChangedListener(nameFieldTextWatcher)
-            binding.editedProteinsValue.addTextChangedListener(caloriesValueWatcher)
-            binding.editedFatsValue.addTextChangedListener(caloriesValueWatcher)
-            binding.editedCarbsValue.addTextChangedListener(caloriesValueWatcher)
         }
         foodViewModel.photo.observe(viewLifecycleOwner) {
             if (it.uri == null) {
@@ -186,123 +327,14 @@ class EditFoodItemFragment : Fragment() {
                 .placeholder(R.drawable.empty_food_256dp)
                 .into(binding.foodImage)
         }
-        //attach photo
-        binding.addPhoto.setOnClickListener {
-            ImagePicker.with(this)
-                .crop()
-                .compress(400)
-                .provider(ImageProvider.GALLERY)
-                .galleryMimeTypes(
-                    arrayOf(
-                        "image/png",
-                        "image/jpeg",
-                    )
-                )
-                .createIntent(pickPhotoLauncher::launch)
-        }
-        //make photo
-        binding.takePhoto.setOnClickListener {
-            ImagePicker.with(this)
-                .crop()
-                .compress(400)
-                .provider(ImageProvider.CAMERA)
-                .createIntent(pickPhotoLauncher::launch)
-        }
-        binding.deletePhoto.setOnClickListener {
-            foodViewModel.changePhoto(null)
-        }
-
-        binding.editedButtonSave.setOnClickListener {
-                with(binding) {
-                    editedFoodNameValue.setBackgroundResource(R.drawable.edit_text_value)
-                    val name = editedFoodNameValue.text.toString()
-                        .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString() }
-                    if (name.isEmpty()) {
-                        editedFoodNameValue.requestFocus()
-                        editedFoodNameValue.setBackgroundResource(R.drawable.edit_text_value_wrong)
-                        Toast.makeText(context, R.string.tooShort, Toast.LENGTH_LONG)
-                            .show()
-                        return@setOnClickListener
-                    }
-                    val glycemicIndexString = editedGlycemicIndexValue.text.toString()
-                    val portionWeightString = editedPortionWeightValue.text.toString()
-                    val proteinsString = editedProteinsValue.text.toString()
-                    val fatsString = editedFatsValue.text.toString()
-                    val carbsString = editedCarbsValue.text.toString()
-                    val caloriesString = editedCaloriesValue.text.toString()
-                    try {
-                        itemProteins = proteinsString.toFloat()
-                        itemFats = fatsString.toFloat()
-                        itemCarbs = carbsString.toFloat()
-                        val proteinsToAdd = Math.round(itemProteins * 10.0F) / 10.0F
-                        val fatsToAdd = Math.round(itemFats * 10.0F) / 10.0F
-                        val carbsToAdd = Math.round(itemCarbs * 10.0F) / 10.0F
-                        val caloriesToAdd = Math.round(itemCalories * 10.0F) / 10.0F
-                        itemGlycemicIndex = glycemicIndexString.toInt()
-                        if ((itemProteins + itemFats + itemCarbs) > 100) {
-                            Toast.makeText(
-                                context,
-                                R.string.summOfNutrientsMoreThan100,
-                                Toast.LENGTH_LONG
-                            )
-                                .show()
-                            return@setOnClickListener
-                        }
-                        if (itemProteins >= 0F && itemFats >= 0F && itemCarbs >= 0F) {
-                            viewLifecycleOwner.lifecycleScope.launch {
-                                if (foodViewModel.photo.value != null) {
-                                    itemImage = try {
-                                        foodViewModel.uploadPhoto(MediaUpload(foodViewModel.photo.value?.uri!!.toFile()))
-                                    } catch (e: Exception) {
-                                        null
-                                    }
-                                }
-                                val newFoodEntity = FoodItemEntity(
-                                    id,
-                                    foodId,
-                                    itemCategoryId,
-                                    name,
-                                    itemGlycemicIndex,
-                                    itemPortionWeight,
-                                    proteinsToAdd,
-                                    fatsToAdd,
-                                    carbsToAdd,
-                                    caloriesToAdd,
-                                    itemBarcode,
-                                    itemImage,
-                                    true,
-                                    itemKey
-                                )
-                                foodViewModel.editToAPI(foodId, newFoodEntity)
-                                parentFragmentManager.popBackStack()
-                            }
-
-                        } else {
-                            Toast.makeText(
-                                context,
-                                R.string.checkTheFieldsAreCorrect,
-                                Toast.LENGTH_LONG
-                            )
-                                .show()
-                        }
-                    } catch (e: java.lang.NumberFormatException) {
-                        Toast.makeText(context, R.string.numberFormatException, Toast.LENGTH_LONG)
-                            .show()
-                    }
-                }
-
-        }
-
-        binding.editedButtonBack.setOnClickListener {
-            val fm = requireActivity().supportFragmentManager
-            fm.popBackStack()
-        }
-
-        return binding.root
     }
 
 
     companion object {
+
+        private const val FOOD_ID = "FOOD_ID"
+
+
         fun newInstance(foodId: Int) =
             EditFoodItemFragment().apply {
                 arguments = Bundle().apply {
@@ -310,5 +342,6 @@ class EditFoodItemFragment : Fragment() {
 
                 }
             }
+
     }
 }
