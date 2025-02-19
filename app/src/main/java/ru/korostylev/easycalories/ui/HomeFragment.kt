@@ -1,19 +1,22 @@
 package ru.korostylev.easycalories.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentHomeBinding
@@ -21,25 +24,26 @@ import ru.korostylev.easycalories.entity.EatenFoodsEntity
 import ru.korostylev.easycalories.entity.WeightEntity
 import ru.korostylev.easycalories.interfaces.OnInteractionListener
 import ru.korostylev.easycalories.recyclerview.EatenFoodsListAdapter
-
 import ru.korostylev.easycalories.utils.AndroidUtils
 import ru.korostylev.easycalories.viewmodel.EatenFoodsViewModel
 import ru.korostylev.easycalories.viewmodel.FoodViewModel
 import ru.korostylev.easycalories.viewmodel.NutrientsViewModel
 import ru.korostylev.easycalories.viewmodel.ProfileViewModel
 import java.util.Calendar
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
-private const val DATE_ID = "dateId"
-private const val HOME_FRAGMENT_TAG = "HomeFragment"
-
 class HomeFragment : Fragment() {
+
     private val calendar = Calendar.getInstance()
     private var date: Long = calendar.timeInMillis
     private val viewModel: NutrientsViewModel by activityViewModels()
     private val foodViewModel: FoodViewModel by activityViewModels()
     private val eatenFoodsViewModel: EatenFoodsViewModel by activityViewModels()
     private val profileViewModel: ProfileViewModel by activityViewModels()
+    private var _binding: FragmentHomeBinding? = null
+    private val binding: FragmentHomeBinding
+        get() = _binding ?: throw RuntimeException("FragmentHomeBinding is null")
     private val listener = object: OnInteractionListener {
         override fun remove(eatenFoodsEntity: EatenFoodsEntity) {
             val foodItemEntity = lifecycleScope.launch {
@@ -57,22 +61,22 @@ class HomeFragment : Fragment() {
         }
 
     }
-    private var eatenFoodsAdapter: EatenFoodsListAdapter? = EatenFoodsListAdapter((emptyList()), listener)
-    private var eatenFoodsRecyclerView: RecyclerView? = null
-    private var day = 0
-    private var dayOfWeek = 0
-    private var month = 0
-    private var year = 0
-    private var dayId = 0
-    private var weight: Float = 0F
-    private var proteinsLimit = 0.0f
-    private var fatsLimit = 0.0f
-    private var carbsLimit = 0.0f
-    private var caloriesLimit = 0.0f
-    private var proteinsActual = 0.0f
-    private var fatsActual = 0.0f
-    private var carbsActual = 0.0f
-    private var caloriesActual = 0.0f
+    private var eatenFoodsAdapter: EatenFoodsListAdapter = EatenFoodsListAdapter((emptyList()), listener)
+    private lateinit var eatenFoodsRecyclerView: RecyclerView
+    private var day = EMPTY_INT_VALUE
+    private var dayOfWeek = EMPTY_INT_VALUE
+    private var month = EMPTY_INT_VALUE
+    private var year = EMPTY_INT_VALUE
+    private var dayId = EMPTY_INT_VALUE
+    private var weight: Float = EMPTY_FLOAT_VALUE
+    private var proteinsLimit = EMPTY_FLOAT_VALUE
+    private var fatsLimit = EMPTY_FLOAT_VALUE
+    private var carbsLimit = EMPTY_FLOAT_VALUE
+    private var caloriesLimit = EMPTY_FLOAT_VALUE
+    private var proteinsActual = EMPTY_FLOAT_VALUE
+    private var fatsActual = EMPTY_FLOAT_VALUE
+    private var carbsActual = EMPTY_FLOAT_VALUE
+    private var caloriesActual = EMPTY_FLOAT_VALUE
 
 
     //get current date in digits
@@ -97,8 +101,37 @@ class HomeFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        getDate()
+    }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        requireActivity().setTitle(R.string.app_name)
+        _binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding.root.setOnTouchListener(swipeTouchListener)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bindViews()
+        addWeightValueTextWatcher()
+        addClickListeners()
+        addObservers()
+        setupRV()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun getDate() {
         //заполняем поля из аргументов
-        date = arguments!!.getLong(DATE_ID)
+        date = requireArguments().getLong(DATE_ID)
         calendar.timeInMillis = date
         day = calendar.get(Calendar.DAY_OF_MONTH)
         dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK)
@@ -108,12 +141,7 @@ class HomeFragment : Fragment() {
         weight = profileViewModel.getWeight(dayId) ?: 0F
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        requireActivity().setTitle(R.string.app_name)
-        val homeFragmentBinding = FragmentHomeBinding.inflate(layoutInflater)
+    private fun addWeightValueTextWatcher() {
         val floatFieldWatcher = object : TextWatcher {
             var position = 0
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -138,38 +166,32 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-        fun reloadWeight() {
-            when(weight) {
-                0F -> {
-                    homeFragmentBinding.weightValue.visibility = View.GONE
-                    homeFragmentBinding.weightTitle.setText(R.string.setWeigt)
-                }
-                else -> {
-                    homeFragmentBinding.weightValue.visibility = View.VISIBLE
-                    homeFragmentBinding.weightTitle.setText(R.string.yourWeight)
-                }
+        binding.weightValue.addTextChangedListener(floatFieldWatcher)
+    }
+
+    private fun reloadWeight() {
+        when(weight) {
+            0F -> {
+                binding.weightValue.visibility = View.GONE
+                binding.weightTitle.setText(R.string.setWeigt)
+            }
+            else -> {
+                binding.weightValue.visibility = View.VISIBLE
+                binding.weightTitle.setText(R.string.yourWeight)
             }
         }
+    }
 
-        homeFragmentBinding.weightValue.isFocusable = false
-        val weightValue = when(weight) {
-            0F -> ""
-            else -> weight.toString()
-
+    private fun addClickListeners() {
+        binding.changeButton.setOnClickListener {
+            binding.weightValue.visibility = View.VISIBLE
+            binding.weightValue.isFocusableInTouchMode = true
+            binding.weightValue.requestFocus()
+            binding.changeButton.visibility = View.GONE
+            binding.saveButton.visibility = View.VISIBLE
         }
-        reloadWeight()
-
-        homeFragmentBinding.weightValue.setText(weightValue)
-        homeFragmentBinding.weightValue.addTextChangedListener(floatFieldWatcher)
-        homeFragmentBinding.changeButton.setOnClickListener {
-            homeFragmentBinding.weightValue.visibility = View.VISIBLE
-            homeFragmentBinding.weightValue.isFocusableInTouchMode = true
-            homeFragmentBinding.weightValue.requestFocus()
-            homeFragmentBinding.changeButton.visibility = View.GONE
-            homeFragmentBinding.saveButton.visibility = View.VISIBLE
-        }
-        homeFragmentBinding.saveButton.setOnClickListener {
-            val newWeightValue = homeFragmentBinding.weightValue.text.toString()
+        binding.saveButton.setOnClickListener {
+            val newWeightValue = binding.weightValue.text.toString()
             if (!newWeightValue.isEmpty()) {
                 weight = newWeightValue.toFloat()
                 profileViewModel.saveWeight(WeightEntity(dayId, weight))
@@ -177,30 +199,35 @@ class HomeFragment : Fragment() {
                 weight = 0F
                 profileViewModel.saveWeight(WeightEntity(dayId, weight))
             }
-            homeFragmentBinding.weightValue.clearFocus()
-            homeFragmentBinding.weightValue.isFocusable = false
-            homeFragmentBinding.changeButton.visibility = View.VISIBLE
-            homeFragmentBinding.saveButton.visibility = View.GONE
+            binding.weightValue.clearFocus()
+            binding.weightValue.isFocusable = false
+            binding.changeButton.visibility = View.VISIBLE
+            binding.saveButton.visibility = View.GONE
             reloadWeight()
         }
-        eatenFoodsRecyclerView = homeFragmentBinding.eatenFoodsRecyclerView
-        eatenFoodsRecyclerView!!.layoutManager = LinearLayoutManager(context)
-        eatenFoodsRecyclerView!!.adapter = eatenFoodsAdapter
-        eatenFoodsViewModel.getEatenFoodItemForDay(dayId).observe(
-            viewLifecycleOwner,
-            Observer {foods->
-                val sortedFoods = foods.sortedByDescending {
-                    it.time
-                }
-                sortedFoods.let {
-                    eatenFoodsAdapter = EatenFoodsListAdapter(sortedFoods, listener)
-                    eatenFoodsRecyclerView!!.adapter = eatenFoodsAdapter
-                }
-            }
-        )
+        //back one day
+        binding.backButton.setOnClickListener {
+            moveToPrevDay()
+        }
+
+        //fwd one day
+        binding.fwdButton.setOnClickListener {
+            moveToNextDay()
+        }
+        //add food eat
+        binding.addFood.setOnClickListener {
+            val fragment = FoodListFragment.newInstance()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, fragment)
+                .addToBackStack(null)
+                .commit()
+        }
+    }
+
+    private fun addObservers() {
         viewModel.liveDataNutrients.observe(viewLifecycleOwner, Observer {listOfNutrients->
             listOfNutrients.let {
-                with(homeFragmentBinding) {
+                with(binding) {
                     val limits = it.filter { it.id == 0}[0]
                     val actualNutrients = viewModel.getActualEatenNutrients(dayId)
                     proteinsLimit = limits.proteins
@@ -253,42 +280,92 @@ class HomeFragment : Fragment() {
             }
 
         })
-        //back one day
-        homeFragmentBinding.backButton.setOnClickListener {
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month - 1)
-            calendar.set(Calendar.DAY_OF_MONTH, day - 1)
-            val fragment = newInstance(calendar.timeInMillis)
-            val fragmentManager = parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer,fragment)
-                .addToBackStack(null)
-                .commit()
+        eatenFoodsViewModel.getEatenFoodItemForDay(dayId).observe(
+            viewLifecycleOwner,
+            Observer {foods->
+                val sortedFoods = foods.sortedByDescending {
+                    it.time
+                }
+                sortedFoods.let {
+                    eatenFoodsAdapter = EatenFoodsListAdapter(sortedFoods, listener)
+                    eatenFoodsRecyclerView!!.adapter = eatenFoodsAdapter
+                }
+            }
+        )
+    }
+
+    private fun moveToNextDay() {
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, month - 1)
+        calendar.set(Calendar.DAY_OF_MONTH, day + 1)
+        val fragment = newInstance(calendar.timeInMillis)
+        val fragmentManager = parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer,fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun moveToPrevDay() {
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, month - 1)
+        calendar.set(Calendar.DAY_OF_MONTH, day - 1)
+        val fragment = newInstance(calendar.timeInMillis)
+        val fragmentManager = parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer,fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun setupRV() {
+        eatenFoodsRecyclerView = binding.eatenFoodsRecyclerView
+        eatenFoodsRecyclerView.layoutManager = LinearLayoutManager(context)
+        eatenFoodsRecyclerView.adapter = eatenFoodsAdapter
+    }
+
+    private fun bindViews() {
+        binding.weightValue.isFocusable = false
+        val weightValue = when(weight) {
+            0F -> ""
+            else -> weight.toString()
+
+        }
+        reloadWeight()
+        binding.weightValue.setText(weightValue)
+    }
+
+    private val swipeTouchListener = object : OnTouchListener {
+        var xDown: Float = 0f
+        var xUp: Float = 0f
+        val minDistanceForSwipe = 150f
+        override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
+            when (p1?.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    xDown = p1.x
+                }
+                MotionEvent.ACTION_UP -> {
+                    xUp = p1.x
+                    val delta = xUp - xDown
+                    if (abs(delta) > minDistanceForSwipe) {
+                        when  {
+                            delta > 0f -> {
+                                moveToPrevDay()
+                            }
+                            delta < 0f -> {
+                                moveToNextDay()
+                            }
+                        }
+                    }
+                }
+            }
+            return true
         }
 
-        //fwd one day
-        homeFragmentBinding.fwdButton.setOnClickListener {
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month - 1)
-            calendar.set(Calendar.DAY_OF_MONTH, day + 1)
-            val fragment = newInstance(calendar.timeInMillis)
-            val fragmentManager = parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer,fragment)
-                .addToBackStack(null)
-                .commit()
-        }
-        //add food eat
-        homeFragmentBinding.addFood.setOnClickListener {
-            val fragment = FoodListFragment.newInstance()
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, fragment)
-                .addToBackStack(null)
-                .commit()
-        }
-
-        return homeFragmentBinding.root
     }
 
     companion object {
+        private const val DATE_ID = "dateId"
+        private const val EMPTY_FLOAT_VALUE = 0.0f
+        private const val EMPTY_INT_VALUE = 0
         @JvmStatic
         fun newInstance(date: Long) = HomeFragment().apply {
             arguments = Bundle().apply {
@@ -297,4 +374,6 @@ class HomeFragment : Fragment() {
 
         }
     }
+
+
 }

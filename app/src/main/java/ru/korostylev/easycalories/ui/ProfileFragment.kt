@@ -25,18 +25,13 @@ import ru.korostylev.easycalories.viewmodel.ProfileViewModel
 import kotlin.coroutines.coroutineContext
 import kotlin.math.pow
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 
 class ProfileFragment : Fragment() {
+    private var _binding: FragmentProfileBinding? = null
+    private val binding: FragmentProfileBinding
+        get() = _binding ?: throw RuntimeException("FragmentProfileBinding is null")
     private val profileViewModel: ProfileViewModel by activityViewModels()
     private var currentProfile: ProfileEntity? = null
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
     private var nameV: String? = null
     private var genderV: String? = null
     private var ageV: Int? = null
@@ -69,72 +64,85 @@ class ProfileFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         requireActivity().setTitle(R.string.profile)
-        val profileBinding = FragmentProfileBinding.inflate(layoutInflater)
-        @SuppressLint("ResourceAsColor")
-        fun calcBMI() {
-            if (heightV != null && weightV != null) {
-                val bmi = weightV!! / ((heightV!!.toFloat() / 100F).pow(2.0F))
-                bmiV = Math.round(bmi * 10F) / 10F
-                profileBinding.bmiValue.text = bmiV.toString()
-                profileBinding.bmiStatus.visibility = View.VISIBLE
-                when (bmiV ?: 0F) {
-                    in 0.1F..15.99F -> {
-                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_severe)
-                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_severe_thinness))
-                        profileBinding.bmiStatus.setText(R.string.BMISevereThinness)
-                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_severe_thinness))
-                    }
-                    in 16F..18.49F -> {
-                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_mild)
-                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_mild_thinness))
-                        profileBinding.bmiStatus.setText(R.string.BMIMildThinness)
-                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_mild_thinness))
-                    }
-                    in 18.5F..24.99F -> {
-                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_normal)
-                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_normal))
-                        profileBinding.bmiStatus.setText(R.string.BMINormalRange)
-                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_normal))
-                    }
-                    in 25F..29.99F -> {
-                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_overweight)
-                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_overweight))
-                        profileBinding.bmiStatus.setText(R.string.BMIOverweight)
-                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_overweight))
-                    }
-                    in 30F..34.99F -> {
-                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese1)
-                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_obese1))
-                        profileBinding.bmiStatus.setText(R.string.BMIObeseClassI)
-                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_obese1))
-                    }
-                    in 35F..39.99F -> {
-                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese2)
-                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_obese2))
-                        profileBinding.bmiStatus.setText(R.string.BMIObeseClassII)
-                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_obese2))
-                    }
-                    in 40F..Float.MAX_VALUE -> {
-                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese3)
-                        profileBinding.bmiValue.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_obese3))
-                        profileBinding.bmiStatus.setText(R.string.BMIObeseClassIII)
-                        profileBinding.bmiStatus.setTextColor(ContextCompat.getColor(context!!, R.color.bmi_obese3))
-                    }
-                    else -> {
-                        profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_no_gradient)
-                        profileBinding.bmiStatus.visibility = View.GONE
-                    }
-                }
+        _binding = FragmentProfileBinding.inflate(layoutInflater)
+        return binding.root
+    }
 
-            } else {
-                bmiV = null
-                profileBinding.bmiValue.text = ""
-                profileBinding.bmiValue.setBackgroundResource(R.drawable.edit_text_no_gradient)
-                profileBinding.bmiStatus.visibility = View.GONE
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        addDigitInputTextWatcher()
+        addClickListeners()
+        bindViews()
+        calcBMI()
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private fun calcBMI() {
+        if (heightV != null && weightV != null) {
+            val bmi = weightV!! / ((heightV!!.toFloat() / 100F).pow(2.0F))
+            bmiV = Math.round(bmi * 10F) / 10F
+            binding.bmiValue.text = bmiV.toString()
+            binding.bmiStatus.visibility = View.VISIBLE
+            when (bmiV ?: 0F) {
+                in 0.1F..15.99F -> {
+                    binding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_severe)
+                    binding.bmiValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_severe_thinness))
+                    binding.bmiStatus.setText(R.string.BMISevereThinness)
+                    binding.bmiStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_severe_thinness))
+                }
+                in 16F..18.49F -> {
+                    binding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_mild)
+                    binding.bmiValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_mild_thinness))
+                    binding.bmiStatus.setText(R.string.BMIMildThinness)
+                    binding.bmiStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_mild_thinness))
+                }
+                in 18.5F..24.99F -> {
+                    binding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_normal)
+                    binding.bmiValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_normal))
+                    binding.bmiStatus.setText(R.string.BMINormalRange)
+                    binding.bmiStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_normal))
+                }
+                in 25F..29.99F -> {
+                    binding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_overweight)
+                    binding.bmiValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_overweight))
+                    binding.bmiStatus.setText(R.string.BMIOverweight)
+                    binding.bmiStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_overweight))
+                }
+                in 30F..34.99F -> {
+                    binding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese1)
+                    binding.bmiValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_obese1))
+                    binding.bmiStatus.setText(R.string.BMIObeseClassI)
+                    binding.bmiStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_obese1))
+                }
+                in 35F..39.99F -> {
+                    binding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese2)
+                    binding.bmiValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_obese2))
+                    binding.bmiStatus.setText(R.string.BMIObeseClassII)
+                    binding.bmiStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_obese2))
+                }
+                in 40F..Float.MAX_VALUE -> {
+                    binding.bmiValue.setBackgroundResource(R.drawable.edit_text_bmi_obese3)
+                    binding.bmiValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_obese3))
+                    binding.bmiStatus.setText(R.string.BMIObeseClassIII)
+                    binding.bmiStatus.setTextColor(ContextCompat.getColor(requireContext(), R.color.bmi_obese3))
+                }
+                else -> {
+                    binding.bmiValue.setBackgroundResource(R.drawable.edit_text_no_gradient)
+                    binding.bmiStatus.visibility = View.GONE
+                }
             }
+
+        } else {
+            bmiV = null
+            binding.bmiValue.text = ""
+            binding.bmiValue.setBackgroundResource(R.drawable.edit_text_no_gradient)
+            binding.bmiStatus.visibility = View.GONE
         }
+    }
+
+    private fun addDigitInputTextWatcher() {
         val digitFieldWatcher = object : TextWatcher {
             var position = 0
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -160,56 +168,46 @@ class ProfileFragment : Fragment() {
             }
 
         }
-        with(profileBinding) {
-            nameValue.setText(nameV ?: "")
-            ageValue.setText(ageV?.toString() ?: "")
-            genderValue.setText(genderV)
-            weightValue.setText(weightV?.toString() ?: "")
-            heightValue.setText(heightV?.toString() ?: "")
-            chestValue.setText(chestV?.toString() ?: "")
-            waistValue.setText(waistV?.toString() ?: "")
-            hipValue.setText(hipV?.toString() ?: "")
-            neckValue.setText(neckV?.toString() ?: "")
-            bmiValue.setText(bmiV?.toString() ?: "")
-            calcBMI()
-            weightValue.addTextChangedListener(digitFieldWatcher)
-            ageValue.addTextChangedListener(digitFieldWatcher)
-            heightValue.addTextChangedListener(digitFieldWatcher)
-            chestValue.addTextChangedListener(digitFieldWatcher)
-            waistValue.addTextChangedListener(digitFieldWatcher)
-            hipValue.addTextChangedListener(digitFieldWatcher)
-            neckValue.addTextChangedListener(digitFieldWatcher)
-            buttonSave.setOnClickListener {
-                nameV = nameValue.text.toString()
-                ageV = convertIntEditTextValues(ageValue)
-                genderV = genderValue.text.toString()
-                weightV = convertFloatEditTextValues(weightValue)
-                heightV = convertIntEditTextValues(heightValue)
-                chestV = convertFloatEditTextValues(chestValue)
-                waistV = convertFloatEditTextValues(waistValue)
-                hipV = convertFloatEditTextValues(hipValue)
-                neckV = convertFloatEditTextValues(neckValue)
-                calcBMI()
-//                bmiV = convertFloatEditTextValues(bmiValue as EditText)
-                val newProfile = ProfileEntity(0, nameV, genderV, ageV, weightV, heightV, chestV, waistV, hipV, neckV, bmiV)
-                profileViewModel.saveProfile(newProfile)
+        binding.weightValue.addTextChangedListener(digitFieldWatcher)
+        binding.ageValue.addTextChangedListener(digitFieldWatcher)
+        binding.heightValue.addTextChangedListener(digitFieldWatcher)
+        binding.chestValue.addTextChangedListener(digitFieldWatcher)
+        binding.waistValue.addTextChangedListener(digitFieldWatcher)
+        binding.hipValue.addTextChangedListener(digitFieldWatcher)
+        binding.neckValue.addTextChangedListener(digitFieldWatcher)
+    }
 
-            }
-            buttonReturn.setOnClickListener {
-                parentFragmentManager.popBackStack()
-            }
+    private fun addClickListeners() {
+        binding.buttonSave.setOnClickListener {
+            nameV = binding.nameValue.text.toString()
+            ageV = convertIntEditTextValues(binding.ageValue)
+            genderV = binding.genderValue.text.toString()
+            weightV = convertFloatEditTextValues(binding.weightValue)
+            heightV = convertIntEditTextValues(binding.heightValue)
+            chestV = convertFloatEditTextValues(binding.chestValue)
+            waistV = convertFloatEditTextValues(binding.waistValue)
+            hipV = convertFloatEditTextValues(binding.hipValue)
+            neckV = convertFloatEditTextValues(binding.neckValue)
+            calcBMI()
+//                bmiV = convertFloatEditTextValues(bmiValue as EditText)
+            val newProfile = ProfileEntity(0, nameV, genderV, ageV, weightV, heightV, chestV, waistV, hipV, neckV, bmiV)
+            profileViewModel.saveProfile(newProfile)
+
         }
-        profileBinding.genderValue.setOnClickListener {
+        binding.buttonReturn.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
+        binding.genderValue.setOnClickListener {
             PopupMenu(context, it).apply {
                 inflate(R.menu.gender_menu)
                 setOnMenuItemClickListener {item ->
                     when (item.itemId) {
                         R.id.male -> {
-                            profileBinding.genderValue.setText(R.string.male)
+                            binding.genderValue.setText(R.string.male)
                             true
                         }
                         R.id.female -> {
-                            profileBinding.genderValue.setText(R.string.female)
+                            binding.genderValue.setText(R.string.female)
                             true
                         }
                         else -> false
@@ -220,11 +218,25 @@ class ProfileFragment : Fragment() {
             }
                 .show()
         }
-        // Inflate the layout for this fragment
-        return profileBinding.root
+    }
+
+    private fun bindViews() {
+        with(binding) {
+            nameValue.setText(nameV ?: EMPTY_STRING_VALUE)
+            ageValue.setText(ageV?.toString() ?: EMPTY_STRING_VALUE)
+            genderValue.setText(genderV)
+            weightValue.setText(weightV?.toString() ?: EMPTY_STRING_VALUE)
+            heightValue.setText(heightV?.toString() ?: EMPTY_STRING_VALUE)
+            chestValue.setText(chestV?.toString() ?: EMPTY_STRING_VALUE)
+            waistValue.setText(waistV?.toString() ?: EMPTY_STRING_VALUE)
+            hipValue.setText(hipV?.toString() ?: EMPTY_STRING_VALUE)
+            neckValue.setText(neckV?.toString() ?: EMPTY_STRING_VALUE)
+            bmiValue.setText(bmiV?.toString() ?: EMPTY_STRING_VALUE)
+        }
     }
 
     companion object {
+        private const val EMPTY_STRING_VALUE = ""
         @JvmStatic
         fun newInstance() =
             ProfileFragment().apply {

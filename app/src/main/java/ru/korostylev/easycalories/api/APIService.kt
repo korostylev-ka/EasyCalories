@@ -1,16 +1,20 @@
 package ru.korostylev.easycalories.api
 
-import android.provider.MediaStore
 import okhttp3.Interceptor
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.*
-import ru.korostylev.easycalories.dto.FoodItem
+import retrofit2.http.Body
+import retrofit2.http.DELETE
+import retrofit2.http.GET
+import retrofit2.http.Multipart
+import retrofit2.http.PATCH
+import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Path
 import ru.korostylev.easycalories.dto.FoodItemFromDB
-import ru.korostylev.easycalories.media.Media
 
 private const val BASE_URL = "https://easycalories.ru"
 //private const val BASE_URL = "http://10.0.2.2:8000/"
@@ -43,7 +47,6 @@ private val retrofit = Retrofit.Builder()
 interface APIService {
     @GET("foods")
     suspend fun getAll(): Response<List<FoodItemFromDB>>
-
 
     @POST("/foods/")
     suspend fun save(@Body foodItemFromDB: FoodItemFromDB): Response<FoodItemFromDB>

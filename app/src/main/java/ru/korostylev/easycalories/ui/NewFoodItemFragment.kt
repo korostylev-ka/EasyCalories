@@ -27,55 +27,50 @@ import ru.korostylev.easycalories.viewmodel.FoodViewModel
 import java.util.*
 
 class NewFoodItemFragment : Fragment() {
+
+    private var _binding: FragmentNewFoodItemBinding? = null
+    private val binding: FragmentNewFoodItemBinding
+        get() = _binding ?: throw RuntimeException(" FragmentNewFoodItemBinding is null")
     private val foodViewModel: FoodViewModel by activityViewModels()
-    private var foodId = 0
-    private var categoryId = 0
-    private var name = ""
-    private var glycemicIndex = 0
+    private var categoryId = EMPTY_ID
+    private var glycemicIndex = EMPTY_INT_VALUE
     private var portionWeight = 100
-    private var proteins = 0F
-    private var fats = 0F
-    private var carbs = 0F
-    private var calories = 0F
+    private var proteins = EMPTY_FLOAT_VALUE
+    private var fats = EMPTY_FLOAT_VALUE
+    private var carbs = EMPTY_FLOAT_VALUE
+    private var calories = EMPTY_FLOAT_VALUE
     private var image: String? = null
     private var barcode: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         foodViewModel.changePhoto(null)
-        arguments?.let {
-
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         requireActivity().setTitle(R.string.addingFood)
-        val binding = FragmentNewFoodItemBinding.inflate(layoutInflater)
-        with(binding) {
-            proteinsValue.setText(proteins.toString())
-            fatsValue.setText(fats.toString())
-            carbsValue.setText(carbs.toString())
-            portionWeightValue.setText(portionWeight.toString())
-            glycemicIndexValue.setText(glycemicIndex.toString())
-        }
-        
-        val pickPhotoLauncher =
-            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                when (it.resultCode) {
-                    ImagePicker.RESULT_ERROR -> {
-                        Snackbar.make(
-                            binding.root,
-                            ImagePicker.getError(it.data),
-                            Snackbar.LENGTH_LONG
-                        ).show()
-                    }
-                    Activity.RESULT_OK -> foodViewModel.changePhoto(it.data?.data)
-                }
-            }
+        _binding = FragmentNewFoodItemBinding.inflate(layoutInflater)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        addNameTextWatcher()
+        addNutrientsValueTextWatcher()
+        addClickListeners()
+        addObservers()
+        bindViews()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun addNameTextWatcher() {
         val nameFieldTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -91,8 +86,11 @@ class NewFoodItemFragment : Fragment() {
             }
 
         }
+        binding.foodNameValue.addTextChangedListener(nameFieldTextWatcher)
+    }
 
-        val caloriesValueWatcher = object: TextWatcher {
+    private fun addNutrientsValueTextWatcher() {
+        val nutrientValueWatcher = object : TextWatcher {
             var position = 0
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
@@ -132,25 +130,27 @@ class NewFoodItemFragment : Fragment() {
                         .show()
                 }
             }
-
         }
+        binding.proteinsValue.addTextChangedListener(nutrientValueWatcher)
+        binding.fatsValue.addTextChangedListener(nutrientValueWatcher)
+        binding.carbsValue.addTextChangedListener(nutrientValueWatcher)
+    }
 
-        binding.foodNameValue.addTextChangedListener(nameFieldTextWatcher)
-        binding.proteinsValue.addTextChangedListener(caloriesValueWatcher)
-        binding.fatsValue.addTextChangedListener(caloriesValueWatcher)
-        binding.carbsValue.addTextChangedListener(caloriesValueWatcher)
-        foodViewModel.photo.observe(viewLifecycleOwner) {
-            if (it.uri == null) {
-                binding.photo.visibility = View.GONE
-                binding.deletePhoto.visibility = View.GONE
-                return@observe
-            } else {
-                binding.deletePhoto.visibility = View.VISIBLE
+    private fun addClickListeners() {
+        val pickPhotoLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+                when (it.resultCode) {
+                    ImagePicker.RESULT_ERROR -> {
+                        Snackbar.make(
+                            binding.root,
+                            ImagePicker.getError(it.data),
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                    }
+
+                    Activity.RESULT_OK -> foodViewModel.changePhoto(it.data?.data)
+                }
             }
-
-            binding.photo.visibility = View.VISIBLE
-            binding.photo.setImageURI(it.uri)
-        }
         //attach photo
         binding.addPhoto.setOnClickListener {
             ImagePicker.with(this)
@@ -204,11 +204,15 @@ class NewFoodItemFragment : Fragment() {
                     val caloriesToAdd = Math.round(calories * 10.0F) / 10.0F
                     glycemicIndex = glycemicIndexString.toInt()
                     if ((proteins + fats + carbs) > 100) {
-                        Toast.makeText(context, R.string.summOfNutrientsMoreThan100, Toast.LENGTH_LONG)
+                        Toast.makeText(
+                            context,
+                            R.string.summOfNutrientsMoreThan100,
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                         return@setOnClickListener
                     }
-                    if (proteins >= 0F && fats >=0F && carbs >= 0F && calories > 0F) {
+                    if (proteins >= 0F && fats >= 0F && carbs >= 0F && calories > 0F) {
                         viewLifecycleOwner.lifecycleScope.launch {
                             if (foodViewModel.photo.value != null) {
                                 image = try {
@@ -219,21 +223,43 @@ class NewFoodItemFragment : Fragment() {
                             }
                             val isFoodExist = foodViewModel.getFoodItem(name)
                             if (isFoodExist == null) {
-                                val newFoodEntity = FoodItemEntity(0, 0, categoryId, name, glycemicIndex, portionWeight, proteinsToAdd, fatsToAdd, carbsToAdd, caloriesToAdd, barcode, image, true)
+                                val newFoodEntity = FoodItemEntity(
+                                    0,
+                                    0,
+                                    categoryId,
+                                    name,
+                                    glycemicIndex,
+                                    portionWeight,
+                                    proteinsToAdd,
+                                    fatsToAdd,
+                                    carbsToAdd,
+                                    caloriesToAdd,
+                                    barcode,
+                                    image,
+                                    true
+                                )
                                 foodViewModel.saveToApi(newFoodEntity)
                                 foodViewModel.changePhoto(null)
                                 parentFragmentManager.popBackStack()
                             } else {
                                 binding.foodNameValue.requestFocus()
                                 binding.foodNameValue.setBackgroundResource(R.drawable.edit_text_value_wrong)
-                                Toast.makeText(context, R.string.foodAlreadyExists, Toast.LENGTH_SHORT)
+                                Toast.makeText(
+                                    context,
+                                    R.string.foodAlreadyExists,
+                                    Toast.LENGTH_SHORT
+                                )
                                     .show()
                             }
 
                         }
 
                     } else {
-                        Toast.makeText(context, R.string.checkTheFieldsAreCorrect, Toast.LENGTH_LONG)
+                        Toast.makeText(
+                            context,
+                            R.string.checkTheFieldsAreCorrect,
+                            Toast.LENGTH_LONG
+                        )
                             .show()
                     }
                 } catch (e: java.lang.NumberFormatException) {
@@ -246,12 +272,38 @@ class NewFoodItemFragment : Fragment() {
             val fm = requireActivity().supportFragmentManager
             fm.popBackStack()
         }
+    }
 
-        return binding.root
+    private fun addObservers() {
+        foodViewModel.photo.observe(viewLifecycleOwner) {
+            if (it.uri == null) {
+                binding.photo.visibility = View.GONE
+                binding.deletePhoto.visibility = View.GONE
+                return@observe
+            } else {
+                binding.deletePhoto.visibility = View.VISIBLE
+            }
+
+            binding.photo.visibility = View.VISIBLE
+            binding.photo.setImageURI(it.uri)
+        }
+    }
+
+    private fun bindViews() {
+        with(binding) {
+            proteinsValue.setText(proteins.toString())
+            fatsValue.setText(fats.toString())
+            carbsValue.setText(carbs.toString())
+            portionWeightValue.setText(portionWeight.toString())
+            glycemicIndexValue.setText(glycemicIndex.toString())
+        }
     }
 
 
     companion object {
+        private const val EMPTY_FLOAT_VALUE = 0.0f
+        private const val EMPTY_INT_VALUE = 0
+        private const val EMPTY_ID = 0
         fun newInstance() =
             NewFoodItemFragment().apply {
                 arguments = Bundle().apply {

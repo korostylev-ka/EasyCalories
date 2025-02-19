@@ -1,6 +1,5 @@
 package ru.korostylev.easycalories.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
@@ -18,8 +17,8 @@ import java.io.IOException
 
 
 class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
-    val emptyList: List<FoodItemEntity> = emptyList()
-    val infoModel = InfoModel()
+    private val emptyList: List<FoodItemEntity> = emptyList()
+    private val infoModel = InfoModel()
     private val data = MutableLiveData(emptyList)
     private val dataInfoModel = MutableLiveData<InfoModel>()
     override val liveDataFromDB: LiveData<List<FoodItemEntity>>
@@ -48,7 +47,7 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
             }
 
             dataInfoModel.postValue(infoModel.copy(loading = false))
-        } catch (e: java.net.SocketTimeoutException) {
+        } catch (e: Exception) {
             dataInfoModel.postValue(infoModel.copy(isError = true))
         }
     }
