@@ -1,10 +1,14 @@
 package ru.korostylev.easycalories.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
+import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -26,6 +30,7 @@ import ru.korostylev.easycalories.viewmodel.FoodViewModel
 import ru.korostylev.easycalories.viewmodel.NutrientsViewModel
 import ru.korostylev.easycalories.viewmodel.ProfileViewModel
 import java.util.Calendar
+import kotlin.math.abs
 import kotlin.math.roundToInt
 
 class HomeFragment : Fragment() {
@@ -99,12 +104,14 @@ class HomeFragment : Fragment() {
         getDate()
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         requireActivity().setTitle(R.string.app_name)
         _binding = FragmentHomeBinding.inflate(layoutInflater)
+        binding.root.setOnTouchListener(swipeTouchListener)
         return binding.root
     }
 
@@ -200,26 +207,12 @@ class HomeFragment : Fragment() {
         }
         //back one day
         binding.backButton.setOnClickListener {
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month - 1)
-            calendar.set(Calendar.DAY_OF_MONTH, day - 1)
-            val fragment = newInstance(calendar.timeInMillis)
-            val fragmentManager = parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer,fragment)
-                .addToBackStack(null)
-                .commit()
+            moveToPrevDay()
         }
 
         //fwd one day
         binding.fwdButton.setOnClickListener {
-            calendar.set(Calendar.YEAR, year)
-            calendar.set(Calendar.MONTH, month - 1)
-            calendar.set(Calendar.DAY_OF_MONTH, day + 1)
-            val fragment = newInstance(calendar.timeInMillis)
-            val fragmentManager = parentFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer,fragment)
-                .addToBackStack(null)
-                .commit()
+            moveToNextDay()
         }
         //add food eat
         binding.addFood.setOnClickListener {
@@ -301,6 +294,28 @@ class HomeFragment : Fragment() {
         )
     }
 
+    private fun moveToNextDay() {
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, month - 1)
+        calendar.set(Calendar.DAY_OF_MONTH, day + 1)
+        val fragment = newInstance(calendar.timeInMillis)
+        val fragmentManager = parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer,fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    private fun moveToPrevDay() {
+        calendar.set(Calendar.YEAR, year)
+        calendar.set(Calendar.MONTH, month - 1)
+        calendar.set(Calendar.DAY_OF_MONTH, day - 1)
+        val fragment = newInstance(calendar.timeInMillis)
+        val fragmentManager = parentFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer,fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
     private fun setupRV() {
         eatenFoodsRecyclerView = binding.eatenFoodsRecyclerView
         eatenFoodsRecyclerView.layoutManager = LinearLayoutManager(context)
@@ -318,6 +333,35 @@ class HomeFragment : Fragment() {
         binding.weightValue.setText(weightValue)
     }
 
+    private val swipeTouchListener = object : OnTouchListener {
+        var xDown: Float = 0f
+        var xUp: Float = 0f
+        val minDistanceForSwipe = 150f
+        override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
+            when (p1?.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    xDown = p1.x
+                }
+                MotionEvent.ACTION_UP -> {
+                    xUp = p1.x
+                    val delta = xUp - xDown
+                    if (abs(delta) > minDistanceForSwipe) {
+                        when  {
+                            delta > 0f -> {
+                                moveToPrevDay()
+                            }
+                            delta < 0f -> {
+                                moveToNextDay()
+                            }
+                        }
+                    }
+                }
+            }
+            return true
+        }
+
+    }
+
     companion object {
         private const val DATE_ID = "dateId"
         private const val EMPTY_FLOAT_VALUE = 0.0f
@@ -330,4 +374,6 @@ class HomeFragment : Fragment() {
 
         }
     }
+
+
 }

@@ -140,7 +140,8 @@ class FoodListFragment : Fragment() {
                     it.name.startsWith(text, ignoreCase = true)
                 }
                 adapter = FoodListAdapter(apiListener, onInteractionListener)
-                recyclerView!!.adapter = adapter
+                recyclerView.adapter = adapter
+                adapter.submitList(editedList)
             }
         }
         binding.filterText.addTextChangedListener(filterTextWatcher)

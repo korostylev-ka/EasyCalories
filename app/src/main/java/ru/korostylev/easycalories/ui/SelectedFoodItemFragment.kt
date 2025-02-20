@@ -28,93 +28,57 @@ import ru.korostylev.easycalories.viewmodel.FoodViewModel
 import ru.korostylev.easycalories.viewmodel.NutrientsViewModel
 import java.util.*
 
-private const val FOOD_NAME = "foodName"
-
-
 class SelectedFoodItemFragment : Fragment() {
+    private var _binding: FragmentSelectedFoodItemBinding? = null
+    private val binding: FragmentSelectedFoodItemBinding
+        get() = _binding ?: throw RuntimeException("FragmentSelectedFoodItemBinding is null")
     private var calendar = Calendar.getInstance()
     private var day = calendar.get(Calendar.DAY_OF_MONTH)
-    private var selectedDay = 0
-    private var dayOfWeek = 0
+    private var selectedDay = EMPTY_INT_VALUE
     private var month = calendar.get(Calendar.MONTH)
-    private var selectedMonth = 0
+    private var selectedMonth = EMPTY_INT_VALUE
     private var year = calendar.get(Calendar.YEAR)
-    private var selectedYear = 0
+    private var selectedYear = EMPTY_INT_VALUE
     private var hour = calendar.get(Calendar.HOUR_OF_DAY)
     private var minute = calendar.get(Calendar.MINUTE)
-    private var selectedHour = 0
-    private var selectedMinute = 0
+    private var selectedHour = EMPTY_INT_VALUE
+    private var selectedMinute = EMPTY_INT_VALUE
     private var dayId = getCurrentDay()
-    private var currentTime = getCurrentStringTime()
-    private var foodName = ""
+    private var foodName = EMPTY_STRING_VALUE
     private var foodItemEntity: FoodItemEntity? = null
     private val foodViewModel: FoodViewModel by activityViewModels()
     private val nutrientsViewModel: NutrientsViewModel by activityViewModels()
     private val eatenFoodsViewModel: EatenFoodsViewModel by activityViewModels()
 
-    private fun getStringDate(): String {
-        //val dayOfWeek = getString(AndroidUtils.getDayOfWeek(dayOfWeek))
-        val day = day.toString()
-        val month = getString(AndroidUtils.getMonth(month + 1))
-        val year = year.toString()
-        return ("$day $month $year")
-
-    }
-
-    private fun getSelectedStringDate(): String {
-        //val dayOfWeek = getString(AndroidUtils.getDayOfWeek(dayOfWeek))
-        val day = selectedDay
-        val month = getString(AndroidUtils.getMonth(selectedMonth.toInt() + 1))
-        val year = selectedYear
-        return ("$day $month $year")
-    }
-
-    private fun getCurrentStringTime(): String {
-        val hour = hour.toString()
-        val minute = when (minute) {
-            in 0..9 -> "0${minute.toString()}"
-            else -> minute.toString()
-        }
-        return ("$hour : $minute")
-    }
-
-    private fun getSelectedStringTime(): String {
-        val hour = selectedHour.toString()
-        val minute = when (selectedMinute) {
-            in 0..9 -> "0${selectedMinute.toString()}"
-            else -> selectedMinute.toString()
-        }
-        return ("$hour : $minute")
-    }
-
-    private fun getCurrentDay(): Int {
-        val day = "%02d".format(day)
-        val month = "%02d".format(month + 1)
-        val year = year.toString()
-        return (year + month + day).toInt()
-    }
-
-    private fun getSelectDay(): Int {
-        val day = "%02d".format(selectedDay)
-        val month = "%02d".format(selectedMonth + 1)
-        val year = selectedYear.toString()
-        return (year + month + day).toInt()
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            foodName = it.getString(FOOD_NAME) ?: ""
+            foodName = it.getString(FOOD_NAME) ?: EMPTY_STRING_VALUE
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         requireActivity().setTitle(R.string.editingPortion)
-        val binding = FragmentSelectedFoodItemBinding.inflate(layoutInflater)
-        val nutrientsValueWatcher = object: TextWatcher {
+        _binding = FragmentSelectedFoodItemBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        addNutrientsValueTextWatcher()
+        addClickListeners()
+        getFoodItemFromDB()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+    private fun addNutrientsValueTextWatcher() {
+        val nutrientsValueWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
@@ -143,36 +107,10 @@ class SelectedFoodItemFragment : Fragment() {
                 }
             }
         }
-        viewLifecycleOwner.lifecycleScope.launch {
-            foodItemEntity = foodViewModel.getFoodItem(foodName)
-            Log.d("URI", foodItemEntity.toString())
-            with(binding) {
-                when (foodItemEntity!!.image) {
-                    null -> foodImage.visibility = View.GONE
-                    else -> {
-                        foodImage.visibility = View.VISIBLE
-                        Glide.with(foodImage)
-                            .load(foodItemEntity!!.image!!.toUri())
-                            .circleCrop()
-                            .placeholder(R.drawable.empty_food_256dp)
-                            .into(foodImage)
+        binding.portionWeightValue.addTextChangedListener(nutrientsValueWatcher)
+    }
 
-                    }
-                }
-                portionWeightValue.requestFocus()
-                portionWeightValue.addTextChangedListener(nutrientsValueWatcher)
-                foodNameValue.text = foodItemEntity!!.name
-                portionWeightValue.setText(foodItemEntity!!.portionWeight.toString())
-                val portionFloat = foodItemEntity!!.portionWeight / 100F
-                proteinsValue.text = (foodItemEntity!!.proteins * portionFloat).toString()
-                fatsValue.text = (foodItemEntity!!.fats * portionFloat).toString()
-                carbsValue.text = (foodItemEntity!!.carbs * portionFloat).toString()
-                caloriesValue.text = (foodItemEntity!!.calories * portionFloat).toString()
-                date.text = getStringDate()
-                time.text = getCurrentStringTime()
-            }
-        }
-
+    private fun addClickListeners() {
         with(binding) {
             date.setOnClickListener {
                 val datePickerDialog = DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
@@ -231,11 +169,90 @@ class SelectedFoodItemFragment : Fragment() {
                 requireActivity().setTitle(R.string.app_name)
             }
         }
+    }
 
-        return binding.root
+    private fun getFoodItemFromDB() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            foodItemEntity = foodViewModel.getFoodItem(foodName)
+            with(binding) {
+                when (foodItemEntity!!.image) {
+                    null -> foodImage.visibility = View.GONE
+                    else -> {
+                        foodImage.visibility = View.VISIBLE
+                        Glide.with(foodImage)
+                            .load(foodItemEntity!!.image!!.toUri())
+                            .circleCrop()
+                            .placeholder(R.drawable.empty_food_256dp)
+                            .into(foodImage)
+
+                    }
+                }
+                portionWeightValue.requestFocus()
+
+                foodNameValue.text = foodItemEntity!!.name
+                portionWeightValue.setText(foodItemEntity!!.portionWeight.toString())
+                val portionFloat = foodItemEntity!!.portionWeight / 100F
+                proteinsValue.text = (foodItemEntity!!.proteins * portionFloat).toString()
+                fatsValue.text = (foodItemEntity!!.fats * portionFloat).toString()
+                carbsValue.text = (foodItemEntity!!.carbs * portionFloat).toString()
+                caloriesValue.text = (foodItemEntity!!.calories * portionFloat).toString()
+                date.text = getStringDate()
+                time.text = getCurrentStringTime()
+            }
+        }
+    }
+
+    private fun getStringDate(): String {
+        val day = day.toString()
+        val month = getString(AndroidUtils.getMonth(month + 1))
+        val year = year.toString()
+        return ("$day $month $year")    }
+
+    private fun getSelectedStringDate(): String {
+        //val dayOfWeek = getString(AndroidUtils.getDayOfWeek(dayOfWeek))
+        val day = selectedDay
+        val month = getString(AndroidUtils.getMonth(selectedMonth.toInt() + 1))
+        val year = selectedYear
+        return ("$day $month $year")
+    }
+
+    private fun getCurrentStringTime(): String {
+        val hour = hour.toString()
+        val minute = when (minute) {
+            in 0..9 -> "0${minute.toString()}"
+            else -> minute.toString()
+        }
+        return ("$hour : $minute")
+    }
+
+    private fun getSelectedStringTime(): String {
+        val hour = selectedHour.toString()
+        val minute = when (selectedMinute) {
+            in 0..9 -> "0${selectedMinute.toString()}"
+            else -> selectedMinute.toString()
+        }
+        return ("$hour : $minute")
+    }
+
+    private fun getCurrentDay(): Int {
+        val day = "%02d".format(day)
+        val month = "%02d".format(month + 1)
+        val year = year.toString()
+        return (year + month + day).toInt()
+    }
+
+    private fun getSelectDay(): Int {
+        val day = "%02d".format(selectedDay)
+        val month = "%02d".format(selectedMonth + 1)
+        val year = selectedYear.toString()
+        return (year + month + day).toInt()
     }
 
     companion object {
+
+        private const val FOOD_NAME = "foodName"
+        private const val EMPTY_STRING_VALUE = ""
+        private const val EMPTY_INT_VALUE = 0
         fun newInstance(foodName: String) = SelectedFoodItemFragment().apply {
             arguments = Bundle().apply {
                 putString(FOOD_NAME, foodName)
