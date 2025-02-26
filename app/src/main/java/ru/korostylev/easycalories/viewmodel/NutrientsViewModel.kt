@@ -3,14 +3,19 @@ package ru.korostylev.easycalories.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import ru.korostylev.easycalories.db.NutrientsDB
-import ru.korostylev.easycalories.db.WeightDB
+import ru.korostylev.easycalories.db.WaterDB
 import ru.korostylev.easycalories.entity.EatenFoodsEntity
 import ru.korostylev.easycalories.entity.NutrientsEntity
 import ru.korostylev.easycalories.repository.NutrientsRepository
 import ru.korostylev.easycalories.repository.NutrientsRepositoryImpl
+import ru.korostylev.easycalories.repository.WaterRepository
+import ru.korostylev.easycalories.repository.WaterRepositoryImpl
 
 class NutrientsViewModel(application: Application): AndroidViewModel(application) {
-    private val repository: NutrientsRepository = NutrientsRepositoryImpl(NutrientsDB.getInstance(application).nutrientsDao)
+    private val repository: NutrientsRepository = NutrientsRepositoryImpl(
+        NutrientsDB.getInstance(application).nutrientsDao
+    )
+    private val waterRepository: WaterRepository = WaterRepositoryImpl(WaterDB.getInstance(application).waterDao)
     val liveDataNutrients = repository.getAll()
 
     fun limitsOfNutrients() = repository.getLimits()

@@ -105,13 +105,15 @@ class HomeFragment : Fragment() {
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         requireActivity().setTitle(R.string.app_name)
         _binding = FragmentHomeBinding.inflate(layoutInflater)
-        binding.root.setOnTouchListener(swipeTouchListener)
+        binding.dateAndDiagram.setOnTouchListener(swipeTouchListener)
+
         return binding.root
     }
 
@@ -221,6 +223,9 @@ class HomeFragment : Fragment() {
                 .replace(R.id.fragmentContainer, fragment)
                 .addToBackStack(null)
                 .commit()
+        }
+        binding.buttonAdd100Ml.setOnClickListener {
+            binding.waterProgressBar.progress += 100
         }
     }
 
@@ -334,9 +339,11 @@ class HomeFragment : Fragment() {
     }
 
     private val swipeTouchListener = object : OnTouchListener {
+
         var xDown: Float = 0f
         var xUp: Float = 0f
         val minDistanceForSwipe = 150f
+
         override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
             when (p1?.action) {
                 MotionEvent.ACTION_DOWN -> {

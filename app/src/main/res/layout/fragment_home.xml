@@ -7,7 +7,7 @@
     tools:context=".ui.HomeFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -74,7 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/common"
-            app:layout_constraintBottom_toTopOf="@id/dateAndDiagram"
+            app:layout_constraintBottom_toTopOf="@id/water_table"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/userDataInfo">
@@ -241,11 +241,62 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/water_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tableNutrients"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/dateAndDiagram">
+            <ProgressBar
+                android:id="@+id/water_progress_bar"
+                style="@style/WaterProgressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/water_progress_bar"
+
+
+                app:layout_constraintTop_toTopOf="@id/tv_progress_water"
+                app:layout_constraintBottom_toBottomOf="@id/tv_progress_water"
+
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginStart="@dimen/common"
+                android:layout_marginEnd="@dimen/common">
+            </ProgressBar>
+            <TextView
+                android:id="@+id/tv_progress_water"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                style="@style/WaterTextView"
+
+                app:layout_constraintStart_toStartOf="@id/water_progress_bar"
+                app:layout_constraintEnd_toEndOf="@id/water_progress_bar"
+                android:text="water"
+                >
+
+            </TextView>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/button_add_100_ml"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/water_progress_bar"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="+100">
+
+            </com.google.android.material.button.MaterialButton>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/dateAndDiagram"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/common"
-            app:layout_constraintTop_toBottomOf="@id/tableNutrients"
+            app:layout_constraintTop_toBottomOf="@id/water_table"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 

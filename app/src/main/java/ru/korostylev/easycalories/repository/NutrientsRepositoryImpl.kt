@@ -2,12 +2,15 @@ package ru.korostylev.easycalories.repository
 
 import androidx.lifecycle.LiveData
 import ru.korostylev.easycalories.dao.NutrientsDao
-import ru.korostylev.easycalories.dao.WeightDao
+import ru.korostylev.easycalories.dao.WaterDao
 import ru.korostylev.easycalories.entity.EatenFoodsEntity
 import ru.korostylev.easycalories.entity.NutrientsEntity
+import ru.korostylev.easycalories.entity.WaterEntity
 
 
-class NutrientsRepositoryImpl(val nutrientsDao: NutrientsDao): NutrientsRepository {
+class NutrientsRepositoryImpl(
+    private val nutrientsDao: NutrientsDao
+): NutrientsRepository {
 
     //заглушка с нулевыми нутриентами
     private val emptyNutrients = NutrientsEntity(0, 0F, 0F, 0F, 0F)
@@ -53,5 +56,7 @@ class NutrientsRepositoryImpl(val nutrientsDao: NutrientsDao): NutrientsReposito
         }
 
     }
+
+
 }
 

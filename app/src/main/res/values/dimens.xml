@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="common">16dp</dimen>
+    <dimen name="water_progress_bar">8dp</dimen>
     <dimen name="small_dimen">16dp</dimen>
     <dimen name="divider_margin">72dp</dimen>
     <dimen name="padding_edit_text">4dp</dimen>
