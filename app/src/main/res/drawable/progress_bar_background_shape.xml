@@ -1,0 +1,19 @@
+<!-- rounded_progress_bar.xml -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background shape -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/water_empty" />
+            <corners android:radius="10dp" /> <!-- Adjust radius as needed -->
+        </shape>
+    </item>
+    <!-- Progress shape -->
+    <item android:id="@android:id/progress">
+        <clip>
+            <shape android:shape="rectangle">
+                <solid android:color="@color/water_full" />
+                <corners android:radius="10dp" /> <!-- Adjust radius as needed -->
+            </shape>
+        </clip>
+    </item>
+</layer-list>

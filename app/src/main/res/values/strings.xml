@@ -100,6 +100,11 @@
     <string name="fwdButtonDescr">Forward button</string>
     <string name="changeButtonDescr">Change button</string>
     <string name="weightDescr">Weight</string>
+    <!--    WATER      -->
+    <string name="water_label">WATER: %1d ml / %2d ml</string>
+    <string name="ml100">100ml</string>
+    <string name="ml250">250ml</string>
+    <string name="ml500">500ml</string>
 
 
 </resources>

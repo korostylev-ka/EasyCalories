@@ -100,5 +100,10 @@
     <string name="fwdButtonDescr">Кнопка вперед</string>
     <string name="changeButtonDescr">Кнопка изменить</string>
     <string name="weightDescr">Вес</string>
+    <!--    WATER      -->
+    <string name="water_label">ВОДА: %1d мл / %2d мл</string>
+    <string name="ml100">100мл</string>
+    <string name="ml250">250мл</string>
+    <string name="ml500">500мл</string>
 
 </resources>

@@ -6,6 +6,7 @@ import ru.korostylev.easycalories.db.NutrientsDB
 import ru.korostylev.easycalories.db.WaterDB
 import ru.korostylev.easycalories.entity.EatenFoodsEntity
 import ru.korostylev.easycalories.entity.NutrientsEntity
+import ru.korostylev.easycalories.entity.WaterEntity
 import ru.korostylev.easycalories.repository.NutrientsRepository
 import ru.korostylev.easycalories.repository.NutrientsRepositoryImpl
 import ru.korostylev.easycalories.repository.WaterRepository
@@ -17,6 +18,7 @@ class NutrientsViewModel(application: Application): AndroidViewModel(application
     )
     private val waterRepository: WaterRepository = WaterRepositoryImpl(WaterDB.getInstance(application).waterDao)
     val liveDataNutrients = repository.getAll()
+    val liveDataWater = waterRepository.getAllWaterLD()
 
     fun limitsOfNutrients() = repository.getLimits()
 
@@ -50,6 +52,10 @@ class NutrientsViewModel(application: Application): AndroidViewModel(application
 
     fun removeNutrients(eatenFoodsEntity: EatenFoodsEntity) {
         repository.removeNutrients(eatenFoodsEntity)
+    }
+
+    fun addWater(waterEntity: WaterEntity) {
+        waterRepository.addWater(waterEntity)
     }
 
 }

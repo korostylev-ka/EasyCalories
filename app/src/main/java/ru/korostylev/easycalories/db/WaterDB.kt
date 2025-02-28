@@ -24,8 +24,9 @@ abstract class WaterDB: RoomDatabase() {
         private fun buildDatabase(context: Context) = Room.databaseBuilder(
             context,
             WaterDB::class.java,
-            "nutrients.db"
+            "water.db"
         )
+            .allowMainThreadQueries()
             .build()
     }
 }
