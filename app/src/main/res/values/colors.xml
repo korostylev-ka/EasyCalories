@@ -1,46 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="main_color_blue">#031D44</color>
-    <color name="wrong">#E81708</color>
-    <color name="ok">#08E813</color>
+<!--    <color name="main_color_blue">#031D44</color>-->
+<!--    <color name="wrong">#E81708</color>-->
+<!--    <color name="ok">#08E813</color>-->
+<!--    <color name="warning">#FF9800</color>-->
+<!--    <color name="foodEaten">#03A9F4</color>-->
+<!--    <color name="bmi_severe_thinness">#1900FF</color>-->
+<!--    <color name="bmi_mild_thinness">#00D9FF</color>-->
+<!--    <color name="bmi_normal">#08E813</color>-->
+<!--    <color name="bmi_overweight">#B3EC70</color>-->
+<!--    <color name="bmi_obese1">#FFEB3B</color>-->
+<!--    <color name="bmi_obese2">#FF9800</color>-->
+<!--    <color name="bmi_obese3">#E81708</color>-->
+<!--    <color name="purple_200">#FFBB86FC</color>-->
+<!--    <color name="purple_500">#FF6200EE</color>-->
+<!--    <color name="purple_700">#FF3700B3</color>-->
+<!--    <color name="border">#0065B3</color>-->
+<!--    <color name="edit_text_gradient_start">#6EAFE1</color>-->
+<!--    <color name="teal_200">#FF03DAC5</color>-->
+<!--    <color name="teal_700">#FF018786</color>-->
+<!--    <color name="black">#FF000000</color>-->
+<!--    <color name="white">#FFFFFFFF</color>-->
+<!--    &lt;!&ndash;color name="protein_fill">#039511</color&ndash;&gt;-->
+<!--    &lt;!&ndash;color name="protein_fill">#B2D9BC</color&ndash;&gt;-->
+<!--    &lt;!&ndash;    release < 1.4&ndash;&gt;-->
+<!--&lt;!&ndash;    <color name="protein">#99E4A0</color>&ndash;&gt;-->
+<!--&lt;!&ndash;    <color name="protein_fill">#70A288</color>&ndash;&gt;-->
+<!--    <color name="protein">#99E4A0</color>-->
+<!--    <color name="protein_fill">#00D15E</color>-->
+<!--    <color name="fat">#E6BEBE</color>-->
+<!--    &lt;!&ndash;color name="fat_fill">#D10606</color&ndash;&gt;-->
+<!--&lt;!&ndash;    <color name="fat_fill">#E99499</color>&ndash;&gt;-->
+<!--    <color name="fat_fill">#D5896F</color>-->
+<!--    <color name="carbs">#D6D6A2</color>-->
+<!--    &lt;!&ndash;color name="carbs_fill">#CDCC5C</color&ndash;&gt;-->
+<!--&lt;!&ndash;    <color name="carbs_fill">#FFEFB1</color>&ndash;&gt;-->
+<!--    <color name="carbs_fill">#DAB785</color>-->
+<!--    &lt;!&ndash;color name="calories_fill">#193EC8</color&ndash;&gt;-->
+<!--&lt;!&ndash;    <color name="calories_fill">#BA7FAD</color>&ndash;&gt;-->
+<!--    <color name="calories_fill">#04395E</color>-->
+<!--    <color name="gi_low">#4CAF50</color>-->
+<!--    <color name="gi_medium">#CDDC39</color>-->
+<!--    <color name="gi_high">#F44336</color>-->
+<!--    <color name="water_empty">#A3D3F8</color>-->
+<!--    <color name="water_full">#4DB0FD</color>-->
+<!--    <color name="water_text">#0060AA</color>-->
+<!--    <array name="colors">-->
+<!--        <item>#4CAF50</item>-->
+<!--        <item>#2196F3</item>-->
+<!--        <item>#FFDE03</item>-->
+<!--        <item>#FF0266</item>-->
+<!--    </array>-->
+
+    <!--    release > 1.4 -->
+    <color name="main_color_blue">#325596</color>
+    <color name="wrong">#D11100</color>
+    <color name="ok">#2AD436</color>
     <color name="warning">#FF9800</color>
     <color name="foodEaten">#03A9F4</color>
     <color name="bmi_severe_thinness">#1900FF</color>
     <color name="bmi_mild_thinness">#00D9FF</color>
-    <color name="bmi_normal">#08E813</color>
-    <color name="bmi_overweight">#B3EC70</color>
-    <color name="bmi_obese1">#FFEB3B</color>
-    <color name="bmi_obese2">#FF9800</color>
-    <color name="bmi_obese3">#E81708</color>
+    <color name="bmi_normal">#00D15E</color>
+    <color name="bmi_overweight">#61CC91</color>
+    <color name="bmi_obese1">#D1C166</color>
+    <color name="bmi_obese2">#D1B200</color>
+    <color name="bmi_obese3">#D11100</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
-    <color name="border">#0065B3</color>
-    <color name="edit_text_gradient_start">#6EAFE1</color>
+    <color name="border">#325596</color>
+    <color name="edit_text_gradient_start">#A3D3F8</color>
     <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="action_button">#2AD436</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="protein">#99E4A0</color>
-    <!--color name="protein_fill">#039511</color-->
-    <!--color name="protein_fill">#B2D9BC</color-->
-    <color name="protein_fill">#70A288</color>
-    <color name="fat">#E6BEBE</color>
-    <!--color name="fat_fill">#D10606</color-->
-<!--    <color name="fat_fill">#E99499</color>-->
-    <color name="fat_fill">#D5896F</color>
-    <color name="carbs">#D6D6A2</color>
-    <!--color name="carbs_fill">#CDCC5C</color-->
-<!--    <color name="carbs_fill">#FFEFB1</color>-->
-    <color name="carbs_fill">#DAB785</color>
-    <!--color name="calories_fill">#193EC8</color-->
-<!--    <color name="calories_fill">#BA7FAD</color>-->
-    <color name="calories_fill">#04395E</color>
-    <color name="gi_low">#4CAF50</color>
-    <color name="gi_medium">#CDDC39</color>
-    <color name="gi_high">#F44336</color>
-
-
+    <color name="protein">#61CC91</color>
+    <color name="protein_fill">#00D15E</color>
+    <color name="fat">#CC756D</color>
+    <color name="fat_fill">#D11100</color>
+    <color name="carbs">#D1C166</color>
+    <color name="carbs_fill">#D1B200</color>
+    <color name="calories_fill">#325596</color>
+    <color name="gi_low">#00D15E</color>
+    <color name="gi_medium">#D1B200</color>
+    <color name="gi_high">#D11100</color>
+    <color name="water_empty">#A3D3F8</color>
+    <color name="water_full">#4DB0FD</color>
+    <color name="water_text">#0060AA</color>
     <array name="colors">
         <item>#4CAF50</item>
         <item>#2196F3</item>

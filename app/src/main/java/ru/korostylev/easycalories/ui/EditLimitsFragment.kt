@@ -3,14 +3,11 @@ package ru.korostylev.easycalories.ui
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.StringRes
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentEditLimitsBinding
@@ -19,45 +16,97 @@ import ru.korostylev.easycalories.utils.AndroidUtils.calculateCalories
 import ru.korostylev.easycalories.viewmodel.NutrientsViewModel
 import kotlin.math.roundToInt
 
-private const val PROTEINS = "proteinsLimit"
-private const val FATS = "fatsLimit"
-private const val CARBS = "carbsLimit"
-private const val CALORIES = "caloriesLimit"
+
 class EditLimitsFragment : Fragment() {
-    private var proteinsLimit = 0F
-    private var proteinsPercent = 0
-    private var fatsLimit = 0F
-    private var fatsPercent = 0
-    private var carbsLimit = 0F
-    private var carbsPercent = 0
-    private var caloriesLimit = 0F
+    private var proteinsLimit = EMPTY_FLOAT_VALUE
+    private var proteinsPercent = EMPTY_INT_VALUE
+    private var fatsLimit = EMPTY_FLOAT_VALUE
+    private var fatsPercent = EMPTY_INT_VALUE
+    private var carbsLimit = EMPTY_FLOAT_VALUE
+    private var carbsPercent = EMPTY_INT_VALUE
+    private var caloriesLimit = EMPTY_FLOAT_VALUE
+    private var waterLimit = EMPTY_INT_VALUE
     private val viewModel: NutrientsViewModel by activityViewModels()
+    private var _binding: FragmentEditLimitsBinding? = null
+    private val binding: FragmentEditLimitsBinding
+        get() = _binding ?: throw RuntimeException("FragmentEditLimitsBinding is null")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         with(viewModel.limitsOfNutrients()) {
-            proteinsLimit = this.proteins ?: 0F
-            fatsLimit = this.fats ?: 0F
-            carbsLimit = this.carbs ?: 0F
-            caloriesLimit = this.calories ?: 0F
-            if (caloriesLimit != 0F) {
+            proteinsLimit = this.proteins
+            fatsLimit = this.fats
+            carbsLimit = this.carbs
+            caloriesLimit = this.calories
+            if (caloriesLimit != EMPTY_FLOAT_VALUE) {
                 proteinsPercent = (proteinsLimit * 4 * 100/ caloriesLimit).roundToInt()
                 fatsPercent = (fatsLimit * 9 * 100 / caloriesLimit).roundToInt()
                 carbsPercent = (carbsLimit * 4 * 100 / caloriesLimit).roundToInt()
             } else {
-                proteinsPercent = 0
-                fatsPercent = 0
-                carbsPercent = 0
+                proteinsPercent = EMPTY_INT_VALUE
+                fatsPercent = EMPTY_INT_VALUE
+                carbsPercent = EMPTY_INT_VALUE
             }
+        }
+        with(viewModel.limitOfWater()) {
+            waterLimit = this.waterVolume
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val editLimitsBinding = FragmentEditLimitsBinding.inflate(layoutInflater)
+    ): View {
+        _binding = FragmentEditLimitsBinding.inflate(layoutInflater)
         requireActivity().setTitle(R.string.editCaloriesLimitFragment)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        bindViews()
+        addTextWatchers()
+        addClickListeners()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun bindViews() {
+        with (binding) {
+            proteinsValueAddGramm.setText(proteinsLimit.toString())
+            fatsValueAddGramm.setText(fatsLimit.toString())
+            carbsValueAddGramm.setText(carbsLimit.toString())
+            proteinsValueAddPercent.isFocusable = false
+            fatsValueAddPercent.isFocusable = false
+            carbsValueAddPercent.isFocusable = false
+            val summ = proteinsPercent + fatsPercent + carbsPercent
+            if (summ != 100 && summ != 0) {
+                val list = listOf(proteinsPercent, fatsPercent, carbsPercent)
+                val max = list.max()
+                for ((index, items) in list.withIndex()) {
+                    if (items == max) {
+                        when (index) {
+                            0 -> proteinsPercent = 100 - (fatsPercent + carbsPercent)
+                            1 -> fatsPercent = 100 - (proteinsPercent + carbsPercent)
+                            2 -> carbsPercent = 100 - (proteinsPercent + fatsPercent)
+                        }
+                    }
+                }
+            }
+            proteinsValueAddPercent.setText(proteinsPercent.toString())
+            fatsValueAddPercent.setText(fatsPercent.toString())
+            carbsValueAddPercent.setText(carbsPercent.toString())
+            caloriesValueAdd.setText(caloriesLimit.toString())
+            waterValueAdd.setText(waterLimit.toString())
+
+        }
+    }
+
+    private fun addTextWatchers() {
         val nutrientsValueWatcher = object : TextWatcher {
             override fun beforeTextChanged(
                 sequence: CharSequence?,
@@ -78,7 +127,7 @@ class EditLimitsFragment : Fragment() {
             }
 
             override fun afterTextChanged(sequence: Editable?) {
-                with (editLimitsBinding) {
+                with (binding) {
                     try {
                         var proteinsPercent = 0
                         var fatsPercent = 0
@@ -130,57 +179,61 @@ class EditLimitsFragment : Fragment() {
             }
         }
 
-        with (editLimitsBinding) {
-            proteinsValueAddGramm.setText(proteinsLimit.toString())
-            fatsValueAddGramm.setText(fatsLimit.toString())
-            carbsValueAddGramm.setText(carbsLimit.toString())
-            proteinsValueAddPercent.isFocusable = false
-            fatsValueAddPercent.isFocusable = false
-            carbsValueAddPercent.isFocusable = false
-            val summ = proteinsPercent + fatsPercent + carbsPercent
-            if (summ != 100 && summ != 0) {
-                val list = listOf(proteinsPercent, fatsPercent, carbsPercent)
-                val max = list.max()
-                for ((index, items) in list.withIndex()) {
-                    if (items == max) {
-                        when (index) {
-                            0 -> proteinsPercent = 100 - (fatsPercent + carbsPercent)
-                            1 -> fatsPercent = 100 - (proteinsPercent + carbsPercent)
-                            2 -> carbsPercent = 100 - (proteinsPercent + fatsPercent)
-                        }
-                    }
-                }
+        val numberValueWatcher = object  : TextWatcher {
+            private var position = 0
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
             }
-            proteinsValueAddPercent.setText(proteinsPercent.toString())
-            fatsValueAddPercent.setText(fatsPercent.toString())
-            carbsValueAddPercent.setText(carbsPercent.toString())
-            caloriesValueAdd.setText(caloriesLimit.toString())
-            proteinsValueAddGramm.addTextChangedListener(nutrientsValueWatcher)
-            fatsValueAddGramm.addTextChangedListener(nutrientsValueWatcher)
-            carbsValueAddGramm.addTextChangedListener(nutrientsValueWatcher)
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                position = p1
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val input = p0.toString()
+                if (input.startsWith("0")) {
+                    p0?.delete(position, position + 1)
+                }
+
+            }
         }
-        editLimitsBinding.saveButton.setOnClickListener {
-            val proteins = editLimitsBinding.proteinsValueAddGramm.text.toString()
+        binding.proteinsValueAddGramm.addTextChangedListener(nutrientsValueWatcher)
+        binding.fatsValueAddGramm.addTextChangedListener(nutrientsValueWatcher)
+        binding.carbsValueAddGramm.addTextChangedListener(nutrientsValueWatcher)
+        binding.waterValueAdd.addTextChangedListener(numberValueWatcher)
+        binding.caloriesValueAdd.addTextChangedListener(numberValueWatcher)
+    }
+
+    private fun addClickListeners() {
+        binding.saveButton.setOnClickListener {
+            val proteins = binding.proteinsValueAddGramm.text.toString()
             proteinsLimit = proteins.toFloat()
-            val fats = editLimitsBinding.fatsValueAddGramm.text.toString()
+            val fats = binding.fatsValueAddGramm.text.toString()
             fatsLimit = fats.toFloat()
-            val carbs = editLimitsBinding.carbsValueAddGramm.text.toString()
+            val carbs = binding.carbsValueAddGramm.text.toString()
             carbsLimit = carbs.toFloat()
-            val calories = editLimitsBinding.caloriesValueAdd.text.toString()
+            val calories = binding.caloriesValueAdd.text.toString()
             caloriesLimit = calories.toFloat()
+            val water = binding.waterValueAdd.text.toString()
+            waterLimit = water.toInt()
             viewModel.setLimit(NutrientsEntity(0, proteinsLimit, fatsLimit, carbsLimit, caloriesLimit))
+            viewModel.setWaterLimit(waterLimit)
             requireActivity().setTitle(R.string.app_name)
             val fm = requireActivity().supportFragmentManager
             fm.popBackStack()
         }
-        editLimitsBinding.backButton.setOnClickListener {
+        binding.backButton.setOnClickListener {
             val fm = requireActivity().supportFragmentManager
             fm.popBackStack()
         }
-        return editLimitsBinding.root
+
     }
 
     companion object {
+
+        private const val EMPTY_FLOAT_VALUE = 0.0f
+        private const val EMPTY_INT_VALUE = 0
         fun newInstance() = EditLimitsFragment()
     }
 

@@ -21,6 +21,7 @@ import kotlinx.coroutines.launch
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentHomeBinding
 import ru.korostylev.easycalories.entity.EatenFoodsEntity
+import ru.korostylev.easycalories.entity.WaterEntity
 import ru.korostylev.easycalories.entity.WeightEntity
 import ru.korostylev.easycalories.interfaces.OnInteractionListener
 import ru.korostylev.easycalories.recyclerview.EatenFoodsListAdapter
@@ -68,7 +69,7 @@ class HomeFragment : Fragment() {
     private var month = EMPTY_INT_VALUE
     private var year = EMPTY_INT_VALUE
     private var dayId = EMPTY_INT_VALUE
-    private var weight: Float = EMPTY_FLOAT_VALUE
+    private var weight = EMPTY_FLOAT_VALUE
     private var proteinsLimit = EMPTY_FLOAT_VALUE
     private var fatsLimit = EMPTY_FLOAT_VALUE
     private var carbsLimit = EMPTY_FLOAT_VALUE
@@ -77,6 +78,7 @@ class HomeFragment : Fragment() {
     private var fatsActual = EMPTY_FLOAT_VALUE
     private var carbsActual = EMPTY_FLOAT_VALUE
     private var caloriesActual = EMPTY_FLOAT_VALUE
+    private var waterLimit = EMPTY_INT_VALUE
 
 
     //get current date in digits
@@ -102,16 +104,19 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getDate()
+        waterLimit = viewModel.limitOfWater().waterVolume
     }
 
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         requireActivity().setTitle(R.string.app_name)
         _binding = FragmentHomeBinding.inflate(layoutInflater)
-        binding.root.setOnTouchListener(swipeTouchListener)
+        binding.dateAndDiagram.setOnTouchListener(swipeTouchListener)
+
         return binding.root
     }
 
@@ -222,10 +227,20 @@ class HomeFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
         }
+        binding.buttonAdd100Ml.setOnClickListener {
+            viewModel.addWater(WaterEntity(dayId, WATER_ADD_100_ML))
+        }
+        binding.buttonAdd250Ml.setOnClickListener {
+            viewModel.addWater(WaterEntity(dayId, WATER_ADD_250_ML))
+        }
+        binding.buttonAdd500Ml.setOnClickListener {
+            viewModel.addWater(WaterEntity(dayId, WATER_ADD_500_ML))
+        }
     }
 
     private fun addObservers() {
         viewModel.liveDataNutrients.observe(viewLifecycleOwner, Observer {listOfNutrients->
+            Log.d("water", "CHANGED NUTR")
             listOfNutrients.let {
                 with(binding) {
                     val limits = it.filter { it.id == 0}[0]
@@ -283,6 +298,11 @@ class HomeFragment : Fragment() {
         eatenFoodsViewModel.getEatenFoodItemForDay(dayId).observe(
             viewLifecycleOwner,
             Observer {foods->
+                if (foods.size > 0) {
+                    binding.eatenFoods.visibility = View.VISIBLE
+                } else {
+                    binding.eatenFoods.visibility = View.GONE
+                }
                 val sortedFoods = foods.sortedByDescending {
                     it.time
                 }
@@ -292,6 +312,12 @@ class HomeFragment : Fragment() {
                 }
             }
         )
+        viewModel.liveDataWater.observe(viewLifecycleOwner) { it ->
+            val currentDayWater = it.firstOrNull { it.id == dayId }
+            if (currentDayWater != null) {
+                bindWaterProgress(currentDayWater)
+            }
+        }
     }
 
     private fun moveToNextDay() {
@@ -331,12 +357,15 @@ class HomeFragment : Fragment() {
         }
         reloadWeight()
         binding.weightValue.setText(weightValue)
+        binding.tvProgressWater.text = String.format(getString(R.string.water_label), 0 ,waterLimit)
     }
 
     private val swipeTouchListener = object : OnTouchListener {
+
         var xDown: Float = 0f
         var xUp: Float = 0f
         val minDistanceForSwipe = 150f
+
         override fun onTouch(p0: View?, p1: MotionEvent?): Boolean {
             when (p1?.action) {
                 MotionEvent.ACTION_DOWN -> {
@@ -362,7 +391,17 @@ class HomeFragment : Fragment() {
 
     }
 
+    private fun bindWaterProgress(waterEntity: WaterEntity) {
+        val waterLimit = viewModel.limitOfWater()
+        binding.tvProgressWater.text = String.format(getString(R.string.water_label), waterEntity.waterVolume, waterLimit.waterVolume)
+        binding.waterProgressBar.max = waterLimit.waterVolume
+        binding.waterProgressBar.progress = waterEntity.waterVolume
+    }
+
     companion object {
+        private const val WATER_ADD_100_ML = 100
+        private const val WATER_ADD_250_ML = 250
+        private const val WATER_ADD_500_ML = 500
         private const val DATE_ID = "dateId"
         private const val EMPTY_FLOAT_VALUE = 0.0f
         private const val EMPTY_INT_VALUE = 0
@@ -371,7 +410,6 @@ class HomeFragment : Fragment() {
             arguments = Bundle().apply {
                 putLong(DATE_ID, date)
             }
-
         }
     }
 

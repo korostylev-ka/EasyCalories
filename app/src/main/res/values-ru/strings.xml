@@ -13,7 +13,8 @@
     <string name="carbohydrates">Углеводы</string>
     <string name="C">У</string>
     <string name="calories">Калории</string>
-    <string name="calories_title">калории:</string>
+    <string name="calories_title">Калории:</string>
+    <string name="water_limit_title">Норма воды в день (мл):</string>
     <string name="kcal">кКал</string>
     <string name="weight_g">(г):</string>
     <string name="mon">ПН</string>
@@ -92,7 +93,7 @@
     <string name="startFrom0">Не может начинаться с "0"</string>
     <string name="startFrom.">Не может начинаться с "."</string>
     <!--    ABOUT    -->
-    <string name="nameApp">Легкие Калории V1.3</string>
+    <string name="nameApp">Легкие Калории V1.5</string>
     <string name="developer">Разработчик: Коростылев К.А.</string>
     <string name="email">Email: developkirill@yandex.ru</string>
     <!--    CONTENT DESCRIPTION     -->
@@ -100,5 +101,10 @@
     <string name="fwdButtonDescr">Кнопка вперед</string>
     <string name="changeButtonDescr">Кнопка изменить</string>
     <string name="weightDescr">Вес</string>
+    <!--    WATER      -->
+    <string name="water_label">ВОДА: %1d мл / %2d мл</string>
+    <string name="ml100">+100мл</string>
+    <string name="ml250">+250мл</string>
+    <string name="ml500">+500мл</string>
 
 </resources>

@@ -2,6 +2,8 @@ package ru.korostylev.easycalories.recyclerview
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -14,6 +16,7 @@ import ru.korostylev.easycalories.interfaces.APIListener
 import ru.korostylev.easycalories.interfaces.FoodEntityListener
 import ru.korostylev.easycalories.interfaces.OnInteractionListener
 import ru.korostylev.easycalories.ui.SelectedFoodItemFragment
+import kotlin.math.abs
 
 
 class FoodListViewHolder(
@@ -90,13 +93,12 @@ class FoodListViewHolder(
         toSelectedFoodItemFragment()
     }
 
-    fun toSelectedFoodItemFragment() {
+    private fun toSelectedFoodItemFragment() {
         val fragment = SelectedFoodItemFragment.newInstance(binding.foodName.text.toString())
         (context as AppCompatActivity).supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .addToBackStack(null)
             .commit()
     }
-
 
 }
