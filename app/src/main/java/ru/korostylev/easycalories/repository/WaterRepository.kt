@@ -9,5 +9,9 @@ interface WaterRepository {
     fun getAllWaterLD(): LiveData<List<WaterEntity>>
     fun getDayActualWater(dayId: Int): WaterEntity
 
+    fun getLimit(): WaterEntity
+
+    fun setLimit(waterVolume: Int)
+
     fun addWater(waterEntity: WaterEntity)
 }

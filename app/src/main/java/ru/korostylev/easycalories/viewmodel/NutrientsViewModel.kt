@@ -21,6 +21,7 @@ class NutrientsViewModel(application: Application): AndroidViewModel(application
     val liveDataWater = waterRepository.getAllWaterLD()
 
     fun limitsOfNutrients() = repository.getLimits()
+    fun limitOfWater() = waterRepository.getLimit()
 
     fun getActualEatenNutrients(dayId: Int) = repository.getDayActualNutrients(dayId)
 
@@ -56,6 +57,10 @@ class NutrientsViewModel(application: Application): AndroidViewModel(application
 
     fun addWater(waterEntity: WaterEntity) {
         waterRepository.addWater(waterEntity)
+    }
+
+    fun setWaterLimit(waterVolume: Int) {
+        waterRepository.setLimit(waterVolume)
     }
 
 }

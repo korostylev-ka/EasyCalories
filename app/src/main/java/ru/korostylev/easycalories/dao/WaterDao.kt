@@ -16,6 +16,9 @@ interface WaterDao {
     @Query("SELECT * FROM WaterEntity WHERE id = (:dayId)")
     fun getDayActualWater(dayId: Int): WaterEntity?
 
+    @Query("SELECT * FROM WaterEntity WHERE id = 0")
+    fun getLimit(): WaterEntity?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(waterEntity: WaterEntity)
 }

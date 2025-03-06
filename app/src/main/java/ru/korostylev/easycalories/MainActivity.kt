@@ -2,8 +2,10 @@ package ru.korostylev.easycalories
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.MotionEvent
 import com.google.firebase.FirebaseApp
 import ru.korostylev.easycalories.ui.AboutFragment
 import ru.korostylev.easycalories.ui.EditLimitsFragment
@@ -12,6 +14,10 @@ import ru.korostylev.easycalories.ui.ProfileFragment
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        return super.onTouchEvent(event)
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.options_menu, menu)

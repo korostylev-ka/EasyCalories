@@ -19,9 +19,24 @@ class WaterRepositoryImpl(private val waterDao: WaterDao): WaterRepository {
         return waterDao.getDayActualWater(dayId) ?: WaterEntity(dayId, 0)
     }
 
+    override fun getLimit(): WaterEntity {
+        return waterDao.getLimit() ?: WaterEntity(WATER_LIMIT_ID, WATER_LIMIT_VOLUME_DEFAULT)
+    }
+
+    override fun setLimit(waterVolume: Int) {
+        waterDao.insert(WaterEntity(WATER_LIMIT_ID, waterVolume))
+    }
+
     override fun addWater(waterEntity: WaterEntity) {
         val currentVolume = getDayActualWater(waterEntity.id)
         waterDao.insert(waterEntity.copy(waterVolume = currentVolume.waterVolume + waterEntity.waterVolume))
         _waterVolumeLD.value = waterDao.getAllWater().value
     }
+
+    companion object {
+        private const val WATER_LIMIT_ID = 0
+        private const val WATER_LIMIT_VOLUME_DEFAULT = 1500
+    }
+
+
 }

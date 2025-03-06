@@ -36,19 +36,19 @@ class EditFoodItemFragment : Fragment() {
     private val binding: FragmentEditFoodItemBinding
         get() = _binding ?: throw RuntimeException("FragmentEditFoodItemBinding is null")
     private var foodItemEntity: FoodItemEntity? = null
-    private var id = 0
-    private var foodId = 0
-    private var itemCategoryId = 0
-    private var itemName = ""
-    private var itemGlycemicIndex = 0
+    private var id = DEFAULT_ID
+    private var foodId = DEFAULT_FOOD_ID
+    private var itemCategoryId = DEFAULT_CATEGORY_ID
+    private var itemName = EMPTY_STRING_VALUE
+    private var itemGlycemicIndex = EMPTY_INT_VALUE
     private var itemPortionWeight = 100
-    private var itemProteins = 0F
-    private var itemFats = 0F
-    private var itemCarbs = 0F
-    private var itemCalories = 0F
+    private var itemProteins = EMPTY_FLOAT_VALUE
+    private var itemFats = EMPTY_FLOAT_VALUE
+    private var itemCarbs = EMPTY_FLOAT_VALUE
+    private var itemCalories = EMPTY_FLOAT_VALUE
     private var itemImage: String? = null
     private var itemBarcode: String? = null
-    private var itemKey: String? = ""
+    private var itemKey: String? = EMPTY_STRING_VALUE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,10 +67,10 @@ class EditFoodItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addNameTextWatcher()
-        addNutrientsValueTextWatcher()
         addClickListeners()
         addObservers()
+        addNameTextWatcher()
+        addNutrientsValueTextWatcher()
     }
 
     override fun onDestroyView() {
@@ -333,6 +333,12 @@ class EditFoodItemFragment : Fragment() {
     companion object {
 
         private const val FOOD_ID = "FOOD_ID"
+        private const val EMPTY_FLOAT_VALUE = 0.0f
+        private const val EMPTY_INT_VALUE = 0
+        private const val EMPTY_STRING_VALUE = ""
+        private const val DEFAULT_ID = 0
+        private const val DEFAULT_FOOD_ID = 0
+        private const val DEFAULT_CATEGORY_ID = 0
 
 
         fun newInstance(foodId: Int) =

@@ -9,9 +9,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <TextView
             android:id="@+id/caloriesTitle"
@@ -28,9 +31,10 @@
             android:id="@+id/caloriesValueAdd"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:textAlignment="center"
             android:background="@drawable/calories_value_view"
-            android:layout_marginTop="@dimen/common"
+            android:layout_marginTop="@dimen/medium_dimen"
             android:hint="@string/enterCaloriesLimit"
             app:layout_constraintStart_toStartOf="@id/carbsValueAddPercent"
             app:layout_constraintEnd_toEndOf="@id/carbsValueAddGramm"
@@ -154,6 +158,29 @@
             app:layout_constraintStart_toStartOf="@id/proteinsValueAddGramm"
             app:layout_constraintEnd_toEndOf="@id/proteinsValueAddGramm">
         </EditText>
+        <TextView
+            android:id="@+id/waterTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_marginTop="@dimen/common"
+            android:text="@string/water_limit_title"
+            app:layout_constraintStart_toStartOf="@id/carbsValueAddPercent"
+            app:layout_constraintEnd_toEndOf="@id/carbsValueAddGramm"
+            app:layout_constraintTop_toBottomOf="@id/caloriesValueAdd">
+        </TextView>
+        <EditText
+            android:id="@+id/waterValueAdd"
+            android:inputType="number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:background="@drawable/water_value_view"
+            android:layout_marginTop="@dimen/medium_dimen"
+            app:layout_constraintStart_toStartOf="@id/carbsValueAddPercent"
+            app:layout_constraintEnd_toEndOf="@id/carbsValueAddGramm"
+            app:layout_constraintTop_toBottomOf="@id/waterTitle">
+        </EditText>
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
@@ -161,7 +188,7 @@
             android:layout_margin="@dimen/common"
             style="@style/Widget.AppTheme.IconButtonOk"
             app:layout_constraintStart_toStartOf="@id/caloriesValueAdd"
-            app:layout_constraintTop_toBottomOf="@id/caloriesValueAdd"
+            app:layout_constraintTop_toBottomOf="@id/waterValueAdd"
             app:layout_constraintEnd_toStartOf="@id/backButton"
             app:icon="@drawable/save_button_new_48dp">
         </com.google.android.material.button.MaterialButton>

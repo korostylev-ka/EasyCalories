@@ -58,11 +58,11 @@ class NewFoodItemFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addNameTextWatcher()
-        addNutrientsValueTextWatcher()
+        bindViews()
         addClickListeners()
         addObservers()
-        bindViews()
+        addNameTextWatcher()
+        addNutrientsValueTextWatcher()
     }
 
     override fun onDestroyView() {

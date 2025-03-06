@@ -381,6 +381,7 @@
             android:id="@+id/eatenFoods"
             android:orientation="vertical"
             android:scrollbars="vertical"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/common"

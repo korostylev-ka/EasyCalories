@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
     private var month = EMPTY_INT_VALUE
     private var year = EMPTY_INT_VALUE
     private var dayId = EMPTY_INT_VALUE
-    private var weight: Float = EMPTY_FLOAT_VALUE
+    private var weight = EMPTY_FLOAT_VALUE
     private var proteinsLimit = EMPTY_FLOAT_VALUE
     private var fatsLimit = EMPTY_FLOAT_VALUE
     private var carbsLimit = EMPTY_FLOAT_VALUE
@@ -78,6 +78,7 @@ class HomeFragment : Fragment() {
     private var fatsActual = EMPTY_FLOAT_VALUE
     private var carbsActual = EMPTY_FLOAT_VALUE
     private var caloriesActual = EMPTY_FLOAT_VALUE
+    private var waterLimit = EMPTY_INT_VALUE
 
 
     //get current date in digits
@@ -103,6 +104,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getDate()
+        waterLimit = viewModel.limitOfWater().waterVolume
     }
 
 
@@ -296,6 +298,11 @@ class HomeFragment : Fragment() {
         eatenFoodsViewModel.getEatenFoodItemForDay(dayId).observe(
             viewLifecycleOwner,
             Observer {foods->
+                if (foods.size > 0) {
+                    binding.eatenFoods.visibility = View.VISIBLE
+                } else {
+                    binding.eatenFoods.visibility = View.GONE
+                }
                 val sortedFoods = foods.sortedByDescending {
                     it.time
                 }
@@ -306,7 +313,6 @@ class HomeFragment : Fragment() {
             }
         )
         viewModel.liveDataWater.observe(viewLifecycleOwner) { it ->
-            Log.d("water", "CHANGED")
             val currentDayWater = it.firstOrNull { it.id == dayId }
             if (currentDayWater != null) {
                 bindWaterProgress(currentDayWater)
@@ -351,7 +357,7 @@ class HomeFragment : Fragment() {
         }
         reloadWeight()
         binding.weightValue.setText(weightValue)
-        binding.tvProgressWater.text = String.format(getString(R.string.water_label), 0 ,0)
+        binding.tvProgressWater.text = String.format(getString(R.string.water_label), 0 ,waterLimit)
     }
 
     private val swipeTouchListener = object : OnTouchListener {
@@ -386,7 +392,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun bindWaterProgress(waterEntity: WaterEntity) {
-        binding.tvProgressWater.text = String.format(getString(R.string.water_label), waterEntity.waterVolume, 0)
+        val waterLimit = viewModel.limitOfWater()
+        binding.tvProgressWater.text = String.format(getString(R.string.water_label), waterEntity.waterVolume, waterLimit.waterVolume)
+        binding.waterProgressBar.max = waterLimit.waterVolume
         binding.waterProgressBar.progress = waterEntity.waterVolume
     }
 

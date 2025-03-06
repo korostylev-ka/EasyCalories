@@ -13,7 +13,8 @@
     <string name="carbohydrates">Carb-s</string>
     <string name="C">C</string>
     <string name="calories">Сalories</string>
-    <string name="calories_title">calories:</string>
+    <string name="calories_title">Calories:</string>
+    <string name="water_limit_title">Water per day (ml):</string>
     <string name="kcal">kcal</string>
     <string name="weight_g">(g):</string>
     <string name="mon">MON</string>
@@ -92,7 +93,7 @@
     <string name="startFrom0">Can\'t start with "0"</string>
     <string name="startFrom.">Can\'t start with "."</string>
     <!--    ABOUT    -->
-    <string name="nameApp">Easy Calories V1.3</string>
+    <string name="nameApp">Easy Calories V1.5</string>
     <string name="developer">Developer: Korostylev K.A.</string>
     <string name="email">Email: developkirill@yandex.ru</string>
     <!--    CONTENT DESCRIPTION     -->
@@ -102,9 +103,9 @@
     <string name="weightDescr">Weight</string>
     <!--    WATER      -->
     <string name="water_label">WATER: %1d ml / %2d ml</string>
-    <string name="ml100">100ml</string>
-    <string name="ml250">250ml</string>
-    <string name="ml500">500ml</string>
+    <string name="ml100">+100ml</string>
+    <string name="ml250">+250ml</string>
+    <string name="ml500">+500ml</string>
 
 
 </resources>
