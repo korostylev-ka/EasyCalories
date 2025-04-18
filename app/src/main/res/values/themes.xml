@@ -9,7 +9,7 @@
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
 <!--        <item name="colorSecondary">@color/teal_200</item>-->
-        <item name="colorSecondary">@color/action_button</item>
+        <item name="colorSecondary">@color/main_color_blue</item>
         <item name="colorSecondaryVariant">@color/action_button</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->

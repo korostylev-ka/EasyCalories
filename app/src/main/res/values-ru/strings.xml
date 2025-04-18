@@ -72,7 +72,7 @@
     <string name="height">Рост (см)</string>
     <string name="chestCirc">Грудь (см)</string>
     <string name="waistCirc">Талия (см)</string>
-    <string name="hipCirc">Талия (см)</string>
+    <string name="hipCirc">Бедра (см)</string>
     <string name="neckCirc">Шея (см)</string>
     <string name="setWeigt">Укажите ваш вес сегодня</string>
     <string name="yourWeight">Ваш вес сегодня:</string>
