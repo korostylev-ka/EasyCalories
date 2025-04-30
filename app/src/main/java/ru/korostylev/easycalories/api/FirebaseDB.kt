@@ -1,12 +1,5 @@
 package ru.korostylev.easycalories.api
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.google.firebase.database.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import ru.korostylev.easycalories.dto.FoodItem
-
 class FirebaseDB: API {
 //    private val firebaseDB = FirebaseDatabase.getInstance()
 //    private val foodsReference = firebaseDB.getReference("foods")

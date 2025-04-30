@@ -37,9 +37,12 @@ class FoodViewModel(application: Application): AndroidViewModel(application) {
         repository.getFoodItem(name)
     }.await()
 
-    suspend fun getFoodItemById(foodId: Int): FoodItemEntity? = viewModelScope.async{
-        repository.getFoodItemById(foodId)
-    }.await()
+//    suspend fun getFoodItemById(foodId: Int): FoodItemEntity? = viewModelScope.async{
+//        repository.getFoodItemById(foodId)
+//    }.await()
+    fun getFoodItemByFoodId(foodId: Int): FoodItemEntity? = repository.getFoodItemByFoodId(foodId)
+
+    fun getFoodItemById(id: Int): FoodItemEntity? = repository.getFoodItemById(id)
 
     fun deleteItem(id: Int) = viewModelScope.launch(Dispatchers.IO) {
         repository.deleteFoodItemById(id)

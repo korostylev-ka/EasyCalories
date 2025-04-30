@@ -1,35 +1,26 @@
 package ru.korostylev.easycalories.ui
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
-import android.view.View.OnClickListener
-import android.view.View.OnTouchListener
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ru.korostylev.easycalories.recyclerview.FoodListAdapter
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FragmentFoodListBinding
-import ru.korostylev.easycalories.dto.FoodItem
 import ru.korostylev.easycalories.entity.EatenFoodsEntity
 import ru.korostylev.easycalories.entity.FoodItemEntity
 import ru.korostylev.easycalories.interfaces.APIListener
-import ru.korostylev.easycalories.interfaces.FoodEntityListener
 import ru.korostylev.easycalories.interfaces.OnInteractionListener
-
+import ru.korostylev.easycalories.recyclerview.FoodListAdapter
 import ru.korostylev.easycalories.viewmodel.FoodViewModel
-import kotlin.math.abs
 
 
 class FoodListFragment : Fragment() {

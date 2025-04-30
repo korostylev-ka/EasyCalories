@@ -1,5 +1,6 @@
 package ru.korostylev.easycalories.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.Dispatchers
@@ -56,9 +57,13 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
         return foodDao.getFoodItem(name)
     }
 
-    override suspend fun getFoodItemById(foodId: Int): FoodItemEntity? {
-        val food = foodDao.getFoodItemById(foodId)
-        return foodDao.getFoodItemById(foodId)
+    override fun getFoodItemByFoodId(foodId: Int): FoodItemEntity? {
+        //val food = foodDao.getFoodItemById(foodId)
+        return foodDao.getFoodItemByFoodId(foodId)
+    }
+
+    override fun getFoodItemById(id: Int): FoodItemEntity? {
+        return foodDao.getFoodItemById(id)
     }
 
     override suspend fun saveToAPI(foodItemEntity: FoodItemEntity) {
@@ -81,9 +86,11 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
 
     override suspend fun editToAPI(foodId: Int, foodItemEntity: FoodItemEntity): FoodItemEntity {
         try {
-            val response = FoodsApi.service.edit(foodId, foodItemEntity.toFoodItemFromDB())
+            val foodItemToDB = foodItemEntity.toFoodItemFromDB()
+            val response = FoodsApi.service.edit(foodId, foodItemToDB)
             val body = FoodItemEntity.fromFoodItemFromDB(response.body()!!)
             if (response.isSuccessful) {
+                update(foodItemEntity)
                 getFoodListFromAPI()
             } else {
                 dataInfoModel.postValue(infoModel.copy(successResponse = false, responseCode = "${response.code()}"))
@@ -113,7 +120,7 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
 
     override suspend fun updateFromAPI(list: List<FoodItemFromDB>?) {
         list?.map { foodItem->
-            val foodFromEntity = getFoodItem(foodItem.name)
+            val foodFromEntity = getFoodItemByFoodId(foodItem.id)
             val foodFromAPI = FoodItemEntity.fromFoodItemFromDB(foodItem)
             //if doesn't exist, add new food
             if (foodFromEntity == null) {
@@ -121,6 +128,9 @@ class FoodRepositoryImpl(val foodDao: FoodDao): FoodRepository {
             } else {
                 //if item was changed
                 if (foodFromEntity != foodFromAPI) {
+                    Log.d("easycalor","from entity if not null and changed $foodFromEntity")
+                    Log.d("easycalor","from api if not null and changed $foodFromAPI")
+
                     update(foodFromAPI.copy(id = foodFromEntity.id, ownedByMe = foodFromEntity.ownedByMe, timesEaten = foodFromEntity.timesEaten))
                 }
             }

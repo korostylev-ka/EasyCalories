@@ -2,21 +2,16 @@ package ru.korostylev.easycalories.recyclerview
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
-import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import ru.korostylev.easycalories.R
 import ru.korostylev.easycalories.databinding.FoodItemBinding
-import ru.korostylev.easycalories.dto.FoodItem
 import ru.korostylev.easycalories.entity.FoodItemEntity
 import ru.korostylev.easycalories.interfaces.APIListener
-import ru.korostylev.easycalories.interfaces.FoodEntityListener
 import ru.korostylev.easycalories.interfaces.OnInteractionListener
 import ru.korostylev.easycalories.ui.SelectedFoodItemFragment
-import kotlin.math.abs
 
 
 class FoodListViewHolder(

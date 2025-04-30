@@ -1,6 +1,5 @@
 package ru.korostylev.easycalories.dao
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -18,8 +17,11 @@ interface FoodDao {
     @Query("SELECT * FROM FoodItemEntity WHERE name = (:foodName)")
     suspend fun getFoodItem(foodName: String): FoodItemEntity?
 
+    @Query("SELECT * FROM FoodItemEntity WHERE foodId = (:id)")
+    fun getFoodItemByFoodId(id: Int): FoodItemEntity?
+
     @Query("SELECT * FROM FoodItemEntity WHERE id = (:id)")
-    suspend fun getFoodItemById(id: Int): FoodItemEntity?
+    fun getFoodItemById(id: Int): FoodItemEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(foodItemEntity: FoodItemEntity)

@@ -44,6 +44,7 @@
             app:layout_constraintTop_toTopOf="@id/foodNameTitle" />
 
         <TextView
+            android:visibility="gone"
             android:id="@+id/portionWeightTitle"
             style="@style/textTitle"
             android:layout_width="@dimen/nutrient_value_width_large"
@@ -55,6 +56,7 @@
             app:layout_constraintTop_toBottomOf="@id/foodNameTitle" />
 
         <EditText
+            android:visibility="gone"
             android:id="@+id/portionWeightValue"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

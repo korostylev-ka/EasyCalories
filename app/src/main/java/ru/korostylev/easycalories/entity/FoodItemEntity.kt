@@ -3,7 +3,6 @@ package ru.korostylev.easycalories.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.korostylev.easycalories.dto.FoodItem
 import ru.korostylev.easycalories.dto.FoodItemFromDB
 
 @Entity
@@ -33,76 +32,44 @@ data class FoodItemEntity(
                 (this.barcode == other.barcode)
     }
 
-    fun toFoodItem(): FoodItem {
-        return FoodItem(
-            this.foodId,
-            this.categoryId,
-            this.name,
-            this.glycemicIndex,
-            this.proteins,
-            this.fats,
-            this.carbs,
-            this.calories,
-            this.barcode,
-            this.image,
-            this.key
-        )
-    }
-
         fun toFoodItemFromDB(): FoodItemFromDB {
             return FoodItemFromDB(
-                0,
-                2,
-                this.categoryId,
-                this.name,
-                this.glycemicIndex,
-                this.proteins,
-                this.fats,
-                this.carbs,
-                this.calories,
-                null,
-                this.image,
-                null
+                id = EMPTY_ID,
+                user = USER_ID,
+                category_id = this.categoryId,
+                name = this.name,
+                GI = this.glycemicIndex,
+                proteins = this.proteins,
+                fats = this.fats,
+                carbs = this.carbs,
+                calories = this.calories,
+                barcode = null,
+                image = this.image,
+                key = null
             )
         }
 
 
     companion object {
-        fun fromFoodItem(foodItem: FoodItem): FoodItemEntity {
-            return FoodItemEntity(
-                0,
-                foodItem.foodId,
-                foodItem.categoryId,
-                foodItem.name,
-                foodItem.glycemicIndex,
-                100,
-                foodItem.proteins,
-                foodItem.fats,
-                foodItem.carbs,
-                foodItem.calories,
-                foodItem.barcode,
-                foodItem.image,
-                false,
-                foodItem.key
-            )
-        }
+
+        private const val USER_ID = 2
+        private const val EMPTY_ID = 0
 
         fun fromFoodItemFromDB(foodItemFromDB: FoodItemFromDB): FoodItemEntity {
             return FoodItemEntity(
-                0,
-                foodItemFromDB.id,
-                foodItemFromDB.category_id,
-                foodItemFromDB.name,
-                foodItemFromDB.GI ?: 0,
-                100,
-                foodItemFromDB.proteins,
-                foodItemFromDB.fats,
-                foodItemFromDB.carbs,
-                foodItemFromDB.calories,
-                foodItemFromDB.barcode,
-                foodItemFromDB.image,
-                false,
-                foodItemFromDB.key
+                id = 0,
+                foodId = foodItemFromDB.id,
+                categoryId = foodItemFromDB.category_id,
+                name = foodItemFromDB.name,
+                glycemicIndex = foodItemFromDB.GI ?: 0,
+                proteins = foodItemFromDB.proteins,
+                fats = foodItemFromDB.fats,
+                carbs = foodItemFromDB.carbs,
+                calories = foodItemFromDB.calories,
+                barcode = foodItemFromDB.barcode,
+                image = foodItemFromDB.image,
+                ownedByMe = false,
+                key = foodItemFromDB.key
             )
         }
     }

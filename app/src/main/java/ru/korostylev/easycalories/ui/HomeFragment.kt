@@ -240,7 +240,7 @@ class HomeFragment : Fragment() {
 
     private fun addObservers() {
         viewModel.liveDataNutrients.observe(viewLifecycleOwner, Observer {listOfNutrients->
-            Log.d("water", "CHANGED NUTR")
+
             listOfNutrients.let {
                 with(binding) {
                     val limits = it.filter { it.id == 0}[0]
@@ -249,6 +249,7 @@ class HomeFragment : Fragment() {
                     fatsLimit = limits.fats
                     carbsLimit = limits.carbs
                     caloriesLimit = limits.calories
+                    waterLimit = viewModel.limitOfWater().waterVolume
                     proteinsActual = actualNutrients.proteins
                     fatsActual = actualNutrients.fats
                     carbsActual = actualNutrients.carbs
@@ -308,7 +309,7 @@ class HomeFragment : Fragment() {
                 }
                 sortedFoods.let {
                     eatenFoodsAdapter = EatenFoodsListAdapter(sortedFoods, listener)
-                    eatenFoodsRecyclerView!!.adapter = eatenFoodsAdapter
+                    eatenFoodsRecyclerView.adapter = eatenFoodsAdapter
                 }
             }
         )

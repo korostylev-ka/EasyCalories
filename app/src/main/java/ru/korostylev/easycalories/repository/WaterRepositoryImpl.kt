@@ -25,6 +25,7 @@ class WaterRepositoryImpl(private val waterDao: WaterDao): WaterRepository {
 
     override fun setLimit(waterVolume: Int) {
         waterDao.insert(WaterEntity(WATER_LIMIT_ID, waterVolume))
+        _waterVolumeLD.value = waterDao.getAllWater().value
     }
 
     override fun addWater(waterEntity: WaterEntity) {

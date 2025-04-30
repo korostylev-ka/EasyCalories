@@ -26,7 +26,7 @@
         app:layout_constraintTop_toTopOf="parent"
         style="@style/textTitle"
         android:text="@string/foodName" />
-    <TextView
+    <EditText
         android:id="@+id/editedFoodNameValue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -38,8 +38,9 @@
         android:layout_marginEnd="@dimen/common"
         app:layout_constraintTop_toTopOf="@id/editedFoodNameTitle"
         app:layout_constraintBottom_toBottomOf="@id/editedFoodNameTitle">
-    </TextView>
+    </EditText>
     <TextView
+        android:visibility="gone"
         android:id="@+id/editedPortionWeightTitle"
         android:layout_width="@dimen/nutrient_value_width_large"
         android:layout_height="wrap_content"
@@ -50,6 +51,7 @@
         style="@style/textTitle"
         android:text="@string/portionWeight" />
     <EditText
+        android:visibility="gone"
         android:id="@+id/editedPortionWeightValue"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -111,7 +113,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_edit_text"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:hint="@string/enterValue"
         android:background="@drawable/edit_text_value"
         app:layout_constraintStart_toEndOf="@id/divider"
@@ -135,7 +137,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_edit_text"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:hint="@string/enterValue"
         android:background="@drawable/edit_text_value"
         app:layout_constraintStart_toEndOf="@id/divider"
@@ -159,7 +161,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_edit_text"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:hint="@string/enterValue"
         android:background="@drawable/edit_text_value"
         app:layout_constraintStart_toEndOf="@id/divider"
@@ -183,7 +185,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_edit_text"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:hint="@string/enterValue"
         android:background="@drawable/edit_text_value"
         app:layout_constraintStart_toEndOf="@id/divider"

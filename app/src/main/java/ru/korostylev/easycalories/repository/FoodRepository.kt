@@ -11,7 +11,8 @@ interface FoodRepository {
     val liveDataInfoModel: LiveData<InfoModel>
     suspend fun getFoodList()
     suspend fun getFoodItem(name: String): FoodItemEntity?
-    suspend fun getFoodItemById(foodId: Int): FoodItemEntity?
+    fun getFoodItemById(id: Int): FoodItemEntity?
+    fun getFoodItemByFoodId(foodId: Int): FoodItemEntity?
     suspend fun saveToAPI(foodItemEntity: FoodItemEntity)
     suspend fun editToAPI(foodId: Int, foodItemEntity: FoodItemEntity): FoodItemEntity
     suspend fun getFoodListFromAPI()
